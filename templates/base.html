@@ -22,10 +22,10 @@
       <nav>
         <div class="nav-wrapper">
           <ul class="right hide-on-med-and-down">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Lore</a></li>
-            <li><a href="#">Player characters</a></li>
+            <li><a href="{{url_for('home')}}">Home</a></li>
+            <li><a href="{{url_for('about')}}">About</a></li>
+            <li><a href="{{url_for('lore')}}">Lore</a></li>
+            <li><a href="{{url_for('characters')}}">Player characters</a></li>
           </ul>
 
           <a
@@ -38,10 +38,10 @@
       </nav>
 
       <ul class="sidenav" id="mobile-demo">
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Lore</a></li>
-        <li><a href="#">Player characters</a></li>
+        <li><a href="{{url_for('home')}}">Home</a></li>
+        <li><a href="{{url_for('about')}}">About</a></li>
+        <li><a href="{{url_for('lore')}}">Lore</a></li>
+        <li><a href="{{url_for('lore')}}">Player characters</a></li>
       </ul>
     </header>
 
@@ -65,7 +65,7 @@
       });
     </script>
 
-    <!--
+    <!-- Temporarily disabled for debugging
     <script
       type="text/javascript"
       src="{{url_for('static', filename='js/index.js' )}}"

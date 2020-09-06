@@ -18,7 +18,7 @@ chars_sheets = []
 chars = mongo.db.char_sheets.find()
 
 for i in chars:
-    characters.append(i)
+    chars_sheets.append(i)
 
 
 @app.route('/')
@@ -29,6 +29,16 @@ def home():
 @app.route("/characters")
 def characters():
     return render_template("characters.html", characters=chars_sheets)
+
+
+@app.route('/about')
+def about():
+    return render_template("about.html")
+
+
+@app.route('/lore')
+def lore():
+    return render_template("lore.html")
 
 
 if __name__ == '__main__':
