@@ -14,12 +14,6 @@ app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 mongo = PyMongo(app)
 
-chars_sheets = []
-chars = mongo.db.char_sheets.find()
-
-for i in chars:
-    chars_sheets.append(i)
-
 
 @app.route('/')
 def home():
@@ -28,6 +22,11 @@ def home():
 
 @app.route("/characters")
 def characters():
+    chars_sheets = []
+    chars = mongo.db.char_sheets.find()
+
+    for i in chars:
+        chars_sheets.append(i)
     return render_template("characters.html", characters=chars_sheets)
 
 
