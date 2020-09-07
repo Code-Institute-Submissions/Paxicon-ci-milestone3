@@ -1,6 +1,22 @@
-{% extends 'base.html'%} {% block content %}
+{% extends 'base.html'%} {% block content %} {% with messages =
+get_flashed_messages() %} {% if messages%} {% for message in messages %}
+{{message}} {% endfor%} {% endif %} {%endwith%}
 
 <div class="row">
-  <h1>Login</h1>
+  <h1>Select a username and password:</h1>
+  <br />
+  <form method="POST" action="{{ url_for('login')}}">
+    <input name="username" id="username" type="text" />
+    <label for="username">Input username:</label>
+
+    <input name="password" id="password" type="text" />
+    <label for="password">Input password:</label>
+
+    <button type="submit">Login</button>
+  </form>
 </div>
+
+<p class="center-align">
+  New here? Click <a href="{{url_for('register')}}">here</a>
+</p>
 {% endblock %}
