@@ -24,8 +24,8 @@
           <ul class="right hide-on-med-and-down">
             <li><a href="{{url_for('home')}}">Home</a></li>
             <li><a href="{{url_for('about')}}">About</a></li>
-            <li><a href="{{url_for('login')}}">Login</a></li>
             <li><a href="{{url_for('characters')}}">Player characters</a></li>
+            <li><a href="{{url_for('login')}}">Login</a></li>
             <li><a href="{{url_for('register')}}">Register</a></li>
           </ul>
 
@@ -58,12 +58,11 @@
     ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
-    <!-- Local JS -->
+    <!-- Initializing materialize components -->
 
     <script>
       $(document).ready(function () {
         $(".sidenav").sidenav();
-        console.log("Sidenav triggered!");
       });
     </script>
 
