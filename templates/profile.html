@@ -1,4 +1,11 @@
 {% extends 'base.html'%} {% block content %} {% with messages =
 get_flashed_messages() %} {% if messages%} {% for message in messages %}
-{{message}} {% endfor%} {% endif %} {%endwith%} Welcome {{username}}! {%endblock
+{{message}} {% endfor%} {% endif %} {%endwith%} Welcome {{username}}! 
+
+<div class row id="task-bar">
+    <a href="{{url_for('addchar')}}">Create new character
+
+
+</div>
+{%endblock
 %}

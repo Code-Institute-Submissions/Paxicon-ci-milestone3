@@ -98,6 +98,14 @@ def profile(username):
         {"username": session["user"]})["username"]
     return render_template("profile.html", username=session["user"])
 
+# Redirect for creating new entries
+
+
+@app.route('/profile/<username>/addchar', methods=["GET", "POST"])
+def addchar(username):
+    return render_template("addchar.html", username=session["user"])
+
+
 # Logout function + redirect
 
 
