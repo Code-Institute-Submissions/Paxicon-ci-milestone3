@@ -1,19 +1,25 @@
 import os
 from flask import Flask, render_template, redirect, request, url_for, request, flash, session
 import dns
+from flask_mongoengine import MongoEngine
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
+from flask_login import LoginManager
 from werkzeug.security import generate_password_hash, check_password_hash
 from os import path
 if path.exists("env.py"):
     import env
+db = MongoEngine()
 
 app = Flask(__name__)
 
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.config["SECRET_KEY"] = os.environ["SECRET_KEY"]
-mongo = PyMongo(app)
+app.config["MONGODB_SETTINGS"] = os.environ["MONGODB_SETTINGS"]
+db.init_app(app)
+
+login = LoginManager(app)
 
 
 @app.route('/')
