@@ -1,10 +1,9 @@
 import os
 from flask import Flask, render_template, redirect, request, url_for, request, flash, session
 import dns
-from flask_mongoengine import MongoEngine
-from flask_pymongo import PyMongo
-from bson.objectid import ObjectId
-from flask_login import LoginManager, UserMixin, login_required
+from flask_mongoengine import MongoEngine, Document
+from flask_wtf import FlaskForm
+from flask_login import LoginManager, UserMixin, login_required, login_user
 from wtforms import StringField, TextField, SubmitField, PasswordField, ValidationError
 from wtforms.validators import InputRequired, Email, Length
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -31,7 +30,7 @@ login_manager = LoginManager(app)
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.objects(pk=user_id).first()
+    return User.objects(email).first()
 
 # Routes below this point
 
@@ -61,6 +60,8 @@ def lore():
     return render_template("lore.html")
 
 
+# Flask-Login compliant registration scheme.
+
 @app.route('/register', methods=["GET", "POST"])
 def register():
     form = RegForm()
@@ -70,9 +71,13 @@ def register():
             if existing_user is None:
                 hashpass = generate_password_hash(
                     form.password.data, method='sha256')
-                new_user = User(form.email.data, hashpass).save()
+                new_user = User(email=form.email.data,
+                                password=hashpass).save()
                 login_user(new_user)
+                flash("Login succesful!")
                 return redirect(url_for('profile'))
+            else:
+                flash("Email already registered!")
         else:
             flash("Improper registration! This error means your form was not validated.")
     return render_template('register.html', form=form)

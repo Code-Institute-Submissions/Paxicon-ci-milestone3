@@ -1,6 +1,6 @@
 # This file contains setup of the User class for the flask-login extension.
 
-from flask_mongoengine import MongoEngine
+from flask_mongoengine import MongoEngine, Document
 from flask_login import UserMixin
 
 db = MongoEngine()
@@ -19,7 +19,3 @@ class User(UserMixin, db.Document):
     # As required by flask-login. For our purposes, there are no anonymous users.
     is_anonymous = False
     # A requirement of flask-logins authentication process is to return a unicode string for user_loader() callback.
-
-    def get_id():
-        user_id = self.email
-        return user_id
