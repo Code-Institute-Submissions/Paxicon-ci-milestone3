@@ -3,7 +3,7 @@ from flask import Flask, render_template, redirect, request, url_for, request, f
 import dns
 from flask_mongoengine import MongoEngine, Document
 from flask_wtf import FlaskForm
-from flask_login import LoginManager, UserMixin, login_required, login_user
+from flask_login import LoginManager, UserMixin, login_required, login_user, current_user
 from wtforms import StringField, TextField, SubmitField, PasswordField, ValidationError
 from wtforms.validators import InputRequired, Email, Length
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -30,7 +30,7 @@ login_manager = LoginManager(app)
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.objects(email).first()
+    return User.objects(pk=user_id).first()
 
 # Routes below this point
 
@@ -82,30 +82,27 @@ def register():
             flash("Improper registration! This error means your form was not validated.")
     return render_template('register.html', form=form)
 
+# Flask-Login compliant login
+
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
-    if request.method == "POST":
-        # Check for user in DB records
-        existing_user = mongo.db.users.find_one(
-            {"username": request.form.get("username").lower()})
-        # If existing user, check password.
-        if existing_user:
-            if check_password_hash(
-                    existing_user["password"], request.form.get("password")):
-                session["user"] = request.form.get("username").lower()
-                flash("Welcome, {}".format(request.form.get("username")))
-                return redirect(url_for(
-                    "profile", username=session["user"]))
+    # First check to see if user is already logged in.
+    if current_user.is_authenticated == True:
+        return redirect(url_for('profile'))
+    form = RegForm()
+    if request.method == 'POST':
+        if form.validate():
+            # First of all, check if there is a registered email in the DB that matches.
+            check_user = User.objects(email=form.email.data).first()
+            if check_user:
+                # If email matches an entry, check the password hash.
+                if check_password_hash(check_user['password'], form.password.data):
+                    login_user(check_user)
+                    return redirect(url_for('profile'))
             else:
-                flash("Username and/or password incorrect.")
-                return redirect(url_for("login"))
-        else:
-            # Password check failed
-            flash("Username and/or password incorrect.")
-            return redirect(url_for("login"))
-
-    return render_template("login.html")
+                flash("The email entered does not appear to be registered!")
+    return render_template('login.html', form=form)
 
 # Profile page
 
@@ -113,8 +110,6 @@ def login():
 @app.route('/profile', methods=["GET", "POST"])
 @login_required
 def profile():
-    username = mongo.db.users.find_one(
-        {"username": session["user"]})["username"]
     return render_template("profile.html")
 
 # Redirect for creating new entries
