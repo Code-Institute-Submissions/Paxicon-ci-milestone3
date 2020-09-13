@@ -4,9 +4,12 @@ import dns
 from flask_mongoengine import MongoEngine
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
-from flask_login import LoginManager, UserMixin
+from flask_login import LoginManager, UserMixin, login_required
+from wtforms import StringField, TextField, SubmitField, PasswordField, ValidationError
+from wtforms.validators import InputRequired, Email, Length
 from werkzeug.security import generate_password_hash, check_password_hash
 from user import User
+from forms import RegForm
 from os import path
 if path.exists("env.py"):
     import env
@@ -21,7 +24,7 @@ app.config["SECRET_KEY"] = os.environ["SECRET_KEY"]
 db = MongoEngine(app)
 
 # Flask Login setup
-login = LoginManager(app)
+login_manager = LoginManager(app)
 
 # This callback exists as part of the flask-login auth process.
 
@@ -60,26 +63,19 @@ def lore():
 
 @app.route('/register', methods=["GET", "POST"])
 def register():
-    if request.method == "POST":
-
-        existing_user = mongo.db.users.find_one(
-            {"username": request.form.get("username").lower()})
-
-        if existing_user:
-            flash("Username already exists!")
-            return redirect(url_for("register"))
-
-        register = {
-            "username": request.form.get("username").lower(),
-            "password": generate_password_hash(request.form.get("password"))
-        }
-        mongo.db.users.insert_one(register)
-
-        session["user"] = request.form.get("username").lower()
-        flash("Registration succesful!")
-        return redirect(url_for("profile", username=session["user"]))
-
-    return render_template("register.html")
+    form = RegForm()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            existing_user = User.objects(email=form.email.data).first()
+            if existing_user is None:
+                hashpass = generate_password_hash(
+                    form.password.data, method='sha256')
+                new_user = User(form.email.data, hashpass).save()
+                login_user(new_user)
+                return redirect(url_for('profile'))
+        else:
+            flash("Improper registration! This error means your form was not validated.")
+    return render_template('register.html', form=form)
 
 
 @app.route('/login', methods=["GET", "POST"])

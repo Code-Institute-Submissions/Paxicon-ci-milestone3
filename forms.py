@@ -1,6 +1,8 @@
 # This file contains Flask-WTF form classes.
 
-from flask-wtf import wtf, FlaskForm
+from flask_wtf import FlaskForm
+from wtforms import StringField, TextField, SubmitField, PasswordField, ValidationError
+from wtforms.validators import InputRequired, Email, Length
 
 
 # Registration form, can also be passed without issue to login-page.

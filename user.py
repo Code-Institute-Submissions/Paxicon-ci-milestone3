@@ -1,6 +1,6 @@
 # This file contains setup of the User class for the flask-login extension.
 
-import flask_mongoengine
+from flask_mongoengine import MongoEngine
 from flask_login import UserMixin
 
 db = MongoEngine()
@@ -10,7 +10,7 @@ db = MongoEngine()
 
 class User(UserMixin, db.Document):
     meta = {'collection': 'User'}
-    email = db.StringField(max_length=30)
+    email = db.StringField(max_length=50)
     password = db.StringField()
     # A required attribute from flask-login to ensure the login.required decorators operate functionally. As auth here is very simple, all users are considered authenticated if they pass login.
     is_authenticated = True
