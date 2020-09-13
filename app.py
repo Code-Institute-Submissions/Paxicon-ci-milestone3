@@ -109,28 +109,29 @@ def login():
 # Profile page
 
 
-@app.route('/profile/<username>', methods=["GET", "POST"])
-def profile(username):
+@app.route('/profile', methods=["GET", "POST"])
+@login_required
+def profile():
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
-    return render_template("profile.html", username=session["user"])
+    return render_template("profile.html")
 
 # Redirect for creating new entries
 
 
-@app.route('/profile/<username>/addchar', methods=["GET", "POST"])
-def addchar(username):
-    return render_template("addchar.html", username=session["user"])
+@app.route('/profile/addchar', methods=["GET", "POST"])
+def addchar():
+    return render_template("addchar.html")
 
 
 # Logout function + redirect
 
 
-@ app.route('/logout')
+@app.route('/logout', methods=['GET'])
+@login_required
 def logout():
-    flash("You have been logged out!")
-    session.pop("user")
-    return redirect(url_for("login"))
+    logout_user()
+    return redirect(url_for('login'))
 
 
 if __name__ == '__main__':
