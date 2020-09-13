@@ -3,7 +3,7 @@ from flask import Flask, render_template, redirect, request, url_for, request, f
 import dns
 from flask_mongoengine import MongoEngine, Document
 from flask_wtf import FlaskForm
-from flask_login import LoginManager, UserMixin, login_required, login_user, current_user
+from flask_login import LoginManager, UserMixin, login_required, login_user, current_user, logout_user
 from wtforms import StringField, TextField, SubmitField, PasswordField, ValidationError
 from wtforms.validators import InputRequired, Email, Length
 from werkzeug.security import generate_password_hash, check_password_hash

@@ -25,11 +25,9 @@
             <li><a href="{{url_for('home')}}">Home</a></li>
             <li><a href="{{url_for('about')}}">About</a></li>
             <li><a href="{{url_for('characters')}}">Player characters</a></li>
-            {% if session.user %}
+            {% if current_user.is_authenticated %}
             <li>
-              <a href="{{url_for('profile', username=session['user'])}}"
-                >My Profile</a
-              >
+              <a href="{{url_for('profile')}}">My Profile</a>
             </li>
             <li><a href="{{url_for('logout')}}">Logout</a></li>
             {% else %}
@@ -51,11 +49,9 @@
         <li><a href="{{url_for('home')}}">Home</a></li>
         <li><a href="{{url_for('about')}}">About</a></li>
         <li><a href="{{url_for('characters')}}">Player characters</a></li>
-        {% if session.user %}
+        {% if current_user.is_authenticated %}
         <li>
-          <a href="{{url_for('profile', username=session['user'])}}"
-            >My Profile</a
-          >
+          <a href="{{url_for('profile')}}">My Profile</a>
         </li>
         <li><a href="{{url_for('logout')}}">Logout</a></li>
         {% else %}
