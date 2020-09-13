@@ -6,20 +6,31 @@ from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from flask_login import LoginManager, UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+from user import User
 from os import path
 if path.exists("env.py"):
     import env
 
-db = MongoEngine()
 
 app = Flask(__name__)
 
-os.environ["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
-os.environ["MONGODB_HOST"] = os.environ.get("MONGODB_HOST")
+# MongoEngine setup
+app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
+app.config["MONGODB_HOST"] = os.environ.get("MONGODB_HOST")
 app.config["SECRET_KEY"] = os.environ["SECRET_KEY"]
-db.init_app(app)
+db = MongoEngine(app)
 
+# Flask Login setup
 login = LoginManager(app)
+
+# This callback exists as part of the flask-login auth process.
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.objects(pk=user_id).first()
+
+# Routes below this point
 
 
 @app.route('/')
