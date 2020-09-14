@@ -1,4 +1,5 @@
 import os
+import jwt
 from flask import Flask, render_template, redirect, request, url_for, request, flash, session
 import dns
 from flask_mail import Mail, Message
@@ -150,7 +151,7 @@ def lost_password():
                 # Feedback so the user can see the request went through!
                 flash("Message sent, please check your inbox!")
                 flash(
-                    "Reset password email sent to {{email}}! Please check your email and follow instructions therein.")
+                    "Reset password email sent to the provided email! Please check your email and follow instructions therein.")
             else:
                 flash("No such user found!")
 
