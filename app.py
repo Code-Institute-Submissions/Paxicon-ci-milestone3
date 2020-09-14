@@ -1,6 +1,7 @@
 import os
 from flask import Flask, render_template, redirect, request, url_for, request, flash, session
 import dns
+from flask-mail import Mail, Message
 from flask_mongoengine import MongoEngine, Document
 from flask_wtf import FlaskForm
 from flask_login import LoginManager, UserMixin, login_required, login_user, current_user, logout_user
@@ -31,6 +32,18 @@ login_manager = LoginManager(app)
 @login_manager.user_loader
 def load_user(user_id):
     return User.objects(pk=user_id).first()
+
+# Flask-Mail setup variables
+
+
+app.config['MAIL_SERVER'] = os.environ['MAIL_SERVER']
+app.config['MAIL_PORT'] = os.environ['MAIL_PORT']
+app.config['MAIL_USERNAME'] = os.environ['MAIL_USERNAME']
+app.config['MAIL_PASSWORD'] = os.environ['MAIL_PASSWORD']
+app.config['MAIL_USE_SSL'] = True
+mail = Mail(app)
+
+msg = Message()
 
 # Routes below this point
 
@@ -112,12 +125,20 @@ def login():
 def profile():
     return render_template("profile.html")
 
-# Redirect for creating new entries
+# Route for creating new entries
 
 
 @app.route('/profile/addchar', methods=["GET", "POST"])
 def addchar():
     return render_template("addchar.html")
+
+# Route for lost-password request form
+
+
+@app.route('/lost_password', methods=["GET", "POST"])
+def lost_password():
+    form = LostPass()
+    return render_template("lost_password.html", form=form)
 
 
 # Logout function + redirect

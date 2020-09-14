@@ -13,3 +13,9 @@ class RegForm(FlaskForm):
     password = PasswordField('password', validators=[
                              InputRequired(), Length(min=8, max=20)])
     submit = SubmitField("Submit")
+
+
+class LostPass(FlaskForm):
+    email = StringField('email',  validators=[InputRequired(), Email(
+        message='Invalid email'), Length(max=50)])
+    submit = SubmitField("Submit password request")
