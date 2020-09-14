@@ -17,4 +17,8 @@ get_flashed_messages() %} {% if messages%} {% for message in messages %}
 <p class="center-align">
   Already a member? Click <a href="{{url_for('login')}}">here</a>
 </p>
+<br />
+<p class="center-align">
+  Lost your password? Click <a href="{{url_for('lost_password')}}">here</a>
+</p>
 {% endblock %}

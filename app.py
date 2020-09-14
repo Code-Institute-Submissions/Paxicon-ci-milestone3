@@ -1,7 +1,7 @@
 import os
 from flask import Flask, render_template, redirect, request, url_for, request, flash, session
 import dns
-from flask-mail import Mail, Message
+from flask_mail import Mail, Message
 from flask_mongoengine import MongoEngine, Document
 from flask_wtf import FlaskForm
 from flask_login import LoginManager, UserMixin, login_required, login_user, current_user, logout_user
@@ -9,7 +9,7 @@ from wtforms import StringField, TextField, SubmitField, PasswordField, Validati
 from wtforms.validators import InputRequired, Email, Length
 from werkzeug.security import generate_password_hash, check_password_hash
 from user import User
-from forms import RegForm
+from forms import RegForm, LostPass
 from os import path
 if path.exists("env.py"):
     import env
@@ -40,10 +40,7 @@ app.config['MAIL_SERVER'] = os.environ['MAIL_SERVER']
 app.config['MAIL_PORT'] = os.environ['MAIL_PORT']
 app.config['MAIL_USERNAME'] = os.environ['MAIL_USERNAME']
 app.config['MAIL_PASSWORD'] = os.environ['MAIL_PASSWORD']
-app.config['MAIL_USE_SSL'] = True
 mail = Mail(app)
-
-msg = Message()
 
 # Routes below this point
 
@@ -138,6 +135,25 @@ def addchar():
 @app.route('/lost_password', methods=["GET", "POST"])
 def lost_password():
     form = LostPass()
+    # Password Reset functionality
+    if request.method == 'POST':
+        if form.validate():
+            # First of all, check if there is a registered email in the DB that matches.
+            check_user = User.objects(email=form.email.data).first()
+            # Checking if this e-mail exists in the database. If not, flashes an error to the user.
+            if check_user:
+                email = form.email.data
+                password_mail = Message("Lost your password?",
+                                        sender=os.environ['MAIL_USERNAME'],
+                                        recipients=[email])
+                mail.send(password_mail)
+                # Feedback so the user can see the request went through!
+                flash("Message sent, please check your inbox!")
+                flash(
+                    "Reset password email sent to {{email}}! Please check your email and follow instructions therein.")
+            else:
+                flash("No such user found!")
+
     return render_template("lost_password.html", form=form)
 
 
