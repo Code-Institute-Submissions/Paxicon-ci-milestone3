@@ -18,4 +18,9 @@ class User(UserMixin, db.Document):
     is_active = True
     # As required by flask-login. For our purposes, there are no anonymous users.
     is_anonymous = False
-    # A requirement of flask-logins authentication process is to return a unicode string for user_loader() callback.
+
+    # The following method is invoked when a password-reset is ordered. It expires within 1 hour from activation, for safety reasons.
+    def reset_token(self, expires=3600):
+        return jwt.encode({'reset_password': self.email,
+                           'exp':    time() + expires},
+                          key=os.getenv('SECRET_KEY'))

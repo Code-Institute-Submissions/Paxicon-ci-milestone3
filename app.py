@@ -9,7 +9,7 @@ from flask_login import LoginManager, UserMixin, login_required, login_user, cur
 from wtforms import StringField, TextField, SubmitField, PasswordField, ValidationError
 from wtforms.validators import InputRequired, Email, Length
 from werkzeug.security import generate_password_hash, check_password_hash
-from user import User
+from user import User, reset_token
 from forms import RegForm, LostPass
 from os import path
 if path.exists("env.py"):
@@ -157,6 +157,12 @@ def lost_password():
 
     return render_template("lost_password.html", form=form)
 
+# The following view is set to reject anyone connecting directly to it, instead of via a reset email from "/lost_password"
+
+
+@app.route('/password_reset/<token>')
+def password_reset():
+    token = token = user.reset_token()
 
 # Logout function + redirect
 
