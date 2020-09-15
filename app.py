@@ -1,5 +1,6 @@
 import os
 import jwt
+import datetime
 from flask import Flask, render_template, redirect, request, url_for, request, flash, session
 import dns
 from flask_mail import Mail, Message
@@ -9,7 +10,7 @@ from flask_login import LoginManager, UserMixin, login_required, login_user, cur
 from wtforms import StringField, TextField, SubmitField, PasswordField, ValidationError
 from wtforms.validators import InputRequired, Email, Length
 from werkzeug.security import generate_password_hash, check_password_hash
-from user import User, reset_token
+from user import User
 from forms import RegForm, LostPass
 from os import path
 if path.exists("env.py"):
@@ -143,10 +144,17 @@ def lost_password():
             check_user = User.objects(email=form.email.data).first()
             # Checking if this e-mail exists in the database. If not, flashes an error to the user.
             if check_user:
-                email = form.email.data
+                email = str(form.email.data)
+                exp_time = datetime.datetime.now() + datetime.timedelta(hours=1)
+                # If a user is found, we'll proceed to generate a JWT-token to pass along with our mail.
+                token = jwt.encode({'reset_password': form.email.data,
+                           'exp': exp_time},
+                           key=os.getenv('SECRET_KEY'))
+                # print(token) <- Confirmed the token is correctly generated
                 password_mail = Message("Lost your password?",
                                         sender=os.environ['MAIL_USERNAME'],
-                                        recipients=[email])
+                                        recipients=[email],
+                                        body= render_template('reset_email.html', token=token))
                 mail.send(password_mail)
                 # Feedback so the user can see the request went through!
                 flash("Message sent, please check your inbox!")
@@ -157,12 +165,16 @@ def lost_password():
 
     return render_template("lost_password.html", form=form)
 
-# The following view is set to reject anyone connecting directly to it, instead of via a reset email from "/lost_password"
-
-
-@app.route('/password_reset/<token>')
-def password_reset():
-    token = token = user.reset_token()
+@staticmethod
+def callback(token):
+    # This function exists as a callback to check the authenticity of the JWT token for resetting email.
+    verify_token = jwt.decode(token, key=os.environ.getenv('SECRET_KEY'))['reset_password']
+    try:
+        print(verify_token)
+    except Exception as e:
+        print(e)
+        return User.objects(email=email).first()
+    
 
 # Logout function + redirect
 
