@@ -148,13 +148,13 @@ def lost_password():
                 exp_time = datetime.datetime.now() + datetime.timedelta(hours=1)
                 # If a user is found, we'll proceed to generate a JWT-token to pass along with our mail.
                 token = jwt.encode({'reset_password': form.email.data,
-                           'exp': exp_time},
-                           key=os.getenv('SECRET_KEY'))
+                                    'exp': exp_time},
+                                   key=os.getenv('SECRET_KEY'))
                 # print(token) <- Confirmed the token is correctly generated
                 password_mail = Message("Lost your password?",
                                         sender=os.environ['MAIL_USERNAME'],
                                         recipients=[email],
-                                        body= render_template('reset_email.html', token=token))
+                                        body=render_template('reset_email.html', token=token))
                 mail.send(password_mail)
                 # Feedback so the user can see the request went through!
                 flash("Message sent, please check your inbox!")
@@ -165,18 +165,19 @@ def lost_password():
 
     return render_template("lost_password.html", form=form)
 
-@staticmethod
-def callback(token):
-    # This function exists as a callback to check the authenticity of the JWT token for resetting email.
-    verify_token = jwt.decode(token, key=os.environ.getenv('SECRET_KEY'))['reset_password']
-    try:
-        print(verify_token)
-    except Exception as e:
-        print(e)
-        return User.objects(email=email).first()
-    
 
-# Logout function + redirect
+# Correctly times out if token expires, now to write logic + DB change component
+@app.route("/callback/<token>",  methods=['GET', 'POST'])
+def callback(token):
+    # Verified the token is still valid.
+    try:
+        verify_token = jwt.decode(token, key=os.environ["SECRET_KEY"])[
+            'reset_password']
+        return verify_token
+    except:
+        # Any exception that can occur automatically invalidates the token, therefore we redirect to the login page and flash a message indicating a new token is needed.
+        flash("Invalid token! Password reset tokens are time-limited.")
+        return redirect(url_for('login'))
 
 
 @app.route('/logout', methods=['GET'])
