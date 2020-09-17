@@ -19,3 +19,13 @@ class User(UserMixin, db.Document):
     is_active = True
     # As required by flask-login. For our purposes, there are no anonymous users.
     is_anonymous = False
+
+    @staticmethod
+    def verify_token(token):
+        try:
+            user = jwt.decode(token, key=os.environ["SECRET_KEY"])[
+                'reset_password']
+            print(user)
+        except Exception as exc:
+            print(exc)
+        return User.objects(email=user).first()

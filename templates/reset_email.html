@@ -1,6 +1,8 @@
-<p>
-  To reset your password
-  <a href="{{ url_for('callback', token=token, _external=True) }}">
-    click here </a
-  >.
-</p>
+<html>
+  <p>
+    To reset your password
+    <a href="{{ url_for('mail_verified', token=token, _external=True) }}">
+      click here </a
+    >.
+  </p>
+</html>

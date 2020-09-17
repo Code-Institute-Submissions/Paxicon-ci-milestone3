@@ -1,5 +1,5 @@
 import os
-import jwt
+from flask_jwt import jwt, jwt_required
 import datetime
 from flask import Flask, render_template, redirect, request, url_for, request, flash, session
 import dns
@@ -8,10 +8,10 @@ from flask_mongoengine import MongoEngine, Document
 from flask_wtf import FlaskForm
 from flask_login import LoginManager, UserMixin, login_required, login_user, current_user, logout_user
 from wtforms import StringField, TextField, SubmitField, PasswordField, ValidationError
-from wtforms.validators import InputRequired, Email, Length
+from wtforms.validators import InputRequired, Email, Length, EqualTo
 from werkzeug.security import generate_password_hash, check_password_hash
 from user import User
-from forms import RegForm, LostPass
+from forms import RegForm, LostPass, ConfirmNewPassForm
 from os import path
 if path.exists("env.py"):
     import env
@@ -26,9 +26,8 @@ app.config["SECRET_KEY"] = os.environ["SECRET_KEY"]
 db = MongoEngine(app)
 
 # Flask Login setup
-login_manager = LoginManager(app)
-
 # This callback exists as part of the flask-login auth process.
+login_manager = LoginManager(app)
 
 
 @login_manager.user_loader
@@ -157,7 +156,6 @@ def lost_password():
                                         body=render_template('reset_email.html', token=token))
                 mail.send(password_mail)
                 # Feedback so the user can see the request went through!
-                flash("Message sent, please check your inbox!")
                 flash(
                     "Reset password email sent to the provided email! Please check your email and follow instructions therein.")
             else:
@@ -167,17 +165,36 @@ def lost_password():
 
 
 # Correctly times out if token expires, now to write logic + DB change component
-@app.route("/callback/<token>",  methods=['GET', 'POST'])
-def callback(token):
+@app.route("/mail_verified/<token>",  methods=['GET', 'POST'])
+def mail_verified(token):
     # Verified the token is still valid.
-    try:
-        verify_token = jwt.decode(token, key=os.environ["SECRET_KEY"])[
-            'reset_password']
-        return verify_token
-    except:
-        # Any exception that can occur automatically invalidates the token, therefore we redirect to the login page and flash a message indicating a new token is needed.
-        flash("Invalid token! Password reset tokens are time-limited.")
-        return redirect(url_for('login'))
+    form = ConfirmNewPassForm(token)
+    # First of all, check if there is a registered email in the DB that matches the decoded value of the token.
+
+    if request.method == 'POST':
+        print("Post accepted, attempting to validate")
+        if form.validate():
+            print("Finished validating")
+            user = User.verify_token(token).first()
+            print(user)
+            if not user:
+                print("Invalid email")
+                # If invalid for any reason, the user is redirected to login.
+                flash(
+                    "Your password-reset token was invalid! Feel free to submit a new password-reset request.")
+                redirect(url_for('login'))
+            else:
+                # If JWT is valid, the password will be updated.
+                hashpass = generate_password_hash(
+                    form.password.data, method='sha256')
+                user(password=hashpass).update()
+                flash("Your password has been changed!")
+                redirect(url_for('login'))
+        else:
+            print("Form did not validate")
+            print(form.errors.items())
+    # If I just return aa string, it seems fine. We must  thus assume the problem was the render template.
+    return render_template('verified_password_change.html', form=form, token=token)
 
 
 @app.route('/logout', methods=['GET'])
