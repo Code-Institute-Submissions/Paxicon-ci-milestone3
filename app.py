@@ -11,7 +11,7 @@ from wtforms import StringField, TextField, SubmitField, PasswordField, Validati
 from wtforms.validators import InputRequired, Email, Length, EqualTo
 from werkzeug.security import generate_password_hash, check_password_hash
 from user import User
-from forms import RegForm, LostPass, ConfirmNewPassForm
+from forms import RegForm, LostPass
 from os import path
 if path.exists("env.py"):
     import env
@@ -93,13 +93,7 @@ def register():
             flash("Improper registration! This error means your form was not validated.")
     return render_template('register.html', form=form)
 
-# Flask-Login compliant login
-
-    """
-    New fresh fucking hell, the thing won't let me login with the new password now that it lets me reset it.
-    The hashes do not match, even after a full rewrite of the entire system.
-
-    """
+# Flask-Login compliant login, with password-reset functionality
 
 
 @app.route('/login', methods=["GET", "POST"])
@@ -112,24 +106,16 @@ def login():
     if request.method == 'POST':
         # First of all, check if there is a registered email in the DB that matches.
         check_user = User.objects(email=form.email.data).first()
-        if check_user:
-            # Debug print statements, check-hash always returns false and the two last prints do not match.
-            print("I found a user!")
-            print(check_user['email'])
-            print(form.password.data)
-            print(generate_password_hash(form.password.data))
-            print(check_user['password'])
-
+        if check_user is None:
+            # If no matching user is found, inform the user.
+            flash("The email entered does not appear to be registered!")
+        else:
             # If email matches an entry, check the password hash.
-            if check_user.check_pw(password):
+            if check_password_hash(check_user['password'], password):
                 login_user(check_user)
                 return redirect(url_for('profile'))
-
             else:
-                flash("Invalid credentials!")
-        else:
-            print("I didn't find a user!")
-            flash("The email entered does not appear to be registered!")
+                flash("Invalid credentials")
     return render_template('login.html', form=form)
 
 # Profile page
@@ -166,11 +152,10 @@ def lost_password():
                 token = jwt.encode({'reset_password': form.email.data,
                                     'exp': exp_time},
                                    key=os.getenv('SECRET_KEY'))
-                # print(token) <- Confirmed the token is correctly generated
                 password_mail = Message("Lost your password?",
                                         sender=os.environ['MAIL_USERNAME'],
                                         recipients=[email],
-                                        body=render_template('reset_email.html', token=token))
+                                        html=render_template('reset_email.html', token=token))
                 mail.send(password_mail)
                 # Feedback so the user can see the request went through!
                 flash(
@@ -183,28 +168,31 @@ def lost_password():
 
 @app.route("/mail_verified/<token>",  methods=['GET', 'POST'])
 def mail_verified(token):
-    # The user variable is really just a quick way to check the validity of the token. If the token time of 60 minutes has expired, the tokeen will not decode and no password
-    # alteration can occur.
-    user = jwt.decode(token, key=os.getenv('SECRET_KEY'))["reset_password"]
 
-    form = ConfirmNewPassForm(token)
+    # This form does not use the FlaskForm-extension. This is because of a bug with validation that made the JWT-token invalid and the form would not validate correctly,
+    # causing faulty passwords to be saved.
+
+    user = jwt.decode(token, key=os.getenv('SECRET_KEY'))["reset_password"]
+    token_valid = User.objects(email=user).first()
+    password = request.form.get("password")
     # Verified the token is still valid.
     if request.method == 'POST':
         # If a post occurs, check the validity of the token against the DB of registered users.
-        token_valid = User.objects(email=user).first()
-        password = form.password.data
+
         if token_valid is None:
             flash("Invalid token, password reset request denied.")
             return redirect(url_for('login'))
         else:
-            # If JWT is valid, the password will be updated using the set_pw() method.
 
-            token_valid.modify(set__password=generate_password_hash(password))
+            # If a token matching the JWT-token payload has been found, hash the current input and save it to the database.
+
+            token_valid.password = generate_password_hash(password)
+            token_valid.save().reload()
 
             flash("Your password has been changed!")
             login_user(token_valid)
             return redirect(url_for('profile'))
-    return render_template('verified_password_change.html', form=form, token=token)
+    return render_template('verified_password_change.html', token=token)
 
 
 @ app.route('/logout', methods=['GET'])

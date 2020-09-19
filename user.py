@@ -22,8 +22,8 @@ class User(UserMixin, db.Document):
     # Method for returning a hashed, secure password.
 
     def set_pw(self, password):
-        self.password = generate_password_hash(password)
-    # Method for validating the password of a user.
+        return set_pw
 
+    # Method for validating the password of a user.
     def check_pw(self, password):
         return check_password_hash(self['password'], password)
