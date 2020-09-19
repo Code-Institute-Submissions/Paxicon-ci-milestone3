@@ -1,5 +1,5 @@
 import os
-from flask_jwt import jwt, jwt_required
+from flask_jwt import jwt
 import datetime
 from flask import Flask, render_template, redirect, request, url_for, request, flash, session
 import dns
