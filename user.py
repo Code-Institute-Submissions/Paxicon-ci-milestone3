@@ -1,5 +1,5 @@
 # This file contains setup of the User class for the flask-login extension.
-
+from werkzeug.security import check_password_hash, generate_password_hash
 from flask_mongoengine import MongoEngine, Document
 from flask_login import UserMixin
 import jwt
@@ -19,13 +19,11 @@ class User(UserMixin, db.Document):
     is_active = True
     # As required by flask-login. For our purposes, there are no anonymous users.
     is_anonymous = False
+    # Method for returning a hashed, secure password.
 
-    @staticmethod
-    def verify_token(token):
-        try:
-            user = jwt.decode(token, key=os.environ["SECRET_KEY"])[
-                'reset_password']
-            print(user)
-        except Exception as exc:
-            print(exc)
-        return User.objects(email=user).first()
+    def set_pw(self, password):
+        self.password = generate_password_hash(password)
+    # Method for validating the password of a user.
+
+    def check_pw(self, password):
+        return check_password_hash(self['password'], password)

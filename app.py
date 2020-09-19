@@ -81,7 +81,7 @@ def register():
             existing_user = User.objects(email=form.email.data).first()
             if existing_user is None:
                 hashpass = generate_password_hash(
-                    form.password.data, method='sha256')
+                    form.password.data)
                 new_user = User(email=form.email.data,
                                 password=hashpass).save()
                 login_user(new_user)
@@ -95,6 +95,12 @@ def register():
 
 # Flask-Login compliant login
 
+    """
+    New fresh fucking hell, the thing won't let me login with the new password now that it lets me reset it.
+    The hashes do not match, even after a full rewrite of the entire system.
+
+    """
+
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
@@ -102,17 +108,28 @@ def login():
     if current_user.is_authenticated == True:
         return redirect(url_for('profile'))
     form = RegForm()
+    password = form.password.data
     if request.method == 'POST':
-        if form.validate():
-            # First of all, check if there is a registered email in the DB that matches.
-            check_user = User.objects(email=form.email.data).first()
-            if check_user:
-                # If email matches an entry, check the password hash.
-                if check_password_hash(check_user['password'], form.password.data):
-                    login_user(check_user)
-                    return redirect(url_for('profile'))
+        # First of all, check if there is a registered email in the DB that matches.
+        check_user = User.objects(email=form.email.data).first()
+        if check_user:
+            # Debug print statements, check-hash always returns false and the two last prints do not match.
+            print("I found a user!")
+            print(check_user['email'])
+            print(form.password.data)
+            print(generate_password_hash(form.password.data))
+            print(check_user['password'])
+
+            # If email matches an entry, check the password hash.
+            if check_user.check_pw(password):
+                login_user(check_user)
+                return redirect(url_for('profile'))
+
             else:
-                flash("The email entered does not appear to be registered!")
+                flash("Invalid credentials!")
+        else:
+            print("I didn't find a user!")
+            flash("The email entered does not appear to be registered!")
     return render_template('login.html', form=form)
 
 # Profile page
@@ -164,41 +181,34 @@ def lost_password():
     return render_template("lost_password.html", form=form)
 
 
-# Correctly times out if token expires, now to write logic + DB change component
 @app.route("/mail_verified/<token>",  methods=['GET', 'POST'])
 def mail_verified(token):
-    # Verified the token is still valid.
-    form = ConfirmNewPassForm(token)
-    # First of all, check if there is a registered email in the DB that matches the decoded value of the token.
+    # The user variable is really just a quick way to check the validity of the token. If the token time of 60 minutes has expired, the tokeen will not decode and no password
+    # alteration can occur.
+    user = jwt.decode(token, key=os.getenv('SECRET_KEY'))["reset_password"]
 
+    form = ConfirmNewPassForm(token)
+    # Verified the token is still valid.
     if request.method == 'POST':
-        print("Post accepted, attempting to validate")
-        if form.validate():
-            print("Finished validating")
-            user = User.verify_token(token).first()
-            print(user)
-            if not user:
-                print("Invalid email")
-                # If invalid for any reason, the user is redirected to login.
-                flash(
-                    "Your password-reset token was invalid! Feel free to submit a new password-reset request.")
-                redirect(url_for('login'))
-            else:
-                # If JWT is valid, the password will be updated.
-                hashpass = generate_password_hash(
-                    form.password.data, method='sha256')
-                user(password=hashpass).update()
-                flash("Your password has been changed!")
-                redirect(url_for('login'))
+        # If a post occurs, check the validity of the token against the DB of registered users.
+        token_valid = User.objects(email=user).first()
+        password = form.password.data
+        if token_valid is None:
+            flash("Invalid token, password reset request denied.")
+            return redirect(url_for('login'))
         else:
-            print("Form did not validate")
-            print(form.errors.items())
-    # If I just return aa string, it seems fine. We must  thus assume the problem was the render template.
+            # If JWT is valid, the password will be updated using the set_pw() method.
+
+            token_valid.modify(set__password=generate_password_hash(password))
+
+            flash("Your password has been changed!")
+            login_user(token_valid)
+            return redirect(url_for('profile'))
     return render_template('verified_password_change.html', form=form, token=token)
 
 
-@app.route('/logout', methods=['GET'])
-@login_required
+@ app.route('/logout', methods=['GET'])
+@ login_required
 def logout():
     logout_user()
     return redirect(url_for('login'))
