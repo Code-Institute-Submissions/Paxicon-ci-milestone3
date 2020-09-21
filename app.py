@@ -5,12 +5,14 @@ from flask import Flask, render_template, redirect, request, url_for, request, f
 import dns
 from flask_mail import Mail, Message
 from flask_mongoengine import MongoEngine, Document
+from flask_mongoengine.wtf import model_form
 from flask_wtf import FlaskForm
 from flask_login import LoginManager, UserMixin, login_required, login_user, current_user, logout_user
 from wtforms import StringField, TextField, SubmitField, PasswordField, ValidationError
 from wtforms.validators import InputRequired, Email, Length, EqualTo
 from werkzeug.security import generate_password_hash, check_password_hash
 from user import User
+from charsheets import *
 from forms import RegForm, LostPass
 from os import path
 if path.exists("env.py"):
@@ -131,7 +133,8 @@ def profile():
 
 @app.route('/profile/addchar', methods=["GET", "POST"])
 def addchar():
-    return render_template("addchar.html")
+    form = model_form(Char)
+    return render_template("addchar.html", form=form)
 
 # Route for lost-password request form
 

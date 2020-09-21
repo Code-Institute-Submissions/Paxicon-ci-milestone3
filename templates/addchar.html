@@ -4,28 +4,10 @@ get_flashed_messages() %} {% if messages%} {% for message in messages %}
 <h3 class="centered">Add new character:</h3>
 <br />
 <form>
-  <div class="row">
-    <input type="text" class="col 12" name="charname" id="charname" />
-    <label for="charname">Character name: </label>
-  </div>
-  <div class="row">
-    <input
-      class="col 12"
-      type="number"
-      name="level"
-      id="level"
-      min="1"
-      max="20"
-    />
-    <label for="level">Current level: </label>
-  </div>
-  <div class="row">
-    <textarea id="description" name="description" maxlength="1000"></textarea>
-    <label for="description">Character description: </label>
-  </div>
-  <div class="row">
-    <textarea id="backstory" name="backstory" maxlength="1000"></textarea>
-    <label for="backstory">Character backstory: </label>
-  </div>
+  {{form}}
+  <div class="row">    
+    {{form.Name}}
+    {{form.CharClass}}
+    {{form.Subclass}}
 </form>
 {%endblock %}
