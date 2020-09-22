@@ -133,7 +133,8 @@ def profile():
 
 @app.route('/profile/addchar', methods=["GET", "POST"])
 def addchar():
-    form = model_form(Char)
+    char_form = model_form(Char)
+    form = char_form(request.form)
     return render_template("addchar.html", form=form)
 
 # Route for lost-password request form

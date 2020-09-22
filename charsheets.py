@@ -5,6 +5,7 @@ from flask_wtf import *
 from user import User
 from flask_mongoengine import MongoEngine, Document
 from flask_mongoengine.wtf import model_form
+from wtforms.fields import FormField
 db = MongoEngine()
 
 # 'Attributes' are a dict of ints that can range from 1 to 20. All characters have a set of Attributes within this range. This will be passed
@@ -12,7 +13,7 @@ db = MongoEngine()
 # and are calculated from the base-attribute value, it is preferable to defer the modifier to the FrontEnd to save on r/w operations.
 
 
-class Attributes(db.EmbeddedDocument):
+class CharAttributes(db.EmbeddedDocument):
     strength = db.IntField(min_value=1, max_value=20)
     dexterity = db.IntField(min_value=1, max_value=20)
     constitution = db.IntField(min_value=1, max_value=20)
@@ -60,7 +61,8 @@ class Skills(db.EmbeddedDocument):
 
 # 'Armor' at its core represents an integer that theoretically has neither a maximum nor minimum value. However, numerous
 # factors can alter armor-class and it is feasible for a user to want to save multiple 'Armor' objects to represent
-# different equipment in a game. Therefore, Armor will be accessible through a EmbeddedDocumentListField of multiple armor-items in
+# different equipment in a game. Therefore, Armor will be accessible through a EmbeddedDocument
+# Field of multiple armor-items in
 # the DB, which user can add, update or remove from at will. Some of the more basic rules are incorporated for ease-of-use
 # in the form of the required boolean-fields.
 
@@ -78,7 +80,7 @@ class Armor(db.EmbeddedDocument):
 
 
 class ArmorObjs(db.EmbeddedDocument):
-    ArmorList = db.EmbeddedDocumentListField(Armor)
+    ArmorList = db.EmbeddedDocumentField(Armor)
 
 # 'Attacks', much like Armor, are a class of what is essentially a collection of ints. An attack roll is a randomized number
 # adding the modifier, the modifier being calculated client-side on the front-end, the object needs only save name, description, dice-type
@@ -92,7 +94,7 @@ class Attacks(db.EmbeddedDocument):
 
 
 class AttackObjs(db.EmbeddedDocument):
-    AttacksList = db.EmbeddedDocumentListField(Attacks)
+    AttacksList = db.EmbeddedDocumentField(Attacks)
 
 # The ClassObj contains name, description and level as well as an embedded list-item classes as "Ability", a catch-all term for character-abilities
 # that the user must specify and keep updated themselves. Proficiency is a function of level/4 +1 (Rounded up) and is thus referred to the front-end which handles
@@ -103,14 +105,14 @@ class Abilities(db.EmbeddedDocument):
     Name = db.StringField()
     Description = db.StringField()
     DieType = db.IntField()
-    Attribute = db.ReferenceField('Attributes')
+    Attribute = db.EmbeddedDocumentField(CharAttributes)
 
 
 class ClassObj(db.EmbeddedDocument):
     Name = db.StringField()
     Subclass = db.StringField()
     CharClass = db.StringField()
-    Abilities = db.ReferenceField('Abilities')
+    Abilities = db.EmbeddedDocumentField('Abilities')
 
 
 class AbilityObjs(db.EmbeddedDocument):
@@ -121,15 +123,15 @@ class AbilityObjs(db.EmbeddedDocument):
 
 class Char(db.Document):
     Name = db.StringField()
-    Subclass = db.StringField()
     CharClass = db.StringField()
-    Appearances = db.StringField()
+    Subclass = db.StringField()
+    Appearance = db.StringField()
     Description = db.StringField()
-    Attributes = db.EmbeddedDocumentListField(Attributes)
-    Saves = db.EmbeddedDocumentListField(Saves)
-    Skills = db.EmbeddedDocumentListField(Skills)
-    ArmorObjs = db.EmbeddedDocumentListField(ArmorObjs)
-    Attacks = db.EmbeddedDocumentListField(Attacks)
-    ClassObj = db.EmbeddedDocumentListField(ClassObj)
-    AbilityObjs = db.EmbeddedDocumentListField(AbilityObjs)
+    ClassObjList = db.EmbeddedDocumentField(ClassObj)
+    AttributeList = db.EmbeddedDocumentField(CharAttributes)
+    SavesList = db.EmbeddedDocumentField(Saves)
+    SkillsList = db.EmbeddedDocumentField(Skills)
+    ArmorObjList = db.EmbeddedDocumentField(ArmorObjs)
+    AttacksList = db.EmbeddedDocumentField(Attacks)
+    AbilityObjsList = db.EmbeddedDocumentField(AbilityObjs)
     owner = db.ReferenceField(User)
