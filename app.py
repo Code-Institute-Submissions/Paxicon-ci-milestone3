@@ -12,7 +12,7 @@ from wtforms import StringField, TextField, SubmitField, PasswordField, Validati
 from wtforms.validators import InputRequired, Email, Length, EqualTo
 from werkzeug.security import generate_password_hash, check_password_hash
 from user import User
-from charsheets import *
+from charsheets import Char, CharInput
 from forms import RegForm, LostPass
 from os import path
 if path.exists("env.py"):
@@ -136,23 +136,22 @@ def profile():
 def addchar():
     form = CharInput()
     check_user = User.objects(email=current_user.email).first()
-    if request.method == 'POST':
-        if form.validate():
+    if request.method == 'POST' and form.validate():
 
-            # First we need to prepare a new Char object
-            new_char = Char()
-            new_char.Name = form.Name.data,
-            new_char.CharClass = form.CharClass.data,
-            new_char.Subclass = form.Subclass.data,
-            new_char.CharDescription = form.CharDescription.data,
-            new_char.Appearance = form.Appearance.data,
-            new_char.ClassObj = form.ClassObj.data,
-            new_char.SkillsObjLis = form.SkillsObjLis.data,
-            new_char.AttributeList = form.AttributeList.data,
-            new_char.SavesList = form.SavesList.data,
-            new_char.Owner = check_user
-            print(new_char)
-            new_char.save()
+        # First we need to prepare a new Char object
+        new_char = Char()
+        new_char.Name = form.Name.data
+        new_char.CharClass = form.CharClass.data
+        new_char.Subclass = form.Subclass.data
+        new_char.CharDescription = form.CharDescription.data
+        new_char.Appearance = form.Appearance.data
+        new_char.ClassObj = form.ClassObj.data
+        new_char.SkillsObjLis = form.SkillsObjLis.data
+        new_char.AttributeList = form.AttributeList.data
+        new_char.SavesList = form.SavesList.data
+        new_char.Owner = check_user
+        print(new_char)
+        new_char.save()
 
     return render_template("addchar.html", form=form)
 

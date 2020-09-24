@@ -106,13 +106,13 @@ class Abilities(db.EmbeddedDocument):
     Name = db.StringField()
     Description = db.StringField()
     DieType = db.IntField()
-    Attribute = db.EmbeddedDocumentField(CharAttributes)
+    Attribute = FieldList(db.EmbeddedDocumentField(CharAttributes))
 
 
 class ClassObj(db.EmbeddedDocument):
     Lvl = db.IntField()
     HitDie = db.IntField()
-    Abilities = db.ListField(db.EmbeddedDocumentField('AbilityObjs'))
+    Abilities = FieldList(db.EmbeddedDocumentField('AbilityObjs'))
     AttacksPerRound = db.IntField()
 
 
@@ -128,13 +128,13 @@ class Char(db.Document):
     Subclass = db.StringField()
     Appearance = db.StringField()
     CharDescription = db.StringField()
-    ClassObj = db.EmbeddedDocumentField(ClassObj)
-    AttributeList = db.EmbeddedDocumentField(CharAttributes)
-    SavesList = db.EmbeddedDocumentField(Saves)
-    SkillsList = db.EmbeddedDocumentField(Skills)
-    ArmorObjList = db.ListField(db.EmbeddedDocumentField(Armor))
-    AttacksList = db.ListField(db.EmbeddedDocumentField(Attacks))
-    AbilityObjsList = db.ListField(db.EmbeddedDocumentField(AbilityObjs))
+    ClassObj = FieldList(db.EmbeddedDocumentField(ClassObj))
+    AttributeList = FieldList(db.EmbeddedDocumentField(CharAttributes))
+    SavesList = FieldList(db.EmbeddedDocumentField(Saves))
+    SkillsList = FieldList(db.EmbeddedDocumentField(Skills))
+    ArmorObjList = FieldList(db.EmbeddedDocumentField(Armor))
+    AttacksList = FieldList(db.EmbeddedDocumentField(Attacks))
+    AbilityObjsList = FieldList(db.EmbeddedDocumentField(AbilityObjs))
     Owner = db.ReferenceField(User)
 
 # The following forms is what is passed to the Frontend to register new Chars.
