@@ -134,9 +134,26 @@ def profile():
 @app.route('/profile/addchar', methods=["GET", "POST"])
 @ login_required
 def addchar():
-    char_form = model_form(Char, Form, field_args={'Name': {'label': 'Character name: '}, 'CharClass': {'label': 'Class: '}, 'Subclass': {'label': 'Subclass: '},
-                                                   'Appearance': {'label': 'Appearance: '}, 'CharDescription': {'label': 'Backstory: '}, 'ClassObj': {'Lvl': {'label': 'Level: '}}})
     form = CharInput()
+    check_user = User.objects(email=current_user.email).first()
+    if request.method == 'POST':
+        if form.validate():
+
+            # First we need to prepare a new Char object
+            new_char = Char()
+            new_char.Name = form.Name.data,
+            new_char.CharClass = form.CharClass.data,
+            new_char.Subclass = form.Subclass.data,
+            new_char.CharDescription = form.CharDescription.data,
+            new_char.Appearance = form.Appearance.data,
+            new_char.ClassObj = form.ClassObj.data,
+            new_char.SkillsObjLis = form.SkillsObjLis.data,
+            new_char.AttributeList = form.AttributeList.data,
+            new_char.SavesList = form.SavesList.data,
+            new_char.Owner = check_user
+            print(new_char)
+            new_char.save()
+
     return render_template("addchar.html", form=form)
 
 # Route for lost-password request form

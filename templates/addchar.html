@@ -4,20 +4,20 @@ get_flashed_messages() %} {% if messages%} {% for message in messages %}
 <h3 class="centered">Add new character:</h3>
 <br />
 <div class="container-fluid">
-  <form class="form">
+  <form class="form" method="POST">
     {{ form.hidden_tag() }} {{ form.csrf_token() }} {% for field in form %} {%
-    if field.widget.input_type == 'hidden' %} {{field(class_='form-control')}}
-    {% endif %} {% if field.input_type == StringField %} {{field.label}}<br />
-    {{field(class_='list-group-horizontal')}}<br />
-    {% elif field.input_type == NumberInput %} {{field(class_='form-control')}}
+    if field.widget.input_type == 'hidden' %} {{field(class_='col')}} {% endif
+    %} {% if field.input_type == StringField %} {{field.label}}<br />
+    {{field(class_='col')}}<br />
+    {% elif field.input_type == NumberInput %} {{field(class_='col')}}
     <br />
+    {% elif field.input_type == FormField %} {{ form.hidden_tag() }} {% for
+    content in field %} {{ content.csrf_token() }} {{content.label}}<br />
+    {{content}}
     <br />
-    {% elif field.input_type == FormField %} {% for content in field %} {{
-    content.csrf_token() }} {{content.label}}<br />
-    {{content(class_='list-group-horizontal')}}<br />
-    {% endfor%} {% else %} Moo! {% endif %} {% endfor%}
+    {% endfor%} {% else %} {{ form.hidden_tag() }}Moo! {% endif %} {% endfor%}
     <br />
-    {{form.submit}}
+    <button class="" href="{url_for('addchar')">Submit button</button>
   </form>
 </div>
 

@@ -137,22 +137,16 @@ class Char(db.Document):
     AbilityObjsList = db.ListField(db.EmbeddedDocumentField(AbilityObjs))
     Owner = db.ReferenceField(User)
 
-# The following forms is what is passed to the Frontend.
+# The following forms is what is passed to the Frontend to register new Chars.
 
 
 class CharAttributesForm(FlaskForm):
-    strength = DecimalField('Strength: ', [Length(
-        min=1, max=20, message="This field only accepts numbers between 1-20.")])
-    dexterity = DecimalField('Dexterity: ', [Length(
-        min=1, max=20, message="This field only accepts numbers between 1-20.")])
-    constitution = DecimalField('Constitution: ', [Length(
-        min=1, max=20, message="This field only accepts numbers between 1-20.")])
-    intelligence = DecimalField('Intelligence: ', [Length(
-        min=1, max=20, message="This field only accepts numbers between 1-20.")])
-    wisdom = DecimalField('Wisdom: ', [Length(
-        min=1, max=20, message="This field only accepts numbers between 1-20.")])
-    charisma = DecimalField('Charisma: ', [Length(
-        min=1, max=20, message="This field only accepts numbers between 1-20.")])
+    strength = DecimalField('Strength: ')
+    dexterity = DecimalField('Dexterity: ')
+    constitution = DecimalField('Constitution: ')
+    intelligence = DecimalField('Intelligence: ')
+    wisdom = DecimalField('Wisdom: ')
+    charisma = DecimalField('Charisma: ')
 
 
 class ClassObjForm(FlaskForm):
@@ -192,24 +186,25 @@ class AbilitiesForm(FlaskForm):
 
 
 class SkillsForm(FlaskForm):
-    Athletics = CheckboxInput('Athletics: ')
-    Acrobatics = CheckboxInput('Acrobatics: ')
-    Sleight = CheckboxInput('Sleight of Hand: ')
-    Stealth = CheckboxInput('Stealth: ')
-    Arcana = CheckboxInput('Arcana: ')
-    History = CheckboxInput('History: ')
-    Investigation = CheckboxInput('Investigation: ')
-    Nature = CheckboxInput('Nature: ')
-    Religion = CheckboxInput('Religon: ')
-    AnimalHandling = CheckboxInput('Animal handling: ')
-    Insight = CheckboxInput('Insight: ')
-    Medicine = CheckboxInput('Medicine: ')
-    Perception = CheckboxInput('Perception: ')
-    Survival = CheckboxInput('Survival: ')
-    Deception = CheckboxInput('Deception: ')
-    Intimidation = CheckboxInput('Intimidation: ')
-    Performance = CheckboxInput('Performance: ')
-    Persuasion = CheckboxInput('Persuasion: ')
+    Athletics = BooleanField('Athletics: ',
+                             widget=CheckboxInput())
+    Acrobatics = BooleanField('Acrobatics: ', widget=CheckboxInput())
+    Sleight = BooleanField('Sleight of Hand: ', widget=CheckboxInput())
+    Stealth = BooleanField('Stealth: ', widget=CheckboxInput())
+    Arcana = BooleanField('Arcana: ', widget=CheckboxInput())
+    History = BooleanField('History: ', widget=CheckboxInput())
+    Investigation = BooleanField('Investigation: ', widget=CheckboxInput())
+    Nature = BooleanField('Nature: ', widget=CheckboxInput())
+    Religion = BooleanField('Religon: ', widget=CheckboxInput())
+    AnimalHandling = BooleanField('Animal handling: ', widget=CheckboxInput())
+    Insight = BooleanField('Insight: ', widget=CheckboxInput())
+    Medicine = BooleanField('Medicine: ', widget=CheckboxInput())
+    Perception = BooleanField('Perception: ', widget=CheckboxInput())
+    Survival = BooleanField('Survival: ', widget=CheckboxInput())
+    Deception = BooleanField('Deception: ', widget=CheckboxInput())
+    Intimidation = BooleanField('Intimidation: ', widget=CheckboxInput())
+    Performance = BooleanField('Performance: ', widget=CheckboxInput())
+    Persuasion = BooleanField('Persuasion: ', widget=CheckboxInput())
 
 
 class CharInput(FlaskForm):
@@ -220,10 +215,10 @@ class CharInput(FlaskForm):
     CharDescription = StringField('Backstory: ')
     ClassObj = FormField(
         ClassObjForm, 'Character class information: ')
-    SkillsList = FormField(
+    SkillsObjLis = FormField(
         SkillsForm, 'Check box for proficient skills: ')
     AttributeList = FormField(
         CharAttributesForm, 'Character attributes: ')
     SavesList = FormField(SaveForm,
                           'Character saves: ', widget=ListWidget())
-    # Owner=HiddenField(User)
+    Owner = HiddenField(User)
