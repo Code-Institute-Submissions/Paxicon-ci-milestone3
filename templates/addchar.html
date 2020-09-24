@@ -3,15 +3,22 @@ get_flashed_messages() %} {% if messages%} {% for message in messages %}
 {{message}} {% endfor%} {% endif %} {%endwith%}
 <h3 class="centered">Add new character:</h3>
 <br />
-<form>
-  {{ form.csrf_token }}
-  <div class="row">
-    {% for field in form %} {% if field.widget.input_type != 'hidden' %} {{
-    field.label }} {% endif %} {{field()}} {% endfor%}
+<div class="container-fluid">
+  <form class="form">
+    {{ form.hidden_tag() }} {{ form.csrf_token() }} {% for field in form %} {%
+    if field.widget.input_type == 'hidden' %} {{field(class_='form-control')}}
+    {% endif %} {% if field.input_type == StringField %} {{field.label}}<br />
+    {{field(class_='list-group-horizontal')}}<br />
+    {% elif field.input_type == NumberInput %} {{field(class_='form-control')}}
+    <br />
+    <br />
+    {% elif field.input_type == FormField %} {% for content in field %} {{
+    content.csrf_token() }} {{content.label}}<br />
+    {{content(class_='list-group-horizontal')}}<br />
+    {% endfor%} {% else %} Moo! {% endif %} {% endfor%}
+    <br />
+    {{form.submit}}
+  </form>
+</div>
 
-    <br />
-    <br />
-    <button class="btn" type="submit">Save character</button>
-  </div>
-</form>
 {%endblock %}

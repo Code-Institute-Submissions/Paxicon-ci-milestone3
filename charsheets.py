@@ -8,7 +8,10 @@ from flask_mongoengine.wtf import model_form
 from wtforms import *
 from wtforms.widgets import ListWidget, CheckboxInput
 from wtforms.validators import *
+from wtforms import *
 from flask_wtf.form import *
+from wtforms.fields.html5 import *
+from wtforms.widgets.html5 import *
 db = MongoEngine()
 
 # 'Attributes' are a dict of ints that can range from 1 to 20. All characters have a set of Attributes within this range. This will be passed
@@ -138,17 +141,17 @@ class Char(db.Document):
 
 
 class CharAttributesForm(FlaskForm):
-    strength = IntegerField('Strength: ', [Length(
+    strength = DecimalField('Strength: ', [Length(
         min=1, max=20, message="This field only accepts numbers between 1-20.")])
-    dexterity = IntegerField('Dexterity: ', [Length(
+    dexterity = DecimalField('Dexterity: ', [Length(
         min=1, max=20, message="This field only accepts numbers between 1-20.")])
-    constitution = IntegerField('Constitution: ', [Length(
+    constitution = DecimalField('Constitution: ', [Length(
         min=1, max=20, message="This field only accepts numbers between 1-20.")])
-    intelligence = IntegerField('Intelligence: ', [Length(
+    intelligence = DecimalField('Intelligence: ', [Length(
         min=1, max=20, message="This field only accepts numbers between 1-20.")])
-    wisdom = IntegerField('Wisdom: ', [Length(
+    wisdom = DecimalField('Wisdom: ', [Length(
         min=1, max=20, message="This field only accepts numbers between 1-20.")])
-    charisma = IntegerField('Charisma: ', [Length(
+    charisma = DecimalField('Charisma: ', [Length(
         min=1, max=20, message="This field only accepts numbers between 1-20.")])
 
 
@@ -156,7 +159,7 @@ class ClassObjForm(FlaskForm):
 
     Lvl = IntegerField('Character level: ')
     HitDie = IntegerField('Hit-die: ')
-    Abilities = HiddenField(db.EmbeddedDocumentField('Abilities'))
+    Abilities = HiddenField(db.EmbeddedDocumentField('Abilities: '))
     AttacksPerRound = IntegerField('Attack per round: ')
 
 
@@ -175,17 +178,52 @@ class SaveForm(FlaskForm):
                            widget=CheckboxInput())
 
 
+class AbilityObjForm(FlaskForm):
+    Name = StringField('Ability name: ')
+
+
+class AbilitiesForm(FlaskForm):
+    Name = StringField('Name of ability')
+    Description = StringField(' Describe the ability, effects, damage, DCs: ')
+    DieType = IntegerField('Enter the primary dice for this ability: ')
+    Attribute = FormField(CharAttributes, "Your character attributes: ")
+    AbilityObjList = FormField(
+        AbilityObjForm, 'Add abilities your character knows here: ')
+
+
+class SkillsForm(FlaskForm):
+    Athletics = CheckboxInput('Athletics: ')
+    Acrobatics = CheckboxInput('Acrobatics: ')
+    Sleight = CheckboxInput('Sleight of Hand: ')
+    Stealth = CheckboxInput('Stealth: ')
+    Arcana = CheckboxInput('Arcana: ')
+    History = CheckboxInput('History: ')
+    Investigation = CheckboxInput('Investigation: ')
+    Nature = CheckboxInput('Nature: ')
+    Religion = CheckboxInput('Religon: ')
+    AnimalHandling = CheckboxInput('Animal handling: ')
+    Insight = CheckboxInput('Insight: ')
+    Medicine = CheckboxInput('Medicine: ')
+    Perception = CheckboxInput('Perception: ')
+    Survival = CheckboxInput('Survival: ')
+    Deception = CheckboxInput('Deception: ')
+    Intimidation = CheckboxInput('Intimidation: ')
+    Performance = CheckboxInput('Performance: ')
+    Persuasion = CheckboxInput('Persuasion: ')
+
+
 class CharInput(FlaskForm):
     Name = StringField('Character name: ')
     CharClass = StringField('Character class: ')
-    Subclass = StringField('Subclasss: ')
+    Subclass = StringField('Subclass: ')
     Appearance = StringField('Appearance: ')
     CharDescription = StringField('Backstory: ')
     ClassObj = FormField(
-        ClassObjForm, 'Class attributes & skills: ', widget=ListWidget(prefix_label=False))
+        ClassObjForm, 'Character class information: ')
+    SkillsList = FormField(
+        SkillsForm, 'Check box for proficient skills: ')
     AttributeList = FormField(
-        CharAttributesForm, 'Character attributes: ', widget=ListWidget(prefix_label=False))
-    SavesList = FormField(SaveForm, 'Character saves: ')
-
-    # SkillsList=FormField(SkillsForm)
+        CharAttributesForm, 'Character attributes: ')
+    SavesList = FormField(SaveForm,
+                          'Character saves: ', widget=ListWidget())
     # Owner=HiddenField(User)
