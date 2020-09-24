@@ -5,7 +5,10 @@ from flask_wtf import *
 from user import User
 from flask_mongoengine import MongoEngine, Document
 from flask_mongoengine.wtf import model_form
-from wtforms.fields import FormField
+from wtforms import *
+from wtforms.widgets import ListWidget, CheckboxInput
+from wtforms.validators import *
+from flask_wtf.form import *
 db = MongoEngine()
 
 # 'Attributes' are a dict of ints that can range from 1 to 20. All characters have a set of Attributes within this range. This will be passed
@@ -69,18 +72,13 @@ class Skills(db.EmbeddedDocument):
 
 class Armor(db.EmbeddedDocument):
     Name = db.StringField()
-    Description = db.StringField()
+    CharDescription = db.StringField()
     ACValue = db.IntField()
     HeavyArmor = db.BooleanField()
     MediumArmor = db.BooleanField()
     LightArmor = db.BooleanField()
     Shield = db.BooleanField()
 
-# A list of Armor objects, that can be managed by the document owner.
-
-
-class ArmorObjs(db.EmbeddedDocument):
-    ArmorList = db.EmbeddedDocumentField(Armor)
 
 # 'Attacks', much like Armor, are a class of what is essentially a collection of ints. An attack roll is a randomized number
 # adding the modifier, the modifier being calculated client-side on the front-end, the object needs only save name, description, dice-type
@@ -109,10 +107,10 @@ class Abilities(db.EmbeddedDocument):
 
 
 class ClassObj(db.EmbeddedDocument):
-    Name = db.StringField()
-    Subclass = db.StringField()
-    CharClass = db.StringField()
-    Abilities = db.EmbeddedDocumentField('Abilities')
+    Lvl = db.IntField()
+    HitDie = db.IntField()
+    Abilities = db.ListField(db.EmbeddedDocumentField('AbilityObjs'))
+    AttacksPerRound = db.IntField()
 
 
 class AbilityObjs(db.EmbeddedDocument):
@@ -126,12 +124,68 @@ class Char(db.Document):
     CharClass = db.StringField()
     Subclass = db.StringField()
     Appearance = db.StringField()
-    Description = db.StringField()
-    ClassObjList = db.EmbeddedDocumentField(ClassObj)
+    CharDescription = db.StringField()
+    ClassObj = db.EmbeddedDocumentField(ClassObj)
     AttributeList = db.EmbeddedDocumentField(CharAttributes)
     SavesList = db.EmbeddedDocumentField(Saves)
     SkillsList = db.EmbeddedDocumentField(Skills)
-    ArmorObjList = db.EmbeddedDocumentField(ArmorObjs)
-    AttacksList = db.EmbeddedDocumentField(Attacks)
-    AbilityObjsList = db.EmbeddedDocumentField(AbilityObjs)
-    owner = db.ReferenceField(User)
+    ArmorObjList = db.ListField(db.EmbeddedDocumentField(Armor))
+    AttacksList = db.ListField(db.EmbeddedDocumentField(Attacks))
+    AbilityObjsList = db.ListField(db.EmbeddedDocumentField(AbilityObjs))
+    Owner = db.ReferenceField(User)
+
+# The following forms is what is passed to the Frontend.
+
+
+class CharAttributesForm(FlaskForm):
+    strength = IntegerField('Strength: ', [Length(
+        min=1, max=20, message="This field only accepts numbers between 1-20.")])
+    dexterity = IntegerField('Dexterity: ', [Length(
+        min=1, max=20, message="This field only accepts numbers between 1-20.")])
+    constitution = IntegerField('Constitution: ', [Length(
+        min=1, max=20, message="This field only accepts numbers between 1-20.")])
+    intelligence = IntegerField('Intelligence: ', [Length(
+        min=1, max=20, message="This field only accepts numbers between 1-20.")])
+    wisdom = IntegerField('Wisdom: ', [Length(
+        min=1, max=20, message="This field only accepts numbers between 1-20.")])
+    charisma = IntegerField('Charisma: ', [Length(
+        min=1, max=20, message="This field only accepts numbers between 1-20.")])
+
+
+class ClassObjForm(FlaskForm):
+
+    Lvl = IntegerField('Character level: ')
+    HitDie = IntegerField('Hit-die: ')
+    Abilities = HiddenField(db.EmbeddedDocumentField('Abilities'))
+    AttacksPerRound = IntegerField('Attack per round: ')
+
+
+class SaveForm(FlaskForm):
+    StrSave = BooleanField('Strength saving throw: ',
+                           widget=CheckboxInput())
+    DexSave = BooleanField('Dexterity saving throw: ',
+                           widget=CheckboxInput())
+    ConSave = BooleanField('Constitution saving throw: ',
+                           widget=CheckboxInput())
+    IntSave = BooleanField('Intelligence saving throw: ',
+                           widget=CheckboxInput())
+    WisSave = BooleanField('Wisdom saving throw: ',
+                           widget=CheckboxInput())
+    ChaSave = BooleanField('Charisma saving throw: ',
+                           widget=CheckboxInput())
+
+
+class CharInput(FlaskForm):
+    Name = StringField('Character name: ')
+    CharClass = StringField('Character class: ')
+    Subclass = StringField('Subclasss: ')
+    Appearance = StringField('Appearance: ')
+    CharDescription = StringField('Backstory: ')
+    ClassObj = FormField(
+        ClassObjForm, 'Class attributes & skills: ', widget=ListWidget(prefix_label=False))
+    AttributeList = FormField(
+        CharAttributesForm, 'Character attributes: ', widget=ListWidget(prefix_label=False))
+    SavesList = FormField(SaveForm, 'Character saves: ')
+
+    # SkillsList=FormField(SkillsForm)
+    # Owner=HiddenField(User)

@@ -132,15 +132,17 @@ def profile():
 
 
 @app.route('/profile/addchar', methods=["GET", "POST"])
+@ login_required
 def addchar():
-    char_form = model_form(Char)
-    form = char_form(request.form)
+    char_form = model_form(Char, Form, field_args={'Name': {'label': 'Character name: '}, 'CharClass': {'label': 'Class: '}, 'Subclass': {'label': 'Subclass: '},
+                                                   'Appearance': {'label': 'Appearance: '}, 'CharDescription': {'label': 'Backstory: '}, 'ClassObj': {'Lvl': {'label': 'Level: '}}})
+    form = CharInput()
     return render_template("addchar.html", form=form)
 
 # Route for lost-password request form
 
 
-@app.route('/lost_password', methods=["GET", "POST"])
+@ app.route('/lost_password', methods=["GET", "POST"])
 def lost_password():
     form = LostPass()
     # Password Reset functionality
@@ -170,7 +172,7 @@ def lost_password():
     return render_template("lost_password.html", form=form)
 
 
-@app.route("/mail_verified/<token>",  methods=['GET', 'POST'])
+@ app.route("/mail_verified/<token>",  methods=['GET', 'POST'])
 def mail_verified(token):
 
     # This form does not use the FlaskForm-extension. This is because of a bug with validation that made the JWT-token invalid and the form would not validate correctly,
