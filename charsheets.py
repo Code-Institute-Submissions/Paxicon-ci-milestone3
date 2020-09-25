@@ -109,20 +109,22 @@ class Abilities(db.EmbeddedDocument):
     Attribute = FieldList(db.EmbeddedDocumentField(CharAttributes))
 
 
-class ClassObj(db.EmbeddedDocument):
-    Lvl = db.IntField()
-    HitDie = db.IntField()
-    Abilities = FieldList(db.EmbeddedDocumentField('AbilityObjs'))
-    AttacksPerRound = db.IntField()
-
-
 class AbilityObjs(db.EmbeddedDocument):
     AbilityList = db.EmbeddedDocumentField(Abilities)
+
+
+class ClassObj(db.EmbeddedDocument):
+
+    HitDie = db.IntField()
+    Abilities = FieldList(db.EmbeddedDocumentField(AbilityObjs))
+    AttacksPerRound = db.IntField()
+
 
 # Finally, the char object contains StringFields for name, description, looks, an int-field for level and references to all other documents to embed.
 
 
-class Char(db.Document):
+class Char(db.DynamicDocument):
+
     Name = db.StringField()
     CharClass = db.StringField()
     Subclass = db.StringField()
@@ -136,17 +138,16 @@ class Char(db.Document):
     AttacksList = FieldList(db.EmbeddedDocumentField(Attacks))
     AbilityObjsList = FieldList(db.EmbeddedDocumentField(AbilityObjs))
     Owner = db.ReferenceField(User)
-
-# The following forms is what is passed to the Frontend to register new Chars.
+    # The following forms is what is passed to the Frontend to register new Chars.
 
 
 class CharAttributesForm(FlaskForm):
-    strength = DecimalField('Strength: ')
-    dexterity = DecimalField('Dexterity: ')
-    constitution = DecimalField('Constitution: ')
-    intelligence = DecimalField('Intelligence: ')
-    wisdom = DecimalField('Wisdom: ')
-    charisma = DecimalField('Charisma: ')
+    strength = IntegerField('Strength: ')
+    dexterity = IntegerField('Dexterity: ')
+    constitution = IntegerField('Constitution: ')
+    intelligence = IntegerField('Intelligence: ')
+    wisdom = IntegerField('Wisdom: ')
+    charisma = IntegerField('Charisma: ')
 
 
 class ClassObjForm(FlaskForm):
@@ -211,11 +212,11 @@ class CharInput(FlaskForm):
     Name = StringField('Character name: ')
     CharClass = StringField('Character class: ')
     Subclass = StringField('Subclass: ')
-    Appearance = StringField('Appearance: ')
-    CharDescription = StringField('Backstory: ')
+    Appearance = TextAreaField('Appearance: ')
+    CharDescription = TextAreaField('Backstory: ')
     ClassObj = FormField(
         ClassObjForm, 'Character class information: ')
-    SkillsObjLis = FormField(
+    SkillsObjList = FormField(
         SkillsForm, 'Check box for proficient skills: ')
     AttributeList = FormField(
         CharAttributesForm, 'Character attributes: ')

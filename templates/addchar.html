@@ -3,7 +3,7 @@ get_flashed_messages() %} {% if messages%} {% for message in messages %}
 {{message}} {% endfor%} {% endif %} {%endwith%}
 <h3 class="centered">Add new character:</h3>
 <br />
-<div class="container-fluid">
+<div class="container-fluid" action="{{url_for('addchar')}}">
   <form class="form" method="POST">
     {{ form.hidden_tag() }} {{ form.csrf_token() }} {% for field in form %} {%
     if field.widget.input_type == 'hidden' %} {{field(class_='col')}} {% endif
@@ -11,13 +11,14 @@ get_flashed_messages() %} {% if messages%} {% for message in messages %}
     {{field(class_='col')}}<br />
     {% elif field.input_type == NumberInput %} {{field(class_='col')}}
     <br />
-    {% elif field.input_type == FormField %} {{ form.hidden_tag() }} {% for
-    content in field %} {{ content.csrf_token() }} {{content.label}}<br />
-    {{content}}
+    {% elif field.input_type == FormField %} {{ form.hidden_tag() }} {% if
+    loop.first == 'hidden' %} Moo! {% endif%} {% for content in field %} {{
+    content.csrf_token() }} {{content.label}}<br />
+    {{content(name_='{{content.label}}')}}
     <br />
     {% endfor%} {% else %} {{ form.hidden_tag() }}Moo! {% endif %} {% endfor%}
     <br />
-    <button class="" href="{url_for('addchar')">Submit button</button>
+    <button class="" action="{url_for('addchar')">Submit button</button>
   </form>
 </div>
 
