@@ -137,8 +137,9 @@ class Char(db.DynamicDocument):
     ArmorObjList = FieldList(db.EmbeddedDocumentField(Armor))
     AttacksList = FieldList(db.EmbeddedDocumentField(Attacks))
     AbilityObjsList = FieldList(db.EmbeddedDocumentField(AbilityObjs))
-    Owner = db.ReferenceField(User)
-    # The following forms is what is passed to the Frontend to register new Chars.
+    Owner = db.ReferenceField(User, reverse_delete_rule=2)
+
+# The following forms is what is passed to the Frontend and Jinja to register new Chars.
 
 
 class CharAttributesForm(FlaskForm):
@@ -222,4 +223,3 @@ class CharInput(FlaskForm):
         CharAttributesForm, 'Character attributes: ')
     SavesList = FormField(SaveForm,
                           'Character saves: ', widget=ListWidget())
-    Owner = HiddenField(User)
