@@ -18,7 +18,7 @@ get_flashed_messages() %} {% if messages%} {% for message in messages %}
     <br />
     {% endfor%} {% else %} {{ form.hidden_tag() }}Moo! {% endif %} {% endfor%}
     <br />
-    <button class="" action="{url_for('addchar')">Submit button</button>
+    <button class="btn" action="{url_for('addchar')">Submit button</button>
   </form>
 </div>
 

@@ -55,11 +55,9 @@ def home():
 
 @app.route("/characters")
 def characters():
+    all_characters = Char.objects()
 
-    for entries in Char.objects:
-        print(entries)
-
-    return render_template("characters.html")
+    return render_template("characters.html", all_characters=all_characters)
 
 
 @app.route('/about')
@@ -125,6 +123,8 @@ def login():
 @app.route('/profile', methods=["GET", "POST"])
 @login_required
 def profile():
+
+    # This definition of user is the best for our purposes
     user = current_user.get_id()
     MyChars = Char.objects(Owner=user)
 
@@ -141,15 +141,16 @@ def addchar():
     form_data = form.data
     if request.method == 'POST' and form.validate():
         # char_content is the dict-object we'll save to our newly created Char() object after filtering the form data.
+
+        # We'll filter out all keys labelled "csrf_token", as this is an artifact of the form-validation process which has no purpose in the DB.
         char_content = {
             k: v for (k, v) in form_data.items() if k != "csrf_token"}
-        # We'll filter out all keys labelled "csrf_token", as this is an artifact of the form-validation process which has no purpose in the DB.
 
         # First we need to prepare a new Char object
         new_char = Char()
 
         # Char() is a dynamic document class, so we can easily insert the full form data-dump, while keeping the object-ID of the owner easily accessible for queries.
-        new_char.content = char_content
+        new_char.content = form_data
         # Owner tags against the currently
         new_char.Owner = check_user
         new_char.save()
