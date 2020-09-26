@@ -37,17 +37,19 @@ get_flashed_messages() %} {% if messages%} {% for message in messages %}
       <div class="modal-body">
         <p>Are you sure you wish to delete your account? All your saved characters will be deleted, as will your account. If you still want to close your account, enter your email and password below: <br>
         </p>
-        <form method="POST">
-          <label for="email">Enter your account-email: </label><br>
-          <input type="text" name="email"><br>
-          <label for="password">Enter your password: </label><br>
-          <input type="password" name="password"><br>
-                </form>
-      </div>
+        {{ form.hidden_tag() }}
+        <p>Email:</p><br>
+        {{form.email}}
+        <p>Password:</p><br>
+        {{form.password}}<br>
+        {{form.submit}}
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button type="submit" class="btn btn-danger">Confirm account-deletion</button>
+        <button class="btn btn-danger btn-lg" action="{url_for('profile')">
+          Confirm account-deletion </button>
+        
       </div>
+    </form>
     </div>
   </div>
 </div>

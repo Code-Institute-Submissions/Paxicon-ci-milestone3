@@ -5,20 +5,22 @@ get_flashed_messages() %} {% if messages%} {% for message in messages %}
 <br />
 <div class="container-fluid" action="{{url_for('addchar')}}">
   <form class="form" method="POST">
-    {{ form.hidden_tag() }} {{ form.csrf_token() }} {% for field in form %} {%
-    if field.widget.input_type == 'hidden' %} {{field(class_='col')}} {% endif
-    %} {% if field.input_type == StringField %} {{field.label}}<br />
+    {{ form.hidden_tag() }} {% for field in form %} {% if
+    field.widget.input_type == 'hidden' %} {{field(class_='col')}} {% endif %}
+    {% if field.input_type == StringField %} {{field.label}}<br />
     {{field(class_='col')}}<br />
     {% elif field.input_type == NumberInput %} {{field(class_='col')}}
     <br />
     {% elif field.input_type == FormField %} {{ form.hidden_tag() }} {% if
-    loop.first == 'hidden' %} Moo! {% endif%} {% for content in field %} {{
-    content.csrf_token() }} {{content.label}}<br />
+    loop.first == 'hidden' %} Moo! {% endif%} {% for content in field %}
+    {{content.label}}<br />
     {{content(name_='{{content.label}}')}}
     <br />
     {% endfor%} {% else %} {{ form.hidden_tag() }}Moo! {% endif %} {% endfor%}
     <br />
-    <button class="btn" action="{url_for('addchar')">Submit button</button>
+    <button class="btn btn-primary btn-lg" action="{url_for('addchar')">
+      Submit button
+    </button>
   </form>
 </div>
 

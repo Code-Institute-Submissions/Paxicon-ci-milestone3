@@ -123,12 +123,22 @@ def login():
 @app.route('/profile', methods=["GET", "POST"])
 @login_required
 def profile():
-
     # This definition of user is the best for our purposes
+    form = RegForm()
     user = current_user.get_id()
     MyChars = Char.objects(Owner=user)
+    if request.method == 'POST':
+        if check_password_hash(current_user['password'], form.password.data):
+            flash("Your account has been deleted.")
+            User.objects(id=user).first().delete()
+            return redirect(url_for('home'))
+        else:
+            flash(
+                "You have supplied invalid credentials and have been logged out for account security reasons.")
+            logout_user()
+            return redirect(url_for('home'))
 
-    return render_template("profile.html", Chars=MyChars)
+    return render_template("profile.html", Chars=MyChars, form=form)
 
 # Route for creating new entries
 
