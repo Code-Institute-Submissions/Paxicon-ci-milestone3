@@ -81,7 +81,8 @@ def register():
             if existing_user is None:
                 hashpass = generate_password_hash(
                     form.password.data)
-                new_user = User(email=form.email.data,
+                new_user = User(display_name=form.display_name.data,
+                                email=form.email.data,
                                 password=hashpass).save()
                 login_user(new_user)
                 flash("Login succesful!")
@@ -138,7 +139,7 @@ def profile():
             logout_user()
             return redirect(url_for('home'))
 
-    return render_template("profile.html", Chars=MyChars, form=form)
+    return render_template("profile.html", Chars=MyChars, form=form, user=current_user)
 
 # Route for creating new entries
 

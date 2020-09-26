@@ -3,6 +3,12 @@ get_flashed_messages() %} {% if messages%} {% for message in messages %}
 {{message}} {% endfor%} {% endif %} {%endwith%}
 
 <div class="row" id="task-bar">
+  <div class="container-fluid">
+    <h3>Welcome {{ user.display_name }}</h3>
+
+    </div>
+</div>
+  <div class="container-fluid"></div>
   <div class="col">
     <a href="{{url_for('addchar')}}">Create new character: </a>
     <br />
@@ -37,15 +43,15 @@ get_flashed_messages() %} {% if messages%} {% for message in messages %}
       <div class="modal-body">
         <p>Are you sure you wish to delete your account? All your saved characters will be deleted, as will your account. If you still want to close your account, enter your email and password below: <br>
         </p>
+        <form method="POST">
         {{ form.hidden_tag() }}
         <p>Email:</p><br>
         {{form.email}}
         <p>Password:</p><br>
         {{form.password}}<br>
-        {{form.submit}}
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button class="btn btn-danger btn-lg" action="{url_for('profile')">
+        <button type="submit" class="btn btn-danger btn-lg" action="{url_for('profile')">
           Confirm account-deletion </button>
         
       </div>

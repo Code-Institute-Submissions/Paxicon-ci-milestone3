@@ -8,9 +8,12 @@ db = MongoEngine()
 
 # While UserMixin does allow us to inherit the required class attributes, I decided to implement them for clarity of code.
 
+# Since user is classed as a Document, it adheres more rigidly to the schema than other document-models in the project.
+
 
 class User(UserMixin, db.Document):
     meta = {'collection': 'User'}
+    display_name = db.StringField(max_length=50)
     email = db.StringField(max_length=50)
     password = db.StringField()
     # A required attribute from flask-login to ensure the login.required decorators operate functionally. As auth here is very simple, all users are considered authenticated if they pass login.

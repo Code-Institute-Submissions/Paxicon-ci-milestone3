@@ -1,24 +1,37 @@
 {% extends 'base.html'%} {% block content %} {% with messages =
 get_flashed_messages() %} {% if messages%} {% for message in messages %}
 {{message}} {% endfor%} {% endif %} {%endwith%}
-
-<div class="row">
-  <form method="POST" action="{{ url_for('login')}}">
-    <h3>Login with your email and password:</h3>
-    <br />
-    {{ form.hidden_tag() }}
-    <p>Email:</p>
-    {{form.email}}
-    <p>Password:</p>
-    {{form.password}} {{form.submit}}
-  </form>
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-flex justify-content-center"><h3>Login with your email and password:</h3></div>
+    <br /></div>
+    <form method="POST" action="{{ url_for('login')}}" class="form-inline">
+      <div class="row">
+      <br />
+      
+      <div class="form-group">
+        <p>Email:</p>
+        {{form.email}}
+      </div>
+      <div class="form-group">
+        <p>Password:</p>
+        {{form.password}} {{form.submit}}
+      </div>
+    </form>
+  </div>
+  <div class="container-fluid">
+  <div class="row">  
+  <p>
+    <div class="col">
+    New here? Click <a href="{{url_for('register')}}">here</a>
+  </p>
 </div>
-
-<p class="center-align">
-  New here? Click <a href="{{url_for('register')}}">here</a>
-</p>
-<br />
-<p class="center-align">
-  Lost your password? Click <a href="{{url_for('lost_password')}}">here</a>
-</p>
-{% endblock %}
+  <br />
+  <div class="col"></div>
+  <p>
+    Lost your password? Click <a href="{{url_for('lost_password')}}">here</a>
+  </p>
+</div>
+</div>
+  {% endblock %}
+</div>
