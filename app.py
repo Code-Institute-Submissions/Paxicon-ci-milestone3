@@ -55,12 +55,11 @@ def home():
 
 @app.route("/characters")
 def characters():
-    chars_sheets = []
-    chars = mongo.db.char_sheets.find()
 
-    for i in chars:
-        chars_sheets.append(i)
-    return render_template("characters.html", characters=chars_sheets)
+    for entries in Char.objects:
+        print(entries)
+
+    return render_template("characters.html")
 
 
 @app.route('/about')
@@ -126,7 +125,10 @@ def login():
 @app.route('/profile', methods=["GET", "POST"])
 @login_required
 def profile():
-    return render_template("profile.html")
+    user = current_user.get_id()
+    MyChars = Char.objects(Owner=user)
+
+    return render_template("profile.html", Chars=MyChars)
 
 # Route for creating new entries
 
@@ -138,12 +140,21 @@ def addchar():
     check_user = User.objects(email=current_user.email).first()
     form_data = form.data
     if request.method == 'POST' and form.validate():
+        # char_content is the dict-object we'll save to our newly created Char() object after filtering the form data.
+        char_content = {
+            k: v for (k, v) in form_data.items() if k != "csrf_token"}
+        # We'll filter out all keys labelled "csrf_token", as this is an artifact of the form-validation process which has no purpose in the DB.
 
         # First we need to prepare a new Char object
         new_char = Char()
-        new_char.content = form_data
+
+        # Char() is a dynamic document class, so we can easily insert the full form data-dump, while keeping the object-ID of the owner easily accessible for queries.
+        new_char.content = char_content
+        # Owner tags against the currently
         new_char.Owner = check_user
         new_char.save()
+        flash("New character added!")
+        return redirect(url_for('profile'))
 
     return render_template("addchar.html", form=form)
 
