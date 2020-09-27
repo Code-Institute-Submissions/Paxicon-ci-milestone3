@@ -9,14 +9,15 @@
     <div class="card-header" id="heading-{{entry.content.Name|join}}">
       <h5 class="mb-0">
         <button class="btn btn-link" data-toggle="collapse" data-target="#collapse-{{entry.content.Name|join}}" aria-expanded="true" aria-controls="collapse-{{entry.content.Name|join}}">
-          <p class="text-left">{{ entry.content.Name }}</p>  <p class="text-right">Made by: {{entry.Owner.display_name}}</p>
+          <p class="text-left">Name: {{ entry.content.Name }} - Class: {{entry.content.CharClass}} - Made by: {{entry.Owner.display_name}}</p>
         </button>
       </h5>
     </div>
 
     <div id="collapse-{{entry.content.Name|join}}" class="collapse" aria-labelledby="heading-{{entry.content.Name|join}}" data-parent="#accordion">
       <div class="card-body">
-        {{entry.content.CharDescription}}
+        {{entry.content.CharDescription}}<br>
+        {{entry.get_id}}
       </div>
     </div>
   </div>

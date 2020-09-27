@@ -152,11 +152,7 @@ def addchar():
     form_data = form.data
     if request.method == 'POST' and form.validate():
         # char_content is the dict-object we'll save to our newly created Char() object after filtering the form data.
-
-        # We'll filter out all keys labelled "csrf_token", as this is an artifact of the form-validation process which has no purpose in the DB.
-        char_content = {
-            k: v for (k, v) in form_data.items() if k != "csrf_token"}
-
+        # First we need to prepare a new Char object
         # First we need to prepare a new Char object
         new_char = Char()
 
@@ -241,8 +237,10 @@ def logout():
 # Char-Profile is the actual character-sheet. Users can access it either from their own profile or from the list of characters.
 
 
-@app.route('/char-profile/<char_id>')
+@app.route('/characters/char-profile/<char_id>')
 def char_profile(char_id):
+    char_id = Char.objects()
+    return render_template('char_profile.html', char_id=char_id)
 
 
 if __name__ == '__main__':
