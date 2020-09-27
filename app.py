@@ -238,6 +238,12 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
+# Char-Profile is the actual character-sheet. Users can access it either from their own profile or from the list of characters.
+
+
+@app.route('/char-profile/<char_id>')
+def char_profile(char_id):
+
 
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),

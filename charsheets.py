@@ -213,6 +213,8 @@ class CharInput(FlaskForm):
     Name = StringField('Character name: ')
     CharClass = StringField('Character class: ')
     Subclass = StringField('Subclass: ')
+    Race = StringField('Race: ')
+    Subrace = StringField('Subace: ')
     Appearance = TextAreaField('Appearance: ')
     CharDescription = TextAreaField('Backstory: ')
     ClassObj = FormField(
