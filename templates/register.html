@@ -2,46 +2,50 @@
 get_flashed_messages() %} {% if messages%} {% for message in messages %}
 {{message}} {% endfor%} {% endif %} {%endwith%}
 
+<br />
+<div class="d-flex justify-content-center">
+  <h3>Register with your email and password:</h3>
+</div>
+<div class="container">
+  <div class="row justify-content-center">
+    <form class="form-inline" method="POST" action="{{ url_for('register')}}">
+      <br />
+      {{ form.hidden_tag() }}
+      <br />
 
-  <br />
-  <div class="d-flex justify-content-center">
-    <h3>Register with your email and password:</h3>
-  </div>
-  <div class="container">
-  <div class="row">
-  <form class="form-inline" method="POST" action="{{ url_for('register')}}">
-    
-  <br />
-  {{ form.hidden_tag() }}
-    <br />
-    
       <div class="form-group">
-    <label for="display_name">Display name</label>
-    {{form.display_name}} 
-  </div>
-        
-        <div class="form-group">
-      <label for="email">Email: </label><br>
-      {{form.email}}     
-    </div> 
-    
-    <div class="form-group">
-    <label for="password">Password: </label><br>
-    
-    {{form.password}}<br>
-  </div>
-    <div class="d-flex justify-content-center">
-       {{form.submit}}
+        <label for="display_name">Display name</label>
+        {{form.display_name}}
       </div>
-  </form>
+
+      <div class="form-group">
+        <label for="email">Email: </label><br />
+        {{form.email}}
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password: </label><br />
+
+        {{form.password}}<br />
+      </div>
+      <div class="d-flex justify-content-center">{{form.submit}}</div>
+    </form>
+  </div>
 </div>
-</div>
-<div class="d-flex flex-row">
-  <div class="d-flex d-flex justify-content-between">
-  Already a member? Click <a href="{{url_for('login')}}">here</a>
-</div>
-  <div class="d-flex d-flex justify-content-between">
-  Lost your password? Click <a href="{{url_for('lost_password')}}">here</a></p>
-</div>
+<br />
+<br />
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <p class="text-center">
+        Already a member? Click <a href="{{url_for('login')}}">here</a>
+      </p>
+    </div>
+  </div>
+  <div class="col">
+    <p class="text-center">
+      Lost your password? Click <a href="{{url_for('lost_password')}}">here</a>
+    </p>
+  </div>
 </div>
 {% endblock %}

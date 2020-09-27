@@ -5,7 +5,7 @@
 </div>
   <br /><br />
 
-  {% for entry in all_characters %} <p class="col">{{ entry.content.Name }}</p><br />
+  {% for entry in all_characters %} <p class="col">{{ entry.content.Name }} {{entry.owner}}</p><br />
   {% endfor%}
 </div>
 {% endblock %}

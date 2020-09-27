@@ -1,34 +1,45 @@
 {% extends 'base.html'%} {% block content %} {% with messages =
 get_flashed_messages() %} {% if messages%} {% for message in messages %}
 {{message}} {% endfor%} {% endif %} {%endwith%}
-<div class="container-fluid">
-  <div class="row">
-    <div class="d-flex justify-content-center"><h3>Login with your email and password:</h3></div>
-    <br /></div>
-    <form method="POST" action="{{ url_for('login')}}" class="form-inline">
-      <div class="row">
+<div class="d-flex justify-content-center">
+  <h3>Enter your email and password to login:</h3><br>
+</div>
+<br>
+<div class="container">
+<div class="row justify-content-center">
+    <form method="POST" action="{{ url_for('login')}}" class="form-inline">      
       <br />
+      <div class="d-flex justify-content-center">
+      <div class="form-group">
+        <label for="email" name="email">Email: </label>
+        <br>{{form.email}}<br>
       
       <div class="form-group">
-        <p>Email:</p>
-        {{form.email}}
+        <label for="password" name="password">Password: </label>
+        {{form.password}} <br>
+        <div class="form-group">
+        {{form.submit}}<br>
       </div>
-      <div class="form-group">
-        <p>Password:</p>
-        {{form.password}} {{form.submit}}
-      </div>
+    </div>
+  </div>    
+      <br>
+      <br>
     </form>
-  </div>
-  <div class="container-fluid">
-  <div class="row">  
-  <p>
+      </div>
+    </div>
+  <div class="container">
+  <div class="row justify-content-center">  
+    <br>
+    <br>
     <div class="col">
+  <p class="text-center">
+    
     New here? Click <a href="{{url_for('register')}}">here</a>
   </p>
 </div>
   <br />
-  <div class="col"></div>
-  <p>
+  <div class="col">
+  <p class="text-center">
     Lost your password? Click <a href="{{url_for('lost_password')}}">here</a>
   </p>
 </div>

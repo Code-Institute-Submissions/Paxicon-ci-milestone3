@@ -13,7 +13,7 @@ class RegForm(FlaskForm):
         message='Invalid email'), Length(max=50)])
     password = PasswordField('password', validators=[
                              InputRequired(), Length(min=8)])
-    submit = SubmitField("Confirm account-deletion")
+    submit = SubmitField("Login")
 
 # Form for requesting password-reset email
 
