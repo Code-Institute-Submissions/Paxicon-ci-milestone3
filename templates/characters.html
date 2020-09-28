@@ -17,7 +17,7 @@
     <div id="collapse-{{entry.content.Name|join}}" class="collapse" aria-labelledby="heading-{{entry.content.Name|join}}" data-parent="#accordion">
       <div class="card-body">
         {{entry.content.CharDescription}}<br>
-        {{entry.get_id}}
+        <a href="{{ url_for('char_profile', char_id=entry.pk) }}">Detailed character sheet.</a>
       </div>
     </div>
   </div>

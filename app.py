@@ -237,10 +237,10 @@ def logout():
 # Char-Profile is the actual character-sheet. Users can access it either from their own profile or from the list of characters.
 
 
-@app.route('/characters/char-profile/<char_id>')
+@app.route("/char-profile/<char_id>", methods=['GET', 'POST'])
 def char_profile(char_id):
-    char_id = Char.objects()
-    return render_template('char_profile.html', char_id=char_id)
+    character = Char.objects(pk=char_id).first()
+    return render_template('char_profile.html', character=character)
 
 
 if __name__ == '__main__':
