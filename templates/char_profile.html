@@ -5,4 +5,14 @@
   <p class="align-content-lg-center"><h1>{{character.content.Name}}</h1></p>
 </div>
 </div>
+
+<script type="text/javascript">
+  // This variable is not well-written JS, but it exists only to pass a working copy of the data to the FrontEnd for the DOM to use.
+  $SCRIPT_ROOT = {{ request.script_root|tojson}}
+  $(document).ready(function(){
+      $.post($SCRIPT_ROOT, function( data ){
+      console.log(data)
+    });
+  });
+  </script>
 {% endblock %}
