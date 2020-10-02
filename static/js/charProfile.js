@@ -23,4 +23,12 @@ $(document).ready(function () {
       return;
     }
   });
+  // Essentially the same, marking which skills have been selected as proficient.
+  $(".skill-list").each(function () {
+    if ($(this).hasClass("True") == true) {
+      $(this).html('<i class="fas fa-check"></i>');
+    } else {
+      return;
+    }
+  });
 });

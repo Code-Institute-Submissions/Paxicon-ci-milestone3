@@ -2,7 +2,7 @@
 <div class="d-flex justify-content-center">
   <h1>{{character.content.Name}}</h1>
 </div>
-<div class="container">
+<div class="container-fluid">
   <div class="card">
     <h5 class="card-header">Vital statistics:</h5>
     <div class="card-body">
@@ -20,16 +20,16 @@
 </div>
 <br />
 <br />
-<div class="container">
+<div class="container-fluid">
   <div class="row">
     <br />
-    <div class="card col">
+    <div class="card col-lg-6">
       <div class="card-body">
         <h5 class="card-title">Appearance:</h5>
         <p class="card-text">{{character.content.Appearance}}</p>
       </div>
     </div>
-    <div class="card col">
+    <div class="card col-lg-6">
       <div class="card-body">
         <h5 class="card-title">Backstory & concept:</h5>
         <p class="card-text">{{character.content.CharDescription}}</p>
@@ -42,9 +42,9 @@
 <div class="d-flex justify-content-center">
   <h3>Attributes:</h3>
 </div>
-<div class="container">
+<div class="container-fluid">
   <div class="row">
-    <table class="table table-borderless">
+    <table class="table table-borderless col-lg-12">
       <thead>
         <th class="col">Attributes:</th>
         <th class="col">Strength</th>
@@ -125,9 +125,9 @@
 </div>
 <br />
 <br />
-<div class="container">
+<div class="container-fluid">
   <div class="row">
-    <table class="table table-borderless">
+    <table class="table table-borderless col-lg-12">
       <thead>
         <th class="col">Saving throws:</th>
         <th class="col">Strength</th>
@@ -190,7 +190,154 @@
     </table>
   </div>
 </div>
-
+<br />
+<br />
+<div class="d-flex justify-content-center">
+  <h3>Skills:</h3>
+</div>
+<br />
+<br />
+<div class="container-fluid">
+  <div class="row">
+    <table class="table table-borderless">
+      <thead>
+        <th class="col">Skills:</th>
+        <th class="col">Athletics</th>
+        <th class="col">Acrobatics</th>
+        <th class="col">Sleight of Hand</th>
+        <th class="col">Stealth</th>
+        <th class="col">Arcana</th>
+        <th class="col">History</th>
+        <th class="col">Investigation</th>
+        <th class="col">Nature</th>
+        <th class="col">Religion</th>
+        <th class="col">Animal Handling</th>
+        <th class="col">Insight</th>
+        <th class="col">Medicine</th>
+        <th class="col">Perception</th>
+        <th class="col">Survival</th>
+        <th class="col">Deception</th>
+        <th class="col">Intimidation</th>
+        <th class="col">Performance</th>
+        <th class="col">Persuasion</th>
+      </thead>
+      <tr>
+        <th class="col">Proficient skills:</th>
+        <th
+          class="col skill-list {{character.content.SkillsObjList.Athletics}}"
+        ></th>
+        <th
+          class="col skill-list {{character.content.SkillsObjList.Acrobatics}}"
+        ></th>
+        <th
+          class="col skill-list {{character.content.SkillsObjList.Sleight}}"
+        ></th>
+        <th
+          class="col skill-list {{character.content.SkillsObjList.Stealth}}"
+        ></th>
+        <th
+          class="col skill-list {{character.content.SkillsObjList.Arcana}}"
+        ></th>
+        <th
+          class="col skill-list {{character.content.SkillsObjList.History}}"
+        ></th>
+        <th
+          class="col skill-list {{character.content.SkillsObjList.Investigation}}"
+        ></th>
+        <th
+          class="col skill-list {{character.content.SkillsObjList.Nature}}"
+        ></th>
+        <th
+          class="col skill-list {{character.content.SkillsObjList.Religion}}"
+        ></th>
+        <th
+          class="col skill-list {{character.content.SkillsObjList.AnimalHandling}}"
+        ></th>
+        <th
+          class="col skill-list {{character.content.SkillsObjList.Insight}}"
+        ></th>
+        <th
+          class="col skill-list {{character.content.SkillsObjList.Medicine}}"
+        ></th>
+        <th
+          class="col skill-list {{character.content.SkillsObjList.Perception}}"
+        ></th>
+        <th
+          class="col skill-list {{character.content.SkillsObjList.Survival}}"
+        ></th>
+        <th
+          class="col skill-list {{character.content.SkillsObjList.Deception}}"
+        ></th>
+        <th
+          class="col skill-list {{character.content.SkillsObjList.AnimalHandling}}"
+        ></th>
+        <th
+          class="col skill-list {{character.content.SkillsObjList.Intimidation}}"
+        ></th>
+        <th
+          class="col skill-list {{character.content.SkillsObjList.Persuasion}}"
+        ></th>
+      </tr>
+      <tr>
+        <th class="col">Roll:</th>
+        <th class="col {{character.content.SkillsObjList.Athletics}}">
+          <i class="fas fa-dice-d20"></i>
+        </th>
+        <th class="col {{character.content.SkillsObjList.Acrobatics}}">
+          <i class="fas fa-dice-d20"></i>
+        </th>
+        <th class="col {{character.content.SkillsObjList.Sleight}}">
+          <i class="fas fa-dice-d20"></i>
+        </th>
+        <th class="col {{character.content.SkillsObjList.Stealth}}">
+          <i class="fas fa-dice-d20"></i>
+        </th>
+        <th class="col {{character.content.SkillsObjList.Arcana}}">
+          <i class="fas fa-dice-d20"></i>
+        </th>
+        <th class="col {{character.content.SkillsObjList.History}}">
+          <i class="fas fa-dice-d20"></i>
+        </th>
+        <th class="col {{character.content.SkillsObjList.Investigation}}">
+          <i class="fas fa-dice-d20"></i>
+        </th>
+        <th class="col {{character.content.SkillsObjList.Nature}}">
+          <i class="fas fa-dice-d20"></i>
+        </th>
+        <th class="col {{character.content.SkillsObjList.Religion}}">
+          <i class="fas fa-dice-d20"></i>
+        </th>
+        <th class="col {{character.content.SkillsObjList.AnimalHandling}}">
+          <i class="fas fa-dice-d20"></i>
+        </th>
+        <th class="col {{character.content.SkillsObjList.Insight}}">
+          <i class="fas fa-dice-d20"></i>
+        </th>
+        <th class="col {{character.content.SkillsObjList.Medicine}}">
+          <i class="fas fa-dice-d20"></i>
+        </th>
+        <th class="col {{character.content.SkillsObjList.Perception}}">
+          <i class="fas fa-dice-d20"></i>
+        </th>
+        <th class="col {{character.content.SkillsObjList.Survival}}">
+          <i class="fas fa-dice-d20"></i>
+        </th>
+        <th class="col {{character.content.SkillsObjList.Deception}}">
+          <i class="fas fa-dice-d20"></i>
+        </th>
+        <th class="col {{character.content.SkillsObjList.AnimalHandling}}">
+          <i class="fas fa-dice-d20"></i>
+        </th>
+        <th class="col {{character.content.SkillsObjList.Intimidation}}">
+          <i class="fas fa-dice-d20"></i>
+        </th>
+        <th class="col {{character.content.SkillsObjList.Persuasion}}">
+          <i class="fas fa-dice-d20"></i>
+        </th>
+      </tr>
+    </table>
+  </div>
+</div>
 <script
   type="text/javascript"
   src="{{url_for('static', filename='js/charProfile.js' )}}"
