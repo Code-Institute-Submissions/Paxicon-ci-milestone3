@@ -1,30 +1,35 @@
 {% extends 'base.html'%} {% block content %}
 <div class="d-flex justify-content-center">
-<h1>{{character.content.Name}}</h1>
+  <h1>{{character.content.Name}}</h1>
 </div>
 <div class="container">
-<div class="card">
-  <h5 class="card-header">Vital statistics:</h5>
-  <div class="card-body">
-    <h5 class="card-title">{{character.content.CharClass}}</h5>
-    <p class="card-text">Character level: {{character.content.ClassObj.Lvl}}</p>
-    <p class="card-text" id="prof">Proficiency: </p>
-    <p class="card-text">Attacks per round: {{character.content.ClassObj.AttacksPerRound}}</p>
+  <div class="card">
+    <h5 class="card-header">Vital statistics:</h5>
+    <div class="card-body">
+      <h5 class="card-title">{{character.content.CharClass}}</h5>
+      <p class="card-text">
+        Character level:
+        <span id="level">{{character.content.ClassObj.Lvl}}</span>
+      </p>
+      <p class="card-text" id="prof"></p>
+      <p class="card-text">
+        Attacks per round: {{character.content.ClassObj.AttacksPerRound}}
+      </p>
+    </div>
   </div>
 </div>
-</div>
-<br>
-<br>
+<br />
+<br />
 <div class="container">
-  <div class="row">    
+  <div class="row">
     <br />
-    <div class="card col" style="width: 18rem">
+    <div class="card col">
       <div class="card-body">
         <h5 class="card-title">Appearance:</h5>
         <p class="card-text">{{character.content.Appearance}}</p>
       </div>
     </div>
-    <div class="card col" style="width: 18rem">
+    <div class="card col">
       <div class="card-body">
         <h5 class="card-title">Backstory & concept:</h5>
         <p class="card-text">{{character.content.CharDescription}}</p>
@@ -32,8 +37,11 @@
     </div>
   </div>
 </div>
-<br>
-<br>
+<br />
+<br />
+<div class="d-flex justify-content-center">
+  <h3>Attributes:</h3>
+</div>
 <div class="container">
   <div class="row">
     <table class="table table-borderless">
@@ -68,27 +76,27 @@
         </th>
       </tr>
       <tr>
-        <tr>
-          <th>Modifier:</th>
-          <th id="str-mod" class="col">
-            {{character.content.AttributeList.strength}}
-          </th>
-          <th id="dex-mod" class="col">
-            {{character.content.AttributeList.dexterity}}
-          </th>
-          <th id="con-mod" class="col">
-            {{character.content.AttributeList.constitution}}
-          </th>
-          <th id="int-mod" class="col">
-            {{character.content.AttributeList.intelligence}}
-          </th>
-          <th id="wis-mod" class="col">
-            {{character.content.AttributeList.wisdom}}
-          </th>
-          <th id="cha-mod" class="col">
-            {{character.content.AttributeList.charisma}}
-          </th>
-        </tr>
+        <th>Modifier:</th>
+        <th id="str-mod" class="col">
+          {{character.content.AttributeList.strength}}
+        </th>
+        <th id="dex-mod" class="col">
+          {{character.content.AttributeList.dexterity}}
+        </th>
+        <th id="con-mod" class="col">
+          {{character.content.AttributeList.constitution}}
+        </th>
+        <th id="int-mod" class="col">
+          {{character.content.AttributeList.intelligence}}
+        </th>
+        <th id="wis-mod" class="col">
+          {{character.content.AttributeList.wisdom}}
+        </th>
+        <th id="cha-mod" class="col">
+          {{character.content.AttributeList.charisma}}
+        </th>
+      </tr>
+      <tr>
         <th>Roll:</th>
         <th id="str-die" class="col">
           <i class="fas fa-dice-d20"></i>
@@ -112,36 +120,80 @@
     </table>
   </div>
 </div>
-<br>
-<br>
+<div class="d-flex justify-content-center">
+  <h3>Saving Throws:</h3>
+</div>
+<br />
+<br />
+<div class="container">
+  <div class="row">
+    <table class="table table-borderless">
+      <thead>
+        <th class="col">Saving throws:</th>
+        <th class="col">Strength</th>
+        <th class="col">Dexterity</th>
+        <th class="col">Constitution</th>
+        <th class="col">Intelligence</th>
+        <th class="col">Wisdom</th>
+        <th class="col">Charisma</th>
+      </thead>
+      <tr id="prof-row">
+        <th>Proficient:</th>
+        <th
+          id="str-prof"
+          class="col saving-throw {{character.content.SavesList.StrSave}}"
+        ></th>
+        <th
+          id="dex-prof"
+          class="col saving-throw {{character.content.SavesList.DexSave}}"
+        ></th>
+        <th
+          id="con-prof"
+          class="col saving-throw {{character.content.SavesList.ConSave}}"
+        ></th>
+        <th
+          id="int-prof"
+          class="col saving-throw {{character.content.SavesList.IntSave}}"
+        ></th>
+        <th
+          id="wis-prof"
+          class="col saving-throw
+    {{character.content.SavesList.WisSave}}"
+        ></th>
+        <th
+          id="cha-prof"
+          class="col saving-throw
+    {{character.content.SavesList.ChaSave}}"
+        ></th>
+      </tr>
+      <tr>
+        <th>Roll:</th>
+        <th id="StrSave-die" class="col">
+          <i class="fas fa-dice-d20"></i>
+        </th>
+        <th id="DexSave-die" class="col">
+          <i class="fas fa-dice-d20"></i>
+        </th>
+        <th id="ConSave-die" class="col">
+          <i class="fas fa-dice-d20"></i>
+        </th>
+        <th id="IntSave-die" class="col">
+          <i class="fas fa-dice-d20"></i>
+        </th>
+        <th id="WisSave-die" class="col">
+          <i class="fas fa-dice-d20"></i>
+        </th>
+        <th id="ChaSave-die" class="col">
+          <i class="fas fa-dice-d20"></i>
+        </th>
+      </tr>
+    </table>
+  </div>
+</div>
 
-<script type="text/javascript">
-  // This variable is not well-written JS, but it exists only to pass a working copy of the data to the FrontEnd for the DOM to use.
-  $SCRIPT_ROOT = {{ request.script_root|tojson}}
-  $(document).ready(function(){
-      $.post($SCRIPT_ROOT, function( data ){
-      });
-      
-      $(".base").each(function(i) {
-        let baseAttr = parseInt($( this ).text());
-        let modAttr = (baseAttr -10) / 2
-        let idString = $(this).attr('id');
-        console.log(idString)
-
-        if (modAttr => 0) {
-            $('#'+idString+"-mod").text('+'+modAttr)
-        }
-        else{
-          $('#'+idString+"-mod").text('-'+modAttr)
-
-        }
-
-      });
-      
-  });
-
-
-</script>
-
+<script
+  type="text/javascript"
+  src="{{url_for('static', filename='js/charProfile.js' )}}"
+></script>
 
 {% endblock %}

@@ -90,17 +90,12 @@
     </header>
     <br />
     <div class="container-fluid">{% block content %} {% endblock %}</div>
-    <!-- The following  <script> tag contains only Bootstrap handlers. -->
-    <script>
-      $(".collapse").collapse();
-      $("#deletion-modal").modal("hide");
-    </script>
 
     <!-- Personal JS -->
 
-    <!-- <script
+    <script
       type="text/javascript"
       src="{{url_for('static', filename='js/index.js' )}}"
-    ></script> !-->
+    ></script>
   </body>
 </html>

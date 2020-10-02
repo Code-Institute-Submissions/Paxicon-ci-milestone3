@@ -242,7 +242,7 @@ def char_profile(char_id):
     character = Char.objects(pk=char_id).first()
     if request.method == 'POST':
         # A very simplistic REST API to pass the character statistics to JavaScript, which will use it to populate fields and features like dice-rolls.
-        return character.content
+        return jsonify(character.content)
     return render_template('char_profile.html', character=character)
 
 
