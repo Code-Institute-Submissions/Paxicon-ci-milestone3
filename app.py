@@ -248,5 +248,5 @@ def char_profile(char_id):
 
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
-            port=5000,
-            debug=True)
+            port=os.environ.get('PORT'),
+            debug=False)

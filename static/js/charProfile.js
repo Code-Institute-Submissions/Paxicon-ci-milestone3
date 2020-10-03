@@ -31,4 +31,5 @@ $(document).ready(function () {
       return;
     }
   });
+  $(".dice-roller").click(function () {});
 });
