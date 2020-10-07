@@ -99,22 +99,58 @@
       <tr>
         <th>Roll:</th>
         <th id="str-die" class="col">
-          <i class="fas fa-dice-d20"></i>
+          <a
+            data-toggle="modal"
+            href="#diceRollModal"
+            class="dice-roller attribute-roll"
+          >
+            <i class="fas fa-dice-d20"></i
+          ></a>
         </th>
         <th id="dex-die" class="col">
-          <i class="fas fa-dice-d20"></i>
+          <a
+            data-toggle="modal"
+            href="#diceRollModal"
+            class="dice-roller attribute-roll"
+          >
+            <i class="fas fa-dice-d20"></i
+          ></a>
         </th>
         <th id="con-die" class="col">
-          <i class="fas fa-dice-d20"></i>
+          <a
+            data-toggle="modal"
+            href="#diceRollModal"
+            class="dice-roller attribute-roll"
+          >
+            <i class="fas fa-dice-d20"></i
+          ></a>
         </th>
         <th id="int-die" class="col">
-          <i class="fas fa-dice-d20"></i>
+          <a
+            data-toggle="modal"
+            href="#diceRollModal"
+            class="dice-roller attribute-roll"
+          >
+            <i class="fas fa-dice-d20"></i
+          ></a>
         </th>
         <th id="wis-die" class="col">
-          <i class="fas fa-dice-d20"></i>
+          <a
+            data-toggle="modal"
+            href="#diceRollModal"
+            class="dice-roller attribute-roll"
+          >
+            <i class="fas fa-dice-d20"></i
+          ></a>
         </th>
         <th id="cha-die" class="col">
-          <i class="fas fa-dice-d20"></i>
+          <a
+            data-toggle="modal"
+            href="#diceRollModal"
+            class="dice-roller attribute-roll"
+          >
+            <i class="fas fa-dice-d20"></i
+          ></a>
         </th>
       </tr>
     </table>
@@ -169,22 +205,58 @@
       <tr>
         <th>Roll:</th>
         <th id="StrSave-die" class="col">
-          <a class="dice-roller"> <i class="fas fa-dice-d20"></i></a>
+          <a
+            data-toggle="modal"
+            href="#diceRollModal"
+            class="dice-roller saving-throw-dice {{character.content.SavesList.StrSave}}"
+          >
+            <i class="fas fa-dice-d20"></i
+          ></a>
         </th>
         <th id="DexSave-die" class="col">
-          <a class="dice-roller"> <i class="fas fa-dice-d20"></i></a>
+          <a
+            data-toggle="modal"
+            href="#diceRollModal"
+            class="dice-roller saving-throw-dice {{character.content.SavesList.DexSave}}"
+          >
+            <i class="fas fa-dice-d20"></i
+          ></a>
         </th>
         <th id="ConSave-die" class="col">
-          <a class="dice-roller"> <i class="fas fa-dice-d20"></i></a>
+          <a
+            data-toggle="modal"
+            href="#diceRollModal"
+            class="dice-roller saving-throw-dice {{character.content.SavesList.ConSave}}"
+          >
+            <i class="fas fa-dice-d20"></i
+          ></a>
         </th>
         <th id="IntSave-die" class="col">
-          <a class="dice-roller"> <i class="fas fa-dice-d20"></i></a>
+          <a
+            data-toggle="modal"
+            href="#diceRollModal"
+            class="dice-roller saving-throw-dice {{character.content.SavesList.IntSave}}"
+          >
+            <i class="fas fa-dice-d20"></i
+          ></a>
         </th>
         <th id="WisSave-die" class="col">
-          <a class="dice-roller"> <i class="fas fa-dice-d20"></i></a>
+          <a
+            data-toggle="modal"
+            href="#diceRollModal"
+            class="dice-roller saving-throw-dice {{character.content.SavesList.WisSave}}"
+          >
+            <i class="fas fa-dice-d20"></i
+          ></a>
         </th>
         <th id="ChaSave-die" class="col">
-          <a class="dice-roller"> <i class="fas fa-dice-d20"></i></a>
+          <a
+            data-toggle="modal"
+            href="#diceRollModal"
+            class="dice-roller saving-throw-dice {{character.content.SavesList.ChaSave}}"
+          >
+            <i class="fas fa-dice-d20"></i
+          ></a>
         </th>
       </tr>
     </table>
@@ -211,9 +283,13 @@
           class="col skill-list {{character.content.SkillsObjList.Athletics}}"
         ></th>
         <th class="col">
-          <a class="dice-roller {{character.content.SkillsObjList.Athletics}}">
-            <i class="fas fa-dice-d20"></i
-          ></a>
+          <a
+            data-toggle="modal"
+            href="#diceRollModal"
+            class="dice-roller {{character.content.SkillsObjList.Athletics}}"
+          >
+            <i class="fas fa-dice-d20"></i>
+          </a>
         </th>
       </tr>
       <tr class="col">
@@ -222,19 +298,27 @@
           class="col skill-list {{character.content.SkillsObjList.Acrobatics}}"
         ></th>
         <th class="col">
-          <a class="dice-roller {{character.content.SkillsObjList.Acrobatics}}">
-            <i class="fas fa-dice-d20"></i
-          ></a>
+          <a
+            data-toggle="modal"
+            href="#diceRollModal"
+            class="dice-roller skill-list-dice {{character.content.SkillsObjList.Acrobatics}}"
+          >
+            <i class="fas fa-dice-d20"></i>
+          </a>
         </th>
       </tr>
       <tr>
         <th class="col">Sleight of Hand</th>
         <th
-          class="col skill-list {{character.content.SkillsObjList.Sleight}}"
+          class="col skill-list-dice {{character.content.SkillsObjList.Sleight}}"
         ></th>
 
         <th class="col">
-          <a class="dice-roller {{character.content.SkillsObjList.Sleight}}">
+          <a
+            data-toggle="modal"
+            href="#diceRollModal"
+            class="dice-roller skill-list-dice {{character.content.SkillsObjList.Sleight}}"
+          >
             <i class="fas fa-dice-d20"></i
           ></a>
         </th>
@@ -245,7 +329,11 @@
           class="col skill-list {{character.content.SkillsObjList.Stealth}}"
         ></th>
         <th class="col">
-          <a class="dice-roller {{character.content.SkillsObjList.Stealth}}">
+          <a
+            data-toggle="modal"
+            href="#diceRollModal"
+            class="dice-roller skill-list-dice {{character.content.SkillsObjList.Stealth}}"
+          >
             <i class="fas fa-dice-d20"></i
           ></a>
         </th>
@@ -256,7 +344,11 @@
           class="col skill-list {{character.content.SkillsObjList.Arcana}}"
         ></th>
         <th class="col">
-          <a class="dice-roller {{character.content.SkillsObjList.Arcana}}">
+          <a
+            data-toggle="modal"
+            href="#diceRollModal"
+            class="dice-roller skill-list-dice {{character.content.SkillsObjList.Arcana}}"
+          >
             <i class="fas fa-dice-d20"></i
           ></a>
         </th>
@@ -267,7 +359,11 @@
           class="col skill-list {{character.content.SkillsObjList.History}}"
         ></th>
         <th class="col">
-          <a class="dice-roller {{character.content.SkillsObjList.History}}">
+          <a
+            data-toggle="modal"
+            href="#diceRollModal"
+            class="dice-roller skill-list-dice {{character.content.SkillsObjList.History}}"
+          >
             <i class="fas fa-dice-d20"></i
           ></a>
         </th>
@@ -279,7 +375,9 @@
         ></th>
         <th class="col">
           <a
-            class="dice-roller {{character.content.SkillsObjList.Investigation}}"
+            data-toggle="modal"
+            href="#diceRollModal"
+            class="dice-roller skill-list-dice {{character.content.SkillsObjList.Investigation}}"
           >
             <i class="fas fa-dice-d20"></i
           ></a>
@@ -288,10 +386,14 @@
       <tr>
         <th class="col">Nature</th>
         <th
-          class="col skill-list {{character.content.SkillsObjList.Nature}}"
+          class="col skill-list skill-list-dice {{character.content.SkillsObjList.Nature}}"
         ></th>
         <th class="col">
-          <a class="dice-roller {{character.content.SkillsObjList.Nature}}">
+          <a
+            data-toggle="modal"
+            href="#diceRollModal"
+            class="dice-roller {{character.content.SkillsObjList.Nature}}"
+          >
             <i class="fas fa-dice-d20"></i
           ></a>
         </th>
@@ -302,7 +404,11 @@
           class="col skill-list {{character.content.SkillsObjList.Religion}}"
         ></th>
         <th class="col">
-          <a class="dice-roller {{character.content.SkillsObjList.Religion}}">
+          <a
+            data-toggle="modal"
+            href="#diceRollModal"
+            class="dice-roller skill-list-dice {{character.content.SkillsObjList.Religion}}"
+          >
             <i class="fas fa-dice-d20"></i
           ></a>
         </th>
@@ -314,7 +420,9 @@
         ></th>
         <th class="col">
           <a
-            class="dice-roller {{character.content.SkillsObjList.AnimalHandling}}"
+            data-toggle="modal"
+            href="#diceRollModal"
+            class="dice-roller skill-list-dice {{character.content.SkillsObjList.AnimalHandling}}"
           >
             <i class="fas fa-dice-d20"></i
           ></a>
@@ -326,7 +434,11 @@
           class="col skill-list {{character.content.SkillsObjList.Insight}}"
         ></th>
         <th class="col">
-          <a class="dice-roller {{character.content.SkillsObjList.Insight}}">
+          <a
+            data-toggle="modal"
+            href="#diceRollModal"
+            class="dice-roller skill-list-dice {{character.content.SkillsObjList.Insight}}"
+          >
             <i class="fas fa-dice-d20"></i
           ></a>
         </th>
@@ -337,7 +449,11 @@
           class="col skill-list {{character.content.SkillsObjList.Medicine}}"
         ></th>
         <th class="col">
-          <a class="dice-roller {{character.content.SkillsObjList.Medicine}}">
+          <a
+            data-toggle="modal"
+            href="#diceRollModal"
+            class="dice-roller skill-list-dice {{character.content.SkillsObjList.Medicine}}"
+          >
             <i class="fas fa-dice-d20"></i
           ></a>
         </th>
@@ -348,7 +464,11 @@
           class="col skill-list {{character.content.SkillsObjList.Perception}}"
         ></th>
         <th class="col">
-          <a class="dice-roller {{character.content.SkillsObjList.Perception}}">
+          <a
+            data-toggle="modal"
+            href="#diceRollModal"
+            class="dice-roller skill-list-dice {{character.content.SkillsObjList.Perception}}"
+          >
             <i class="fas fa-dice-d20"></i
           ></a>
         </th>
@@ -359,7 +479,11 @@
           class="col skill-list {{character.content.SkillsObjList.Survival}}"
         ></th>
         <th class="col">
-          <a class="dice-roller {{character.content.SkillsObjList.Survival}}">
+          <a
+            data-toggle="modal"
+            href="#diceRollModal"
+            class="dice-roller skill-list-dice {{character.content.SkillsObjList.Survival}}"
+          >
             <i class="fas fa-dice-d20"></i
           ></a>
         </th>
@@ -370,7 +494,11 @@
           class="col skill-list {{character.content.SkillsObjList.Deception}}"
         ></th>
         <th class="col">
-          <a class="dice-roller {{character.content.SkillsObjList.Deception}}">
+          <a
+            data-toggle="modal"
+            href="#diceRollModal"
+            class="dice-roller skill-list-dice {{character.content.SkillsObjList.Deception}}"
+          >
             <i class="fas fa-dice-d20"></i
           ></a>
         </th>
@@ -382,7 +510,9 @@
         ></th>
         <th class="col">
           <a
-            class="dice-roller {{character.content.SkillsObjList.Intimidation}}"
+            data-toggle="modal"
+            href="#diceRollModal"
+            class="dice-roller skill-list-dice {{character.content.SkillsObjList.Intimidation}}"
           >
             <i class="fas fa-dice-d20"></i
           ></a>
@@ -394,7 +524,11 @@
           class="col skill-list {{character.content.SkillsObjList.Persuasion}}"
         ></th>
         <th class="col">
-          <a class="dice-roller {{character.content.SkillsObjList.Persuasion}}">
+          <a
+            data-toggle="modal"
+            href="#diceRollModal"
+            class="dice-roller skill-list-dice {{character.content.SkillsObjList.Persuasion}}"
+          >
             <i class="fas fa-dice-d20"></i
           ></a>
         </th>
@@ -402,6 +536,38 @@
     </table>
   </div>
 </div>
+<!-- Modal for displaying dice-rolls -->
+<div
+  class="modal fade"
+  id="diceRollModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="dieModalTitle">Dice roll:</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="diceOutPut">...</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script
   type="text/javascript"
   src="{{url_for('static', filename='js/charProfile.js' )}}"

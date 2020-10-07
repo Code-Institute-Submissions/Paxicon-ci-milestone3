@@ -6,15 +6,15 @@
 <div  id="accordion">
   {% for entry in all_characters %} 
   <div class="card">
-    <div class="card-header" id="heading-{{entry.content.Name|join}}">
+    <div class="card-header" id="heading-{{entry.pk}}">
       <h5 class="mb-0">
-        <button class="btn btn-link" data-toggle="collapse" data-target="#collapse-{{entry.content.Name|join}}" aria-expanded="true" aria-controls="collapse-{{entry.content.Name|join}}">
+        <button class="btn btn-link" data-toggle="collapse" data-target="#collapse-{{entry.pk}}" aria-expanded="true" aria-controls="collapse-{{entry.pk}}">
           <p class="text-left">Name: {{ entry.content.Name }} - Class: {{entry.content.CharClass}} - Made by: {{entry.Owner.display_name}}</p>
         </button>
       </h5>
     </div>
 
-    <div id="collapse-{{entry.content.Name|join}}" class="collapse" aria-labelledby="heading-{{entry.content.Name|join}}" data-parent="#accordion">
+    <div id="collapse-{{entry.pk}}" class="collapse" aria-labelledby="heading-{{entry.content.Name|join}}" data-parent="#accordion">
       <div class="card-body">
         {{entry.content.CharDescription}}<br>
         <a href="{{ url_for('char_profile', char_id=entry.pk) }}">Detailed character sheet.</a>

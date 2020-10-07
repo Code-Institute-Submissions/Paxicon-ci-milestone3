@@ -9,10 +9,12 @@ $(document).ready(function () {
     let realStat = $(this).text();
     let modStat = Math.floor((parseInt(realStat) - 10) / 2);
 
-    if ((modStat) => 0) {
+    if (modStat > 0) {
       $("#" + idString + "-mod").text("+" + modStat);
-    } else if (modStat <= 0) {
-      $("#" + idString + "-mod").text("-" + modStat);
+    } else if (modStat < 0) {
+      $("#" + idString + "-mod").text(modStat);
+    } else {
+      $("#" + idString + "-mod").text(modStat);
     }
   });
   // Mark which saving-throws add the proficiency bonus.
@@ -31,5 +33,30 @@ $(document).ready(function () {
       return;
     }
   });
-  $(".dice-roller").click(function () {});
+  // The bread and butter of the script, here we perform the actual dice-roll functions.
+  $(".dice-roller").click(function () {
+    // d20 is a randomized integer between 1 and 20.
+    let d20 = Math.floor(Math.random() * 20) + 1;
+    if ($(this).hasClass("skill-list-dice") == true) {
+      $("#dieModalTitle").empty();
+      $("#dieModalTitle").html("Skill check: ");
+      $("#diceOutPut").empty();
+      $("#diceOutPut").html(d20);
+    } else if ($(this).hasClass("saving-throw-dice") == true) {
+      $("#dieModalTitle").empty();
+      $("#dieModalTitle").html("Saving throw: ");
+      $("#diceOutPut").empty();
+      $("#diceOutPut").html(d20);
+    } else if ($(this).hasClass("attribute-roll") == true) {
+      $("#dieModalTitle").empty();
+      $("#dieModalTitle").html("Attribute check: ");
+      $("#diceOutPut").empty();
+      $("#diceOutPut").html(d20);
+    } else {
+      $("#dieModalTitle").empty();
+      $("#dieModalTitle").html("Unspecified roll: ");
+      $("#diceOutPut").empty();
+      $("#diceOutPut").html(d20);
+    }
+  });
 });
