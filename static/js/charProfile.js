@@ -49,7 +49,7 @@ $(document).ready(function () {
       // This arrow-function is used later to get a sum total of a roll
       const addResults = (a, b) => a + b;
 
-      // This function calculates the attribute-modifiers of the character for the roller.
+      // This function checks the particular dice-roller clicked for the attribute-modifier that governs it, by checking for the appropriate CSS-class on the roller itself.
       function getMod(thisObj) {
         if (thisObj.hasClass("str-mod")) {
           let modVal = parseInt(
@@ -85,8 +85,6 @@ $(document).ready(function () {
       }
 
       if ($(this).hasClass("skill-list-dice") == true) {
-        // This function checks the particular dice-roller clicked for the attribute-modifier that governs it, by checking for the appropriate CSS-class on the roller itself.
-
         // Empties container of results from last call.
         $("#dieModalTitle").empty();
         $("#diceOutPut").empty();
@@ -110,7 +108,7 @@ $(document).ready(function () {
           );
         } else {
           results.push(d20);
-          results.push(profBonus);
+          results.push(getMod($(this)));
           $("#dieModalTitle").html("Skill check: ");
 
           $("#diceOutPut").empty();
@@ -125,12 +123,56 @@ $(document).ready(function () {
           );
         }
       } else if ($(this).hasClass("saving-throw-dice") == true) {
-        $("#dieModalTitle").html("Saving throw: ");
-
-        $("#diceOutPut").html(d20);
-      } else if ($(this).hasClass("attribute-roll") == true) {
-        $("#dieModalTitle").html("Attribute check: ");
+        // Empties container of results from last call.
+        $("#dieModalTitle").empty();
         $("#diceOutPut").empty();
+        // Handler to add the proficiency bonus to proficient rolls.
+        if ($(this).hasClass("True") == true) {
+          results.push(d20);
+          results.push(getMod($(this)));
+          results.push(profBonus);
+          $("#dieModalTitle").html("Saving throw (Proficient): ");
+          $("#diceOutPut").empty();
+          $("#diceOutPut").html(
+            "<ul class='list-group'><li class='list-group-item'>Roll: " +
+              results[0] +
+              "</li> <li class='list-group-item'>Attribute bonus: " +
+              results[1] +
+              "</li> <li class='list-group-item'>Proficiency bonus: " +
+              results[2] +
+              "</li><li class='list-group-item'><br><h4>Result: " +
+              results.reduce(addResults) +
+              "</h4></li></ul>"
+          );
+        } else {
+          results.push(d20);
+          results.push(getMod($(this)));
+          $("#dieModalTitle").html("Saving throw: ");
+
+          $("#diceOutPut").empty();
+          $("#diceOutPut").html(
+            "<ul class='list-group'><li class='list-group-item'>Roll: " +
+              results[0] +
+              "</li> <li class='list-group-item'>Attribute bonus: " +
+              results[1] +
+              "</li><li class='list-group-item'><br><h4>Result: " +
+              results.reduce(addResults) +
+              "</h4></li></ul>"
+          );
+        }
+      } else if ($(this).hasClass("attribute-roll") == true) {
+        results.push(d20);
+        results.push(getMod($(this)));
+        $("#dieModalTitle").html("Attribute check: ");
+        $("#diceOutPut").html(
+          "<ul class='list-group'><li class='list-group-item'>Roll: " +
+            results[0] +
+            "</li> <li class='list-group-item'>Attribute bonus: " +
+            results[1] +
+            "</li><li class='list-group-item'><br><h4>Result: " +
+            results.reduce(addResults) +
+            "</h4></li></ul>"
+        );
       } else {
         $("#dieModalTitle").html("Unspecified roll: ");
 
