@@ -6,7 +6,7 @@ $(document).ready(function () {
   $.post(root_url, function (data) {
     // Calculate the proficiency bonus based on level.
     let level = data.ClassObj.Lvl;
-    let profBonus = parseInt(Math.ceil(level / 4));
+    let profBonus = parseInt(Math.ceil(level / 4) + 1);
 
     $("#prof").text("Proficiency bonus: " + profBonus);
     // Calculate modifiers based on other attributes and add contextual clues for the user.
