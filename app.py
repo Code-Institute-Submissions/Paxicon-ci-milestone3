@@ -1,7 +1,7 @@
 import os
 from flask_jwt import jwt
 import datetime
-from flask import Flask, render_template, redirect, request, url_for, request, flash, session
+from flask import Flask, render_template, redirect, request, url_for, request, flash, jsonify, session
 import dns
 from flask_mail import Mail, Message
 from flask_mongoengine import MongoEngine, Document
