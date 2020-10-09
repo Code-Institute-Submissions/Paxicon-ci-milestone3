@@ -1,7 +1,20 @@
+/* Import fonts */
+@import url('https://fonts.googleapis.com/css2?family=Bree+Serif&family=Piazzolla:wght@400;700&display=swap');
+
 /* We begin by definining our REM setup. */
 html{
   font-size: 14px;
 }
+/* All header elements use 'Bree Serif', all other text is 'Piazzolla' */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Bree Serif', serif;
+}
+body{
+  font-family: 'Piazzolla', serif;
+  font-size: 1rem;
+}
+
 .dice-roller {
   color: #000000;
 }
@@ -11,5 +24,5 @@ html{
 .jumbotron-bg{
   background-image: url(/static/img/cityscape.jpg);
   background-size: cover;
-  color: #000000;
+  color: #ff5c5c;
 }
