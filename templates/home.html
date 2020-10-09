@@ -12,12 +12,22 @@
     <p class="lead">
       <br />
       <br />
+      {% if current_user.is_authenticated %}
       <a
+      class="btn btn-danger btn-lg"
+      href="{{url_for('profile')}}"
+      role="button"
+      >Go to your profile!</a
+    >
+            {% else %}
+            <a
         class="btn btn-danger btn-lg"
         href="{{url_for('register')}}"
         role="button"
         >Register now!</a
       >
+            {% endif%}
+      
     </p>
   </div>
 </div>
@@ -29,10 +39,10 @@
     </h4>
   </div>
   <div class="row">
-  <div class="col"><h5 class="text-center">Easy to use!</h5><br>
+  <div class="col-md-12 col-lg-6 text-center"><h5>So easy a bugbear could do it!</h5><br><img src="/static/img/bugbear_token.png" class="img-fluid"><br>
   <p>With our simple interface, you can create and store your character-sheets in a simple, accessible format. No need to mess around with paper sheets that go missing, store your character here and you'll have your sheet with you whereever you have your phone!</p>
   </div>
-  <div class="col"><h5 class="text-center">How do I do it?</h5><br>
+  <div class="col-md-12 col-lg-6 text-center"><h5>Will this cost me my hoard?</h5><br><img src="/static/img/brassdragon_token.png" class="img-fluid">><br>
   <p>There's no fee to use the service, you just need to register on the site and agree to some basic rules of conduct! The sheet is unopinionated on home-brew rules, classes, races and so forth, it provides you just what's needed, when you need it!</p>
   </div>
 </div>
