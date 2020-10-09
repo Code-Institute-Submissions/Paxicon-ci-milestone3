@@ -45,13 +45,13 @@ get_flashed_messages() %} {% if messages%} {% for message in messages %}
         </p>
         <form method="POST">
         {{ form.hidden_tag() }}
-        <p>Email:</p><br>
+        {{form.email.label}}
         {{form.email}}
-        <p>Password:</p><br>
+        {{form.password.label}}
         {{form.password}}<br>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button type="submit" class="btn btn-danger btn-lg" action="{url_for('profile')">
+        <button type="submit" class="btn btn-danger" action="{url_for('profile')">
           Confirm account-deletion </button>
         
       </div>
