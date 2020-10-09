@@ -1,12 +1,12 @@
 # This file contains the models for the document object, CharacterSheets for Dungeons & Dragons. It is kept separated in this file because of separations
-# of concerns, as this is a complex data-object with multiple nested arrays and embedded dicts, it would quickly make app.py unreadable.
+# of concerns, as this is a complex data-object with multiple nested arrays and embedded dicts, not to mention subfields for rendering, it would quickly make app.py unreadable.
 
 from flask_wtf import *
 from user import User
 from flask_mongoengine import MongoEngine, Document
 from flask_mongoengine.wtf import model_form
 from wtforms import *
-from wtforms.widgets import ListWidget, CheckboxInput
+from wtforms.widgets import ListWidget, CheckboxInput, TableWidget
 from wtforms.validators import *
 from wtforms import *
 from flask_wtf.form import *
@@ -220,8 +220,8 @@ class CharInput(FlaskForm):
     ClassObj = FormField(
         ClassObjForm, 'Character class information: ')
     SkillsObjList = FormField(
-        SkillsForm, 'Check box for proficient skills: ')
+        SkillsForm, 'Skills: ', widget=TableWidget())
     AttributeList = FormField(
         CharAttributesForm, 'Character attributes: ')
     SavesList = FormField(SaveForm,
-                          'Character saves: ', widget=ListWidget())
+                          'Character saves: ', widget=TableWidget())

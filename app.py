@@ -153,7 +153,6 @@ def addchar():
     if request.method == 'POST' and form.validate():
         # char_content is the dict-object we'll save to our newly created Char() object after filtering the form data.
         # First we need to prepare a new Char object
-        # First we need to prepare a new Char object
         new_char = Char()
 
         # Char() is a dynamic document class, so we can easily insert the full form data-dump, while keeping the object-ID of the owner easily accessible for queries.
