@@ -1,6 +1,15 @@
+/* We begin by definining our REM setup. */
+html{
+  font-size: 14px;
+}
 .dice-roller {
   color: #000000;
 }
 .dice-roller:hover {
   color: #c53618;
+}
+.jumbotron-bg{
+  background-image: url(/static/img/cityscape.jpg);
+  background-size: cover;
+  color: #000000;
 }

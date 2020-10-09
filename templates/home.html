@@ -1,6 +1,42 @@
 {% extends 'base.html'%} {% block content %}
 
-<div class="row">
-  <h1>Home</h1>
+<div class="jumbotron jumbotron-fluid jumbotron-bg">
+  <div class="container-fluid">
+    <h1 class="display-3">
+      B&B: The online home of your character-sheets!
+    </h1>
+    <p class="lead">
+      A place for you to store your D&D 5E character-sheets securely, with
+      included dice-roller and tool-tips!
+    </p>
+    <p class="lead">
+      <br />
+      <br />
+      <a
+        class="btn btn-danger btn-lg"
+        href="{{url_for('register')}}"
+        role="button"
+        >Register now!</a
+      >
+    </p>
+  </div>
 </div>
-{% endblock %}
+</div>
+<div class="container-fluid">
+  <div class="row">
+    <h4 class="mx-auto">
+      Bugbears & Bailiffs - We keep your character-sheets under lock and key!
+    </h4>
+  </div>
+  <div class="row">
+  <div class="col"><h5 class="text-center">Easy to use!</h5><br>
+  <p>With our simple interface, you can create and store your character-sheets in a simple, accessible format. No need to mess around with paper sheets that go missing, store your character here and you'll have your sheet with you whereever you have your phone!</p>
+  </div>
+  <div class="col"><h5 class="text-center">How do I do it?</h5><br>
+  <p>There's no fee to use the service, you just need to register on the site and agree to some basic rules of conduct! The sheet is unopinionated on home-brew rules, classes, races and so forth, it provides you just what's needed, when you need it!</p>
+  </div>
+</div>
+
+
+  {% endblock %}
+
