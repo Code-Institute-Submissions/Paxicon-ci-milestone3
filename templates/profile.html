@@ -12,7 +12,7 @@ get_flashed_messages() %} {% if messages%} {% for message in messages %}
           <br />
           <br />
           <div class="col">
-            <a class="btn btn-primary btn-lg" href="{{url_for('addchar')}}">Create new character: </a>
+            <a class="btn btn-danger btn-lg" href="{{url_for('addchar')}}">Create a new character</a>
             <br />
           </div>
         </p>        
@@ -35,7 +35,7 @@ get_flashed_messages() %} {% if messages%} {% for message in messages %}
       <ul class="list-group list-group-flush"></ul>
       {% for Char in Chars%} 
       <li class="list-group-item">
-        <a href="{{ url_for('char_profile', char_id=Char.pk) }}">{{Char.content.Name}}</a> <a class="float-right" href="#"><i class="fas fa-trash-alt"></i></a>       
+        <a href="{{ url_for('char_profile', char_id=Char.pk) }}">{{Char.content.Name}}</a> <button class="btn float-right" data-toggle="modal" data-target="#delchar-modal"><i class="fas fa-trash-alt" id={{Char.pk}}></i></a></button>       
       </li>
       {%endfor%}
       </ul>

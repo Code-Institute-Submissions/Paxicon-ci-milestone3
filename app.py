@@ -141,7 +141,16 @@ def profile():
 
     return render_template("profile.html", Chars=MyChars, form=form, user=current_user)
 
-# Route for creating new entries
+# The following route is for allowing users to delete their characters from the database. The "GET" only servers a redirect to the main profile, the route is there only to
+# handle forms.
+
+
+@app.route('/profile/del_char/', methods=["GET", "POST"])
+@login_required
+def del_char():
+    return redirect(url_for('profile'))
+
+# Route for creating new entries in the character database
 
 
 @app.route('/profile/addchar', methods=["GET", "POST"])
