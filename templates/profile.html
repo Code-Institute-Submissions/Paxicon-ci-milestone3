@@ -2,34 +2,52 @@
 get_flashed_messages() %} {% if messages%} {% for message in messages %}
 {{message}} {% endfor%} {% endif %} {%endwith%}
 
-<div class="row" id="task-bar">
-  <div class="container-fluid">
-    <h3>Welcome {{ user.display_name }}</h3>
-
+    <div class="jumbotron jumbotron-fluid jumbotron-bg">
+      <div class="container-fluid">
+        <h3 class="display-3">Profile for: {{ user.display_name }}</h3>
+        <p class="lead">
+          Here you can find links to your character-sheets.
+        </p>
+        <p class="lead">
+          <br />
+          <br />
+          <div class="col">
+            <a class="btn btn-primary btn-lg" href="{{url_for('addchar')}}">Create new character: </a>
+            <br />
+          </div>
+        </p>        
+      </div>    
+    </div> 
+  
+<div class="container-fluid">
+  <div class="row">  
+    <div class="col-md-12 col-lg-6">      
+      <h4>Welcome to your profile page!</h4><br>
+      <p> 
+      Here you can administer your account, find links to your characters, delete characters, change your display name and delete your account. You can also click the button above to register new characters!
+    </p>
+  </div>
+  <div class="col-md-6 col-lg-3">
+    <div class="card float-right card-margin" style="width: 18rem;">
+      <div class="card-header">
+        <h5>Your characters: </h5>
+      </div>
+      <ul class="list-group list-group-flush"></ul>
+      {% for Char in Chars%} 
+      <li class="list-group-item">
+        <a href="{{ url_for('char_profile', char_id=Char.pk) }}">{{Char.content.Name}}</a> <a class="float-right" href="#"><i class="fas fa-trash-alt"></i></a>       
+      </li>
+      {%endfor%}
+      </ul>
     </div>
 </div>
-  <div class="container-fluid"></div>
-  <div class="col">
-    <a href="{{url_for('addchar')}}">Create new character: </a>
-    <br />
-    <br />
+  <div class="col-md-6 col-lg-3">
+  <h5>Account options: </h5> <br>
+    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deletion-modal">
+      Click here to delete your account
+    </button>   
   </div>
-  <div class="col">
-    <p>Currently registered characters:</p>
-    <br />
-    <br />
-    {% for Char in Chars%} {{Char.content.Name}}<br> {%endfor%}
-  </div>
-  </div>
-  <br>
-  <div class="row">
-  </div class="align-content-lg-center">
-  
-  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deletion-modal">
-    Click here to delete your account
-  </button> 
- <div></div>
-
+</div>
 
  <div class="modal fade" id="deletion-modal" tabindex="-1" aria-labelledby="deleteLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -41,7 +59,7 @@ get_flashed_messages() %} {% if messages%} {% for message in messages %}
         </button>
       </div>
       <div class="modal-body">
-        <p>Are you sure you wish to delete your account? All your saved characters will be deleted, as will your account. If you still want to close your account, enter your email and password below: <br>
+        <p>Are you sure you wish to delete your account? All your saved characters will be deleted with it. If you still want to close your account, enter your email and password below: <br>
         </p>
         <form method="POST">
         {{ form.hidden_tag() }}

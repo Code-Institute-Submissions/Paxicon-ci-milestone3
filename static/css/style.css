@@ -26,3 +26,7 @@ body{
   background-size: cover;
   color: #ff5c5c;
 }
+.card-margin{
+  color: #000000;
+  margin-right: 2rem;
+}
