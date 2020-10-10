@@ -128,6 +128,7 @@ def profile():
     form = RegForm()
     user = current_user.get_id()
     MyChars = Char.objects(Owner=user)
+
     if request.method == 'POST':
         if check_password_hash(current_user['password'], form.password.data):
             flash("Your account has been deleted.")
@@ -141,22 +142,33 @@ def profile():
 
     return render_template("profile.html", Chars=MyChars, form=form, user=current_user)
 
-# The following route is for allowing users to delete their characters from the database. The "GET" only servers a redirect to the main profile, the route is there only to
+# The following route is for allowing users to delete their characters from the database. The "GET" only serves a redirect to the main profile, the route is there only to
 # handle forms.
 
 
 @ app.route('/profile/del_char/<char_id>', methods=["GET", "POST"])
 @ login_required
 def del_char(char_id):
-    user_id = current_user.get_id()
     character = Char.objects(pk=char_id).first()
-    print(char_id)
     if request.method == 'POST':
-        print(user_id)
-        print(character)
         character.delete()
         flash("Character deleted!")
-        return redirect(url_for('home'))
+        return redirect(url_for('profile'))
+
+    return redirect(url_for('profile'))
+
+# This route is another subsection of the profile-page. Like the one above, it exists only to process requests to MongoEngine and redirects to Profile otherwise.
+
+
+@ app.route('/profile/updt_name/<user_id>', methods=["GET", "POST"])
+@ login_required
+def updt_name(user_id):
+    newName = request.form["display_name"]
+    user = User.objects(pk=user_id).first()
+    if request.method == 'POST':
+        user.update(display_name=newName)
+        user.save().reload()
+        flash("Your display name has been changed!")
 
     return redirect(url_for('profile'))
 

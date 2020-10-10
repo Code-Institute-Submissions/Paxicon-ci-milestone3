@@ -7,11 +7,10 @@ import jwt
 db = MongoEngine()
 
 # While UserMixin does allow us to inherit the required class attributes, I decided to implement them for clarity of code.
+# User is a DynamicDocument, to allow more accessible update schemes.
 
-# Since user is classed as a Document, it adheres more rigidly to the schema than other document-models in the project.
 
-
-class User(UserMixin, db.Document):
+class User(UserMixin, db.DynamicDocument):
     meta = {'collection': 'User'}
     display_name = db.StringField(max_length=50)
     email = db.StringField(max_length=50)
