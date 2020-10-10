@@ -55,24 +55,24 @@ def home():
 
 @app.route("/characters")
 def characters():
-    all_characters = Char.objects()
+    all_characters = Char.objects().order_by('content.Name')
 
     return render_template("characters.html", all_characters=all_characters)
 
 
-@app.route('/about')
+@ app.route('/about')
 def about():
     return render_template("about.html")
 
 
-@app.route('/lore')
+@ app.route('/lore')
 def lore():
     return render_template("lore.html")
 
 
 # Flask-Login compliant registration scheme.
 
-@app.route('/register', methods=["GET", "POST"])
+@ app.route('/register', methods=["GET", "POST"])
 def register():
     form = RegForm()
     if request.method == 'POST':
@@ -96,7 +96,7 @@ def register():
 # Flask-Login compliant login, with password-reset functionality
 
 
-@app.route('/login', methods=["GET", "POST"])
+@ app.route('/login', methods=["GET", "POST"])
 def login():
     # First check to see if user is already logged in.
     if current_user.is_authenticated == True:
@@ -121,8 +121,8 @@ def login():
 # Profile page
 
 
-@app.route('/profile', methods=["GET", "POST"])
-@login_required
+@ app.route('/profile', methods=["GET", "POST"])
+@ login_required
 def profile():
     # This definition of user is the best for our purposes
     form = RegForm()
@@ -145,15 +145,15 @@ def profile():
 # handle forms.
 
 
-@app.route('/profile/del_char/', methods=["GET", "POST"])
-@login_required
+@ app.route('/profile/del_char/', methods=["GET", "POST"])
+@ login_required
 def del_char():
     return redirect(url_for('profile'))
 
 # Route for creating new entries in the character database
 
 
-@app.route('/profile/addchar', methods=["GET", "POST"])
+@ app.route('/profile/addchar', methods=["GET", "POST"])
 @ login_required
 def addchar():
     form = CharInput()
@@ -245,7 +245,7 @@ def logout():
 # Char-Profile is the actual character-sheet. Users can access it either from their own profile or from the list of characters.
 
 
-@app.route("/char-profile/<char_id>", methods=['GET', 'POST'])
+@ app.route("/char-profile/<char_id>", methods=['GET', 'POST'])
 def char_profile(char_id):
     character = Char.objects(pk=char_id).first()
     if request.method == 'POST':
