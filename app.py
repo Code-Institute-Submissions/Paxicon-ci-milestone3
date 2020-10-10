@@ -145,9 +145,19 @@ def profile():
 # handle forms.
 
 
-@ app.route('/profile/del_char/', methods=["GET", "POST"])
+@ app.route('/profile/del_char/<char_id>', methods=["GET", "POST"])
 @ login_required
-def del_char():
+def del_char(char_id):
+    user_id = current_user.get_id()
+    character = Char.objects(pk=char_id).first()
+    print(char_id)
+    if request.method == 'POST':
+        print(user_id)
+        print(character)
+        character.delete()
+        flash("Character deleted!")
+        return redirect(url_for('home'))
+
     return redirect(url_for('profile'))
 
 # Route for creating new entries in the character database

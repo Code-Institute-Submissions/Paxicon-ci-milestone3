@@ -35,7 +35,7 @@ get_flashed_messages() %} {% if messages%} {% for message in messages %}
       <ul class="list-group list-group-flush"></ul>
       {% for Char in Chars%} 
       <li class="list-group-item">
-        <a href="{{ url_for('char_profile', char_id=Char.pk) }}">{{Char.content.Name}}</a> <button class="btn float-right" data-toggle="modal" data-target="#delchar-modal"><i class="fas fa-trash-alt" id={{Char.pk}}></i></a></button>       
+        <a href="{{ url_for('char_profile', char_id=Char.pk) }}">{{Char.content.Name}}</a> <button class="btn float-right" data-toggle="modal" data-target="#mod-{{Char.pk}}"><i class="fas fa-trash-alt" id={{Char.pk}}></i></button>       
       </li>
       {%endfor%}
       </ul>
@@ -49,33 +49,51 @@ get_flashed_messages() %} {% if messages%} {% for message in messages %}
   </div>
 </div>
 
- <div class="modal fade" id="deletion-modal" tabindex="-1" aria-labelledby="deleteLabel" aria-hidden="true">
+ <div class="modal fade" id="deletion-modal">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Confirm account deletion?
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <h5 class="modal-title">Confirm account deletion
       </div>
       <div class="modal-body">
         <p>Are you sure you wish to delete your account? All your saved characters will be deleted with it. If you still want to close your account, enter your email and password below: <br>
         </p>
         <form method="POST">
+        <br>
         {{ form.hidden_tag() }}
         {{form.email.label}}
-        {{form.email}}
+        {{form.email}}<br>
         {{form.password.label}}
         {{form.password}}<br>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         <button type="submit" class="btn btn-danger" action="{url_for('profile')">
-          Confirm account-deletion </button>
-        
+          Confirm account-deletion </button>        
       </div>
     </form>
     </div>
   </div>
 </div>
-  
+</div>
+{% for Char in Chars%} 
+<div class="modal fade" id="mod-{{Char.pk}}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Delete character: {{Char.content.Name}}
+      </div>
+      <div class="modal-body">
+        <h5>Are you sure you wish to delete this character?</h5>
+        <form method="POST" action="{{url_for('del_char', char_id=Char.pk)}}">          
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-danger">
+          Delete character</button>        
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+</div>
+{%endfor%} 
 {%endblock %}

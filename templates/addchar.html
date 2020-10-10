@@ -18,7 +18,7 @@ get_flashed_messages() %} {% if messages%} {% for message in messages %}
     {{content(name_='{{content.label}}', class_="col")}} {%else%} {% endif %} {%
     endfor%} {% endif %} {%endfor%}
     <br />
-    <button class="btn btn-primary btn-lg" action="{url_for('addchar')">
+    <button class="btn btn-primary btn-lg" action="{url_for('addchar')}">
       Submit button
     </button>
   </form>
