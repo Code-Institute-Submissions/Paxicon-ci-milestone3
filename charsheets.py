@@ -142,7 +142,9 @@ class Char(db.DynamicDocument):
 # The following forms is what is passed to the Frontend and Jinja to register new Chars.
 
 
-class CharAttributesForm(FlaskForm):
+class CharAttributesForm(Form):
+    class Meta:
+        csrf = False
     strength = IntegerField('Strength: ')
     dexterity = IntegerField('Dexterity: ')
     constitution = IntegerField('Constitution: ')
@@ -151,7 +153,9 @@ class CharAttributesForm(FlaskForm):
     charisma = IntegerField('Charisma: ')
 
 
-class ClassObjForm(FlaskForm):
+class ClassObjForm(Form):
+    class Meta:
+        csrf = False
 
     Lvl = IntegerField('Character level: ')
     HitDie = IntegerField('Hit-die: ')
@@ -159,26 +163,26 @@ class ClassObjForm(FlaskForm):
     AttacksPerRound = IntegerField('Attack per round: ')
 
 
-class SaveForm(FlaskForm):
-    StrSave = BooleanField('Strength saving throw: ',
-                           widget=CheckboxInput())
-    DexSave = BooleanField('Dexterity saving throw: ',
-                           widget=CheckboxInput())
-    ConSave = BooleanField('Constitution saving throw: ',
-                           widget=CheckboxInput())
-    IntSave = BooleanField('Intelligence saving throw: ',
-                           widget=CheckboxInput())
-    WisSave = BooleanField('Wisdom saving throw: ',
-                           widget=CheckboxInput())
-    ChaSave = BooleanField('Charisma saving throw: ',
-                           widget=CheckboxInput())
+class SaveForm(Form):
+    class Meta:
+        csrf = False
+    StrSave = BooleanField('Strength saving throw: ')
+    DexSave = BooleanField('Dexterity saving throw: ')
+    ConSave = BooleanField('Constitution saving throw: ')
+    IntSave = BooleanField('Intelligence saving throw: ')
+    WisSave = BooleanField('Wisdom saving throw: ')
+    ChaSave = BooleanField('Charisma saving throw: ')
 
 
-class AbilityObjForm(FlaskForm):
+class AbilityObjForm(Form):
+    class Meta:
+        csrf = False
     Name = StringField('Ability name: ')
 
 
-class AbilitiesForm(FlaskForm):
+class AbilitiesForm(Form):
+    class Meta:
+        csrf = False
     Name = StringField('Name of ability')
     Description = StringField(' Describe the ability, effects, damage, DCs: ')
     DieType = IntegerField('Enter the primary dice for this ability: ')
@@ -187,26 +191,27 @@ class AbilitiesForm(FlaskForm):
         AbilityObjForm, 'Add abilities your character knows here: ')
 
 
-class SkillsForm(FlaskForm):
-    Athletics = BooleanField('Athletics: ',
-                             widget=CheckboxInput())
-    Acrobatics = BooleanField('Acrobatics: ', widget=CheckboxInput())
-    Sleight = BooleanField('Sleight of Hand: ', widget=CheckboxInput())
-    Stealth = BooleanField('Stealth: ', widget=CheckboxInput())
-    Arcana = BooleanField('Arcana: ', widget=CheckboxInput())
-    History = BooleanField('History: ', widget=CheckboxInput())
-    Investigation = BooleanField('Investigation: ', widget=CheckboxInput())
-    Nature = BooleanField('Nature: ', widget=CheckboxInput())
-    Religion = BooleanField('Religon: ', widget=CheckboxInput())
-    AnimalHandling = BooleanField('Animal handling: ', widget=CheckboxInput())
-    Insight = BooleanField('Insight: ', widget=CheckboxInput())
-    Medicine = BooleanField('Medicine: ', widget=CheckboxInput())
-    Perception = BooleanField('Perception: ', widget=CheckboxInput())
-    Survival = BooleanField('Survival: ', widget=CheckboxInput())
-    Deception = BooleanField('Deception: ', widget=CheckboxInput())
-    Intimidation = BooleanField('Intimidation: ', widget=CheckboxInput())
-    Performance = BooleanField('Performance: ', widget=CheckboxInput())
-    Persuasion = BooleanField('Persuasion: ', widget=CheckboxInput())
+class SkillsForm(Form):
+    class Meta:
+        csrf = False
+    Athletics = BooleanField('Athletics: ')
+    Acrobatics = BooleanField('Acrobatics: ')
+    Sleight = BooleanField('Sleight of Hand: ')
+    Stealth = BooleanField('Stealth: ')
+    Arcana = BooleanField('Arcana: ')
+    History = BooleanField('History: ')
+    Investigation = BooleanField('Investigation: ')
+    Nature = BooleanField('Nature: ')
+    Religion = BooleanField('Religon: ')
+    AnimalHandling = BooleanField('Animal handling: ')
+    Insight = BooleanField('Insight: ')
+    Medicine = BooleanField('Medicine: ')
+    Perception = BooleanField('Perception: ')
+    Survival = BooleanField('Survival: ')
+    Deception = BooleanField('Deception: ')
+    Intimidation = BooleanField('Intimidation: ')
+    Performance = BooleanField('Performance: ')
+    Persuasion = BooleanField('Persuasion: ')
 
 
 class CharInput(FlaskForm):
@@ -220,8 +225,8 @@ class CharInput(FlaskForm):
     ClassObj = FormField(
         ClassObjForm, 'Character class information: ')
     SkillsObjList = FormField(
-        SkillsForm, 'Skills: ', widget=TableWidget())
+        SkillsForm, 'Skills: ')
     AttributeList = FormField(
         CharAttributesForm, 'Character attributes: ')
     SavesList = FormField(SaveForm,
-                          'Character saves: ', widget=TableWidget())
+                          'Character saves: ')

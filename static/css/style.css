@@ -32,6 +32,11 @@ a:hover{
   background-size: cover;
   color: #ff5c5c;
 }
+.jumbotron-char-bg{
+  background-image: url(/static/img/wizard_wars.jpg);
+  background-size: cover;
+  color: #ff5c5c;
+}
 .card-margin{
   color: #000000;
   margin-right: 2rem;

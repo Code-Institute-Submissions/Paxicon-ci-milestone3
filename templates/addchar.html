@@ -1,27 +1,153 @@
-{% extends 'base.html'%} {% block content %} {% with messages =
-get_flashed_messages() %} {% if messages%} {% for message in messages %}
-{{message}} {% endfor%} {% endif %} {%endwith%}
-<h3 class="centered">Add new character:</h3>
+{% extends 'base.html'%} {% block content %} {% with
+messages=get_flashed_messages() %} {% if messages%} {% for message in messages
+%} {{message}} {% endfor%} {% endif %} {%endwith%}
+
+{# Error handling, displaying validation problems to the user. #}
+{% for field, errors in form.errors.items() %}
+<div class="alert alert-error">
+    {{ form[field].label }}: {{ ', '.join(errors) }}
+</div>
+{% endfor %}
+
 <br />
-<div class="container-fluid" action="{{url_for('addchar')}}">
-  <form class="form" method="POST">
-    {{ form.hidden_tag() }} {% for field in form %} {% if
-    field.widget.input_type != "hidden" %} {{field.label}} {% else%} {% endif %}
-    {% if field.type == "StringField" or "TextAreaField" %} <br />
-    {{field(class_='col')}}<br />
-    {% elif field.type == "NumberInput" %} {{field(class_='col')}}
+  <div class="jumbotron jumbotron-fluid jumbotron-char-bg">
+    <div class="container-fluid">
+      <h3 class="display-3">Create new character:</h3>
+      <p class="lead">
+        Fill in the following form to add a new character. All fields are
+        required.
+      </p>
+    </div>
+  </div>
+<div class="container-fluid">
+  <form class="form" method="POST" action="{{url_for('addchar')}}">
+<h3 class="text-center">General information:</h3>
+    <div class="row">    
+      <div class="col-md-12 col-lg-4">
+        {{ form.hidden_tag() }}
+
+        {{form.Name.label}}<br />
+        {{form.Name(class_="form-control")}}<br />
+        {{form.CharClass.label}}<br />
+        {{form.CharClass(class_="form-control")}}<br />
+        {{form.Subclass.label}}<br />
+        {{form.Subclass(class_="form-control")}}<br />
+        
+        {{form.Race.label}}<br />
+        {{form.Race(class_="form-control")}}<br />
+        {{form.Subrace.label}}<br />
+        {{form.Subrace(class_="form-control")}}<br />
+      </div>
+      <div class="col-md-12 col-lg-4">
+        {{form.Appearance.label}}<br />
+        {{form.Appearance(class_="form-control h-25")}}<br />
+        {{form.CharDescription.label}}<br />
+        {{form.CharDescription(class_="form-control h-25")}}<br />
+      </div>
+      <div class="col-md-12 col-lg-4">
+        {{form.ClassObj.Lvl.label}}<br />
+        {{form.ClassObj.Lvl(class_="form-control")}}<br />
+        {{form.ClassObj.HitDie.label}}<br />
+        {{form.ClassObj.HitDie(class_="form-control")}}<br />
+        {{form.ClassObj.AttacksPerRound.label}}<br />
+        {{form.ClassObj.AttacksPerRound(class_="form-control")}}<br />
+      </div>
+    </div>
+    <h3 class="text-center">Attributes & saves:</h3>
+    <div class="row">    
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Attribute</th>
+              <th scope="col">Value</th>
+              <th scope="col">Saving throw proficiency</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">{{form.AttributeList.strength.label}}</th>
+              <td>{{form.AttributeList.strength}}</td>
+              <td>{{form.SavesList.StrSave}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{form.AttributeList.dexterity.label}}</th>
+              <td>{{form.AttributeList.dexterity}}</td>
+              <td>{{form.SavesList.DexSave}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{form.AttributeList.constitution.label}}</th>
+              <td>{{form.AttributeList.constitution}}</td>
+              <td>{{form.SavesList.ConSave}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{form.AttributeList.intelligence.label}}</th>
+              <td>{{form.AttributeList.intelligence}}</td>
+              <td>{{form.SavesList.IntSave}}</td>
+            </tr>
+           <tr>
+              <th scope="row">{{form.AttributeList.wisdom.label}}</th>
+              <td>{{form.AttributeList.wisdom}}</td>
+              <td>{{form.SavesList.WisSave}}</td>
+            </tr>
+            <tr>
+              <th scope="row">{{form.AttributeList.charisma.label}}</th>
+              <td>{{form.AttributeList.charisma}}</td>
+              <td>{{form.SavesList.ChaSave}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      </div>
+    </div>
+    <h3>Skill proficiencies</h3>
+    <div class="table-responsive">
+    <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">{{form.SkillsObjList.Athletics.label}}</th>
+              <th scope="col">{{form.SkillsObjList.Sleight.label}}</th>
+              <th scope="col">{{form.SkillsObjList.Stealth.label}}</th>
+              <th scope="col">{{form.SkillsObjList.Arcana.label}}</th>
+              <th scope="col">{{form.SkillsObjList.History.label}}</th>
+              <th scope="col">{{form.SkillsObjList.Investigation.label}}</th>
+              <th scope="col">{{form.SkillsObjList.Nature.label}}</th>
+              <th scope="col">{{form.SkillsObjList.Religion.label}}</th>
+              <th scope="col">{{form.SkillsObjList.AnimalHandling.label}}</th>
+              <th scope="col">{{form.SkillsObjList.Insight.label}}</th>
+              <th scope="col">{{form.SkillsObjList.Medicine.label}}</th>
+              <th scope="col">{{form.SkillsObjList.Perception.label}}</th>
+              <th scope="col">{{form.SkillsObjList.Survival.label}}</th>
+              <th scope="col">{{form.SkillsObjList.Deception.label}}</th>
+              <th scope="col">{{form.SkillsObjList.Performance.label}}</th>
+              <th scope="col">{{form.SkillsObjList.Persuasion.label}}</th>
+            </tr>           
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="col">{{form.SkillsObjList.Athletics}}</th>
+              <th scope="col">{{form.SkillsObjList.Sleight}}</th>
+              <th scope="col">{{form.SkillsObjList.Stealth}}</th>
+              <th scope="col">{{form.SkillsObjList.Arcana}}</th>
+              <th scope="col">{{form.SkillsObjList.History}}</th>
+              <th scope="col">{{form.SkillsObjList.Investigation}}</th>
+              <th scope="col">{{form.SkillsObjList.Nature}}</th>
+              <th scope="col">{{form.SkillsObjList.Religion}}</th>
+              <th scope="col">{{form.SkillsObjList.AnimalHandling}}</th>
+              <th scope="col">{{form.SkillsObjList.Insight}}</th>
+              <th scope="col">{{form.SkillsObjList.Medicine}}</th>
+              <th scope="col">{{form.SkillsObjList.Perception}}</th>
+              <th scope="col">{{form.SkillsObjList.Survival}}</th>
+              <th scope="col">{{form.SkillsObjList.Deception}}</th>
+              <th scope="col">{{form.SkillsObjList.Performance}}</th>
+              <th scope="col">{{form.SkillsObjList.Persuasion}}</th>
+            </tr>
+            </tbody>
+    </table>
     <br />
-    {% elif field.type == "FormField" %} {{ form.hidden_tag() }} {% for content
-    in field %} {% if content.widget.input_type != "hidden" %}
-    <br />
-    {{content.label}}<br />
-    {{content(name_='{{content.label}}', class_="col")}} {%else%} {% endif %} {%
-    endfor%} {% endif %} {%endfor%}
-    <br />
-    <button class="btn btn-primary btn-lg" action="{url_for('addchar')}">
-      Submit button
+    <button class="btn btn-danger btn-lg" action="{url_for('addchar')}">
+      Add character
     </button>
   </form>
 </div>
-
 {%endblock %}
