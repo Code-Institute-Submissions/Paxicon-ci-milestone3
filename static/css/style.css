@@ -41,3 +41,8 @@ a:hover{
   color: #000000;
   margin-right: 2rem;
 }
+/* Enhancing the readability of form-errors */
+.errors{
+  color: #ff5c5c;
+  font-size: 1.5rem;
+}

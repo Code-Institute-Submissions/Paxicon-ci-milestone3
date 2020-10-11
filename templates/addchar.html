@@ -5,7 +5,27 @@ messages=get_flashed_messages() %} {% if messages%} {% for message in messages
 {# Error handling, displaying validation problems to the user. #}
 {% for field, errors in form.errors.items() %}
 <div class="alert alert-error">
-    {{ form[field].label }}: {{ ', '.join(errors) }}
+    {% if form.ClassObj.errors %}
+    <ul class="errors">
+        {% for error_field, errors in form.ClassObj.errors.items() %}
+            <li>{{ form.ClassObj[error_field].label }}: {{ errors|join(', ') }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% if form.AttributeList.errors %}
+    <ul class="errors">
+        {% for error_field, errors in form.AttributeList.errors.items() %}
+            <li>{{ form.AttributeList[error_field].label }}: {{ errors|join(', ') }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% if form.SavesList.errors %}
+    <ul class="errors">
+        {% for error_field, errors in form.SavesList.errors.items() %}
+            <li>{{ form.SavesList[error_field].label }}: {{ errors|join(', ') }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
 </div>
 {% endfor %}
 
@@ -14,8 +34,8 @@ messages=get_flashed_messages() %} {% if messages%} {% for message in messages
     <div class="container-fluid">
       <h3 class="display-3">Create new character:</h3>
       <p class="lead">
-        Fill in the following form to add a new character. All fields are
-        required.
+        Fill in the following form to add a new character. All text and numerical fields are
+        required. Check-boxes are multiple
       </p>
     </div>
   </div>
@@ -25,7 +45,6 @@ messages=get_flashed_messages() %} {% if messages%} {% for message in messages
     <div class="row">    
       <div class="col-md-12 col-lg-4">
         {{ form.hidden_tag() }}
-
         {{form.Name.label}}<br />
         {{form.Name(class_="form-control")}}<br />
         {{form.CharClass.label}}<br />
@@ -55,7 +74,7 @@ messages=get_flashed_messages() %} {% if messages%} {% for message in messages
     </div>
     <h3 class="text-center">Attributes & saves:</h3>
     <div class="row">    
-      <div class="table-responsive">
+      <div class="table">
         <table class="table table-striped">
           <thead>
             <tr>
@@ -68,39 +87,40 @@ messages=get_flashed_messages() %} {% if messages%} {% for message in messages
             <tr>
               <th scope="row">{{form.AttributeList.strength.label}}</th>
               <td>{{form.AttributeList.strength}}</td>
-              <td>{{form.SavesList.StrSave}}</td>
+              <td>{{form.SavesList.StrSave(class_="form-check-input")}}</td>
             </tr>
             <tr>
               <th scope="row">{{form.AttributeList.dexterity.label}}</th>
               <td>{{form.AttributeList.dexterity}}</td>
-              <td>{{form.SavesList.DexSave}}</td>
+              <td>{{form.SavesList.DexSave(class_="form-check-input")}}</td>
             </tr>
             <tr>
               <th scope="row">{{form.AttributeList.constitution.label}}</th>
               <td>{{form.AttributeList.constitution}}</td>
-              <td>{{form.SavesList.ConSave}}</td>
+              <td>{{form.SavesList.ConSave(class_="form-check-input")}}</td>
             </tr>
             <tr>
               <th scope="row">{{form.AttributeList.intelligence.label}}</th>
               <td>{{form.AttributeList.intelligence}}</td>
-              <td>{{form.SavesList.IntSave}}</td>
+              <td>{{form.SavesList.IntSave(class_="form-check-input")}}</td>
             </tr>
            <tr>
               <th scope="row">{{form.AttributeList.wisdom.label}}</th>
               <td>{{form.AttributeList.wisdom}}</td>
-              <td>{{form.SavesList.WisSave}}</td>
+              <td>{{form.SavesList.WisSave(class_="form-check-input")}}</td>
             </tr>
             <tr>
               <th scope="row">{{form.AttributeList.charisma.label}}</th>
               <td>{{form.AttributeList.charisma}}</td>
-              <td>{{form.SavesList.ChaSave}}</td>
+              <td>{{form.SavesList.ChaSave(class_="form-check-input")}}</td>
             </tr>
           </tbody>
         </table>
       </div>
       </div>
     </div>
-    <h3>Skill proficiencies</h3>
+    <h3 class="text-center">Skill proficiencies</h3>
+    <div class="row">
     <div class="table-responsive">
     <table class="table">
           <thead>
@@ -149,5 +169,6 @@ messages=get_flashed_messages() %} {% if messages%} {% for message in messages
       Add character
     </button>
   </form>
+</div>
 </div>
 {%endblock %}

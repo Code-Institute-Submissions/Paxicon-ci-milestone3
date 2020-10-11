@@ -145,22 +145,32 @@ class Char(db.DynamicDocument):
 class CharAttributesForm(Form):
     class Meta:
         csrf = False
-    strength = IntegerField('Strength: ')
-    dexterity = IntegerField('Dexterity: ')
-    constitution = IntegerField('Constitution: ')
-    intelligence = IntegerField('Intelligence: ')
-    wisdom = IntegerField('Wisdom: ')
-    charisma = IntegerField('Charisma: ')
+    strength = IntegerField('Strength: ', [InputRequired(message='Attributes must be entered between 1 and 20!'), NumberRange(
+        min=1, max=20, message="This value can only be between 1 and 20!")])
+    dexterity = IntegerField('Dexterity: ', [InputRequired(message='Attributes must be entered between 1 and 20!'), NumberRange(
+        min=1, max=20, message="This value can only be between 1 and 20!")])
+    constitution = IntegerField('Constitution: ', [InputRequired(message='Attributes must be entered between 1 and 20!'), NumberRange(
+        min=1, max=20, message="This value can only be between 1 and 20!")])
+    intelligence = IntegerField('Intelligence: ', [InputRequired(message='Attributes must be entered between 1 and 20!'), NumberRange(
+        min=1, max=20, message="This value can only be between 1 and 20!")])
+    wisdom = IntegerField('Wisdom: ', [InputRequired(message='Attributes must be entered between 1 and 20!'), NumberRange(
+        min=1, max=20, message="This value can only be between 1 and 20!")])
+    charisma = IntegerField('Charisma: ', [InputRequired(message='Attributes must be entered between 1 and 20!'), NumberRange(
+        min=1, max=20, message="This value can only be between 1 and 20!")])
 
 
 class ClassObjForm(Form):
     class Meta:
         csrf = False
 
-    Lvl = IntegerField('Character level: ')
-    HitDie = IntegerField('Hit-die: ')
+    Lvl = IntegerField('Character level: ', [InputRequired(message='Enter a level between 1 and 20!'), NumberRange(
+        min=1, max=20, message="This value can only be between 1 and 20!")])
+    HitDie = IntegerField('Hit-die: ', [InputRequired(message='This field only takes values between 4 and 12! Enter your class HitDie!'),
+                                        NumberRange(min=4, max=12, message="This value can only be between 4 and 12! Enter your class HitDie!")])
+    # Abilities is not used currently, but is kept as it is intended to be used for post-submission further work on the app.
     Abilities = HiddenField(db.EmbeddedDocumentField('Abilities: '))
-    AttacksPerRound = IntegerField('Attack per round: ')
+    AttacksPerRound = IntegerField('Attack per round: ', [InputRequired(message='Enter the number of attacks per turn your character can make, unmodified.'), NumberRange(
+        min=1, max=10, message="This value can only be between 1 and 10! Consult the Player's Handbook to find your correct attacks-per-round.")])
 
 
 class SaveForm(Form):
@@ -215,13 +225,20 @@ class SkillsForm(Form):
 
 
 class CharInput(FlaskForm):
-    Name = StringField('Character name: ')
-    CharClass = StringField('Character class: ')
-    Subclass = StringField('Subclass: ')
-    Race = StringField('Race: ')
-    Subrace = StringField('Subrace: ')
-    Appearance = TextAreaField('Appearance: ')
-    CharDescription = TextAreaField('Backstory: ')
+    Name = StringField('Character name: ', [InputRequired(message='You must provide a name for your new character!'), Length(
+        min=1, max=30, message="Character name must be between  and 30 characters long!")])
+    CharClass = StringField('Character class: ', [InputRequired(message='You must provide a class!'), Length(
+        min=1, max=20, message="Class must be between  and 20 characters long!")])
+    Subclass = StringField('Subclass: ', [InputRequired(message='You must provide a subclass!'), Length(
+        min=1, max=20, message="Subclass must be between  and 20 characters long!")])
+    Race = StringField('Race: ', [InputRequired(message='You must provide a race!'), Length(
+        min=1, max=20, message="Race must be between 1 and 20 characters long!")])
+    Subrace = StringField('Subrace: ', [InputRequired(message='You must provide a subrace!'), Length(
+        min=1, max=20, message="Subrace must be between 1 and 20 characters long!")])
+    Appearance = TextAreaField('Appearance: ',  [InputRequired(message='You must provide a short appearance description!'), Length(
+        min=1, max=1500, message="Appearance must be between 1 and 1500 characters long!")])
+    CharDescription = TextAreaField('Backstory: ', [InputRequired(message='You must provide a short backstory!'), Length(
+        min=1, max=2000, message="Backstory must be between 1 and 2000 characters long!")])
     ClassObj = FormField(
         ClassObjForm, 'Character class information: ')
     SkillsObjList = FormField(
