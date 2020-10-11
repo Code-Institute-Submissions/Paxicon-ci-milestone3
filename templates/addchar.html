@@ -41,7 +41,7 @@ messages=get_flashed_messages() %} {% if messages%} {% for message in messages
   </div>
 <div class="container-fluid">
   <form class="form" method="POST" action="{{url_for('addchar')}}">
-<h3 class="text-center">General information:</h3>
+    <h3 class="text-center">General information:</h3>
     <div class="row">    
       <div class="col-md-12 col-lg-4">
         {{ form.hidden_tag() }}
@@ -78,9 +78,9 @@ messages=get_flashed_messages() %} {% if messages%} {% for message in messages
         <table class="table table-striped">
           <thead>
             <tr>
-              <th scope="col">Attribute</th>
-              <th scope="col">Value</th>
-              <th scope="col">Saving throw proficiency</th>
+              <th>Attribute: </th>
+              <th>Value: </th>              
+              <th>Saving throw proficiency: </th>
             </tr>
           </thead>
           <tbody>
@@ -126,70 +126,88 @@ messages=get_flashed_messages() %} {% if messages%} {% for message in messages
       <thead>
         <tr>
           <th scope="col">Skill</th>
+          <th>Governed by: </th>
           <th scope="col">Proficient</th>
+        </tr>
       </thead>
           <tbody>
             <tr>
               <th scope="row">{{form.SkillsObjList.Athletics.label}}</th>
-              <td>{{form.SkillsObjList.Athletics}}</td>
+              <td>Strength</td>
+              <td>{{form.SkillsObjList.Athletics(class_="form-check-input")}}</td>
             </tr>
             <tr>
               <th scope="row">{{form.SkillsObjList.Sleight.label}}</th>
-              <td>{{form.SkillsObjList.Sleight}}</td>
+              <td>Dexterity</td>
+              <td>{{form.SkillsObjList.Sleight(class_="form-check-input")}}</td>
             </tr>
             <tr>
               <th scope="row">{{form.SkillsObjList.Stealth.label}}</th>
-              <td>{{form.SkillsObjList.Stealth}}</td>
+              <td>Dexterity</td>
+              <td>{{form.SkillsObjList.Stealth(class_="form-check-input")}}</td>
             </tr>
             <tr>
               <th scope="row">{{form.SkillsObjList.Arcana.label}}</th>
-              <td>{{form.SkillsObjList.Arcana}}</td>
+              <td>Intelligence</td>
+              <td>{{form.SkillsObjList.Arcana(class_="form-check-input")}}</td>
             </tr>
             <tr>
               <th scope="row">{{form.SkillsObjList.History.label}}</th>
-              <td>{{form.SkillsObjList.History}}</td>
+              <td>Intelligence</td>
+              <td>{{form.SkillsObjList.History(class_="form-check-input")}}</td>
             </tr>
             <tr>
               <th scope="row">{{form.SkillsObjList.Investigation.label}}</th>
-              <td>{{form.SkillsObjList.Investigation}}</td>
+              <td>Intelligence</td>
+              <td>{{form.SkillsObjList.Investigation(class_="form-check-input")}}</td>
             </tr>
             <tr>
               <th scope="row">{{form.SkillsObjList.Nature.label}}</th>
-              <td>{{form.SkillsObjList.Nature}}</td>
+              <td>Wisdom</td>
+              <td>{{form.SkillsObjList.Nature(class_="form-check-input")}}</td>
             </tr>
             <tr>
               <th scope="row">{{form.SkillsObjList.Religion.label}}</th>
-              <td>{{form.SkillsObjList.Religion}}</td>
+              <td>Wisdom</td>
+              <td>{{form.SkillsObjList.Religion(class_="form-check-input")}}</td>
             </tr>  
             <th scope="row">{{form.SkillsObjList.AnimalHandling.label}}</th>
-              <td>{{form.SkillsObjList.AnimalHandling}}</td>
+            <td>Wisdom</td>
+              <td>{{form.SkillsObjList.AnimalHandling(class_="form-check-input")}}</td>
             </tr>
             <th scope="row">{{form.SkillsObjList.Insight.label}}</th>
-              <td>{{form.SkillsObjList.Insight}}</td>
+            <td>Wisdom</td>
+              <td>{{form.SkillsObjList.Insight(class_="form-check-input")}}</td>
             </tr>
             <tr>
               <th scope="row">{{form.SkillsObjList.Medicine.label}}</th>
-              <td>{{form.SkillsObjList.Medicine}}</td>
+              <td>Wisdom</td>
+              <td>{{form.SkillsObjList.Medicine(class_="form-check-input")}}</td>
             </tr>
             <tr>
               <th scope="row">{{form.SkillsObjList.Perception.label}}</th>
-              <td>{{form.SkillsObjList.Perception}}</td>
+              <td>Wisdom</td>
+              <td>{{form.SkillsObjList.Perception(class_="form-check-input")}}</td>
             </tr>
             <tr>
               <th scope="row">{{form.SkillsObjList.Survival.label}}</th>
-              <td>{{form.SkillsObjList.Survival}}</td>
+              <td>Wisdom</td>
+              <td>{{form.SkillsObjList.Survival(class_="form-check-input")}}</td>
             </tr>
             <tr>
               <th scope="row">{{form.SkillsObjList.Deception.label}}</th>
-              <td>{{form.SkillsObjList.Deception}}</td>
+              <td>Charisma</td>
+              <td>{{form.SkillsObjList.Deception(class_="form-check-input")}}</td>
             </tr>
             <tr>
               <th scope="row">{{form.SkillsObjList.Performance.label}}</th>
-              <td>{{form.SkillsObjList.Performance}}</td>
+              <td>Charisma</td>
+              <td>{{form.SkillsObjList.Performance(class_="form-check-input")}}</td>
             </tr>
             <tr>
               <th scope="row">{{form.SkillsObjList.Persuasion.label}}</th>   
-              <td>{{form.SkillsObjList.Persuasion}}</td>
+              <td>Charisma</td>
+              <td>{{form.SkillsObjList.Persuasion(class_="form-check-input")}}</td>
             </tr>
             </tbody>
     </table>
