@@ -1,6 +1,13 @@
 {% extends 'base.html'%} {% block content %} {% with messages =
 get_flashed_messages() %} {% if messages%} {% for message in messages %}
 {{message}} {% endfor%} {% endif %} {%endwith%}
+{% if form.errors %}    
+    <div class="alert alert-error">
+      <ul class="errors">
+        {% for error_field, errors in form.errors.item %}
+            <li>{{ form[error_field].label }}: {{ errors|join(', ') }}</li>
+        {% endfor %}
+    {% endif %}
 <div class="d-flex justify-content-center">
   <h3>Enter your email and password to login:</h3><br>
 </div>

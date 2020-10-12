@@ -8,11 +8,12 @@ from wtforms.validators import InputRequired, Email, Length, EqualTo, DataRequir
 # Registration form, can also be passed without issue to login-page.
 
 class RegForm(FlaskForm):
-    display_name = StringField('Display name: ')
+    display_name = StringField('Display name: ', [InputRequired(message='You must provide a display name!'), Length(
+        min=1, max=20, message="Display name must be between  and 20 characters long!")])
     email = StringField('Email: ',  validators=[InputRequired(), Email(
         message='Invalid email'), Length(max=50)])
-    password = PasswordField('Password: ', validators=[
-                             InputRequired(), Length(min=8)])
+    password = PasswordField('Password: ', [InputRequired(message='You must provide a password!'), Length(
+        min=8, max=20, message="Your password must be between 8 and 20 characters long!")])
     submit = SubmitField("Login")
 
 # Form for requesting password-reset email
