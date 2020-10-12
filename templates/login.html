@@ -5,20 +5,23 @@ get_flashed_messages() %} {% if messages%} {% for message in messages %}
   <h3>Enter your email and password to login:</h3><br>
 </div>
 <br>
+<br>
 <div class="container">
 <div class="row justify-content-center">
-    <form method="POST" action="{{ url_for('login')}}" class="form-inline">      
+    <form method="POST" action="{{ url_for('login')}}" class="form">      
       <br />
       <div class="d-flex justify-content-center">
-      <div class="form-group">
-        <label for="email" name="email">Email: </label>
-        <br>{{form.email}}<br>
+      <div class="form-group">        
+        {{form.email.label}}<br>
+        {{form.email}}<br>
       
       <div class="form-group">
-        {{form.password.label}}
+        {{form.password.label}}<br>
         {{form.password}}
-        <div class="form-group">
-        {{form.submit(class_="btn btn-primary")}}<br>
+        <div class="form-group"><br>
+          <br>
+          <br>
+        {{form.submit(class_="btn btn-danger")}}<br>
       </div>
     </div>
   </div>
