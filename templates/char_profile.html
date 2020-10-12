@@ -6,7 +6,12 @@
   <div class="card">
     <h5 class="card-header">Vital statistics:</h5>
     <div class="card-body">
-      <h5 class="card-title">{{character.content.CharClass}}</h5>
+      <h5 class="card-title">
+        {{character.content.CharClass}} ({{character.content.Subclass}})
+      </h5>
+      <h5 class="card-title">
+        {{character.content.Race}} ({{character.content.Subrace}})
+      </h5>
       <p class="card-text">
         Character level:
         <span id="level">{{character.content.ClassObj.Lvl}}</span>
@@ -23,16 +28,20 @@
 <div class="container-fluid">
   <div class="row">
     <br />
-    <div class="card col-lg-6">
-      <div class="card-body">
-        <h5 class="card-title">Appearance:</h5>
-        <p class="card-text">{{character.content.Appearance}}</p>
+    <div class="col-md-12 col-lg-6 h-100">
+      <div class="card">
+        <h5 class="card-header">Appearance:</h5>
+        <div class="card-body">
+          <p class="card-text">{{character.content.Appearance}}</p>
+        </div>
       </div>
     </div>
-    <div class="card col-lg-6">
-      <div class="card-body">
-        <h5 class="card-title">Backstory & concept:</h5>
-        <p class="card-text">{{character.content.CharDescription}}</p>
+    <div class="col-md-12 col-lg-6 h-100">
+      <div class="card">
+        <h5 class="card-header">Description & backstory:</h5>
+        <div class="card-body">
+          <p class="card-text">{{character.content.CharDescription}}</p>
+        </div>
       </div>
     </div>
   </div>
@@ -44,7 +53,7 @@
 </div>
 <div class="container-fluid">
   <div class="row">
-    <table class="table table-borderless col-lg-12">
+    <table class="table table-borderless table-striped col-lg-12">
       <thead>
         <th class="col">Attributes:</th>
         <th class="col">Strength</th>
@@ -163,7 +172,7 @@
 <br />
 <div class="container-fluid">
   <div class="row">
-    <table class="table table-borderless col-lg-12">
+    <table class="table table-borderless table-striped col-lg-12">
       <thead>
         <th class="col">Saving throws:</th>
         <th class="col">Strength</th>
@@ -271,7 +280,7 @@
 <br />
 <div class="container-fluid">
   <div class="row">
-    <table class="table table-borderless">
+    <table class="table table-borderless table-striped">
       <thead>
         <th class="col">Skill:</th>
         <th class="col">Proficient</th>
@@ -513,6 +522,21 @@
             data-toggle="modal"
             href="#diceRollModal"
             class="dice-roller skill-list-dice cha-mod {{character.content.SkillsObjList.Intimidation}}"
+          >
+            <i class="fas fa-dice-d20"></i
+          ></a>
+        </th>
+      </tr>
+      <tr>
+        <th class="col">Performance</th>
+        <th
+          class="col skill-list {{character.content.SkillsObjList.Performance}}"
+        ></th>
+        <th class="col">
+          <a
+            data-toggle="modal"
+            href="#diceRollModal"
+            class="dice-roller skill-list-dice cha-mod {{character.content.SkillsObjList.Performance}}"
           >
             <i class="fas fa-dice-d20"></i
           ></a>
