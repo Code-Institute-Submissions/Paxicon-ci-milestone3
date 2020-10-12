@@ -4,9 +4,10 @@ messages=get_flashed_messages() %} {% if messages%} {% for message in messages
 
 {# Error handling, displaying validation problems to the user. #}
 
-<div class="alert alert-error">
-  <ul class="errors">
+
     {% if form.errors %}    
+    <div class="alert alert-error">
+      <ul class="errors">
         {% for error_field, errors in form.errors.item %}
             <li>{{ form[error_field].label }}: {{ errors|join(', ') }}</li>
         {% endfor %}
@@ -25,9 +26,10 @@ messages=get_flashed_messages() %} {% if messages%} {% for message in messages
         {% for error_field, errors in form.SavesList.errors.items() %}
             <li>{{ form.SavesList[error_field].label }}: {{ errors|join(', ') }}</li>
         {% endfor %}    
+      </ul>
+    </div>
     {% endif %}
-  </ul>
-</div>
+  
 
 <br />
   <div class="jumbotron jumbotron-fluid jumbotron-char-bg">

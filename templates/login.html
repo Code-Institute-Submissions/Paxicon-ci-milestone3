@@ -15,15 +15,13 @@ get_flashed_messages() %} {% if messages%} {% for message in messages %}
         <br>{{form.email}}<br>
       
       <div class="form-group">
-        <label for="password" name="password">Password: </label>
-        {{form.password}} <br>
+        {{form.password.label}}
+        {{form.password}}
         <div class="form-group">
-        {{form.submit}}<br>
+        {{form.submit(class_="btn btn-primary")}}<br>
       </div>
     </div>
-  </div>    
-      <br>
-      <br>
+  </div>
     </form>
       </div>
     </div>
@@ -32,8 +30,7 @@ get_flashed_messages() %} {% if messages%} {% for message in messages %}
     <br>
     <br>
     <div class="col">
-  <p class="text-center">
-    
+  <p class="text-center">    
     New here? Click <a href="{{url_for('register')}}">here</a>
   </p>
 </div>
@@ -45,4 +42,3 @@ get_flashed_messages() %} {% if messages%} {% for message in messages %}
 </div>
 </div>
   {% endblock %}
-</div>
