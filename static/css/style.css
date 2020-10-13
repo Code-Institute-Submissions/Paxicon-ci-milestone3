@@ -58,3 +58,17 @@ a:hover{
   color: #ff5c5c;
   font-size: 1.5rem;
 }
+
+/* Caption shader, to make the carousel captions more readable. */
+
+.carousel-shader{
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5) 100%)
+}
+.carousel-shader a{
+  color: #ffffff;
+}
+
+.carousel-shader a:hover{
+  color: #ffffff;
+  text-transform: uppercase;
+}
