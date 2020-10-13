@@ -13,7 +13,7 @@ from wtforms.validators import InputRequired, Email, Length, EqualTo
 from werkzeug.security import generate_password_hash, check_password_hash
 from user import User
 from charsheets import Char, CharInput
-from forms import RegForm, LostPass
+from forms import RegForm, LostPass, MailMeForm
 from os import path
 if path.exists("env.py"):
     import env
@@ -62,7 +62,10 @@ def characters():
 
 @ app.route('/about')
 def about():
-    return render_template("about.html")
+    form = MailMeForm()
+    return render_template("about.html", form=form)
+
+# Email-handler route
 
 
 @ app.route('/lore')

@@ -23,3 +23,14 @@ class LostPass(FlaskForm):
     email = StringField('Email: ',  validators=[InputRequired(), Email(
         message='Invalid email'), Length(max=50)])
     submit = SubmitField("Submit password request")
+
+# Form for about.html MailMe-modal
+
+
+class MailMeForm(FlaskForm):
+    email = StringField('Email: ',  validators=[InputRequired(), Email(
+        message='Invalid email'))
+    subject= StringField('Subject: ', [InputRequired(message='You must enter a message subject!'))
+    message= StringField('Message: ', [InputRequired(message='You cannot submit an empty message!'), Length(
+        min=1, max=500, message="Your message must be between 1 and 500 characters long!")])
+    submit= SubmitField("Send email")
