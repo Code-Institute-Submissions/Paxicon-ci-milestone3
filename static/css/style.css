@@ -72,3 +72,8 @@ a:hover{
   color: #ffffff;
   text-transform: uppercase;
 }
+/* Styling in-line icons in links, so they don't get too crowded. */
+a>i{
+  margin-left: 5px;
+  margin-right: 5px;
+}
