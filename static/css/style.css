@@ -29,12 +29,12 @@ a:hover{
   color: #c53618;
 }
 .jumbotron-bg{
-  background-image: url(/static/img/cityscape.jpg);
+  background-image: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%,rgba(0,0,0,0.5) 100%), url(/static/img/cityscape.jpg);
   background-size: cover;
   color: #ff5c5c;
 }
 .jumbotron-char-bg{
-  background-image: url(/static/img/wizard_wars.jpg);
+  background-image: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%,rgba(0,0,0,0.5) 100%), url(/static/img/wizard_wars.jpg);
   background-size: cover;
   color: #ff5c5c;
 }

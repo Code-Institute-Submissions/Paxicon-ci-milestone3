@@ -72,6 +72,7 @@ get_flashed_messages() %} {% if messages%} {% for message in messages %}
         {{form.email(class_="float-right")}}<br>
         {{form.password.label}}
         {{form.password(class_="float-right")}}<br>
+        <br>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         <button type="submit" class="btn btn-danger" action="{url_for('profile')">
@@ -92,6 +93,7 @@ get_flashed_messages() %} {% if messages%} {% for message in messages %}
       </div>
       <div class="modal-body">
         <h5>Are you sure you wish to delete this character?</h5>
+        <br>
         <form method="POST" action="{{url_for('del_char', char_id=Char.pk)}}">          
         <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
