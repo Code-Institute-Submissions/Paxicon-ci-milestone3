@@ -117,6 +117,7 @@ get_flashed_messages() %} {% if messages%} {% for message in messages %}
         <p>Enter your new display-name below and press the 'save' button.</p>        
         <form method="POST" action="{{url_for('updt_name', user_id=user.pk)}}">          
           <input class="form-control" type="text" name="display_name" id="display_name" required placeholder="Enter your new display name...">          
+          <br>
         <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         <button type="submit" class="btn btn-danger">

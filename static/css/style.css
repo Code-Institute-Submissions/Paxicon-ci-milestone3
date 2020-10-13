@@ -16,10 +16,11 @@ body{
   margin-bottom: 5rem;
 }
 a{
-  color: #000000;
+  color: #c53618;
 }
 a:hover{
   color: #c53618;
+  text-transform: uppercase;
 }
 
 .dice-roller {
