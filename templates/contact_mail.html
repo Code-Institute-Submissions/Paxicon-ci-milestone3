@@ -44,7 +44,15 @@
     />
   </head>
   <body>
-    {{form_data}}
+    <h2>A new message was just submitted from the Bugbears & Bailiffs app:</h2>
+    <br />
+    <h4>Subject of message: {{form_data.subject}}</h4>
+    <br />
+    <p>Message: {{form_data.message}}</p>
+    <br />
+    Please reply to sender at the following email:
+    <br />
+    <a href="mailto:{{form_data.email}}">{{form_data.email}}</a>
   </body>
   <footer class="footer-base bg-light">
     <p>Copyright Patrik Schöön-Axelsson 2020.</p>

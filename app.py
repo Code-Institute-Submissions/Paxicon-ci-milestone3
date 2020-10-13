@@ -67,8 +67,6 @@ def about():
     if request.method == 'POST':
         form_data = form.data
         if form.validate_on_submit():
-            # Does not currently validate correctly, not sure why yet. Prints OK one layer above.
-            print(form_data)
             contact_mail = Message(subject=str(form.subject.data),
                                    sender=os.environ['MAIL_USERNAME'],
                                    recipients=[
