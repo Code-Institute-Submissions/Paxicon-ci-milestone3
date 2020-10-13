@@ -76,6 +76,8 @@ def about():
             # Feedback so the user can see the request went through!
             flash(
                 "Your message has been sent! We'll get back to you as soon as possible!")
+            # Redirect back to about to reset form and show the flash.
+            return redirect(url_for('about'))
     return render_template("about.html", form=form)
 
 # Email-handler route
