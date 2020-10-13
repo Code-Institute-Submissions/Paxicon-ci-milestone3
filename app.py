@@ -60,9 +60,24 @@ def characters():
     return render_template("characters.html", all_characters=all_characters)
 
 
-@ app.route('/about')
+@ app.route('/about', methods=["GET", "POST"])
 def about():
     form = MailMeForm()
+    # Handler for the MailMe modal.
+    if request.method == 'POST':
+        form_data = form.data
+        if form.validate_on_submit():
+            # Does not currently validate correctly, not sure why yet. Prints OK one layer above.
+            print(form_data)
+            contact_mail = Message(subject=str(form.subject.data),
+                                   sender=os.environ['MAIL_USERNAME'],
+                                   recipients=[
+                'test-account@patrikaxelsson.one'],
+                html=render_template('contact_mail.html', form_data=form_data))
+            mail.send(contact_mail)
+            # Feedback so the user can see the request went through!
+            flash(
+                "Your message has been sent! We'll get back to you as soon as possible!")
     return render_template("about.html", form=form)
 
 # Email-handler route

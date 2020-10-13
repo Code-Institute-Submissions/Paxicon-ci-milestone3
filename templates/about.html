@@ -1,4 +1,26 @@
-{% extends 'base.html'%} {% block content %}
+{% extends 'base.html'%} 
+{% block content %}
+
+{% with messages=get_flashed_messages() %} 
+    {% if messages%} 
+      {% for message in messages %}
+        {{message}} 
+    {% endfor%}
+  {% endif %} 
+{%endwith%}
+
+<!-- Error handling in case of missed data in the MailMe form. -->
+{% if form.errors %}    
+  <div class="alert alert-error">
+     <ul class="errors">
+       {{form.errors}}
+        {% for error_field, errors in form.errors.item %}
+        <li>{{ form[error_field].label }}: {{ errors|join(', ') }}</li>
+         {% endfor %}
+      </ul>
+  </div>
+ {% endif %}              
+
 <div class="container-fluid">
   <div class="d-flex justify-content-center">
     <h1>About</h1>
@@ -25,7 +47,7 @@
       </p>
     </div>
     <div class="col-lg-4 col-md-12">
-      <h6>Where can I learn to play it?</h6>
+      <h6>Where can I learn to play D&D?</h6>
       <br />
       <p>
         Good question! D&D has been around for a very long time, so chances are
@@ -68,26 +90,31 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Email owner:</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Email the owner:</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form>
+        <form method="POST">
+          {{form.hidden_tag()}}
           <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Your email:</label>
-            <input type="text" class="form-control" placeholder="Enter your email..." required>
+            {{form.email.label}}
+            {{form.email(class_="form-control", placeholder_="Enter your email...")}}
           </div>
           <div class="form-group">
-            <label for="message-text" class="col-form-label">Message:</label>
-            <textarea class="form-control" placeholder="Enter your message here..." required ></textarea>
+            {{form.subject.label}}
+            {{form.subject(class_="form-control", placeholder_="Subject...")}}
           </div>
-        </form>
+          <div class="form-group">
+            {{form.message.label}}
+            {{form.message(class_="form-control", placeholder_="Enter your message...")}}
+          </div>          
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-danger">Send message</button>
+        {{form.submit(class_="btn btn-danger")}} 
+        </form>
       </div>
     </div>
   </div>

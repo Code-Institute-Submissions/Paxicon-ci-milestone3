@@ -1,7 +1,7 @@
 # This file contains Flask-WTF form classes.
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextField, SubmitField, PasswordField, ValidationError
+from wtforms import StringField, TextField, SubmitField, PasswordField, TextAreaField, ValidationError
 from wtforms.validators import InputRequired, Email, Length, EqualTo, DataRequired
 
 
@@ -29,8 +29,9 @@ class LostPass(FlaskForm):
 
 class MailMeForm(FlaskForm):
     email = StringField('Email: ',  validators=[InputRequired(), Email(
-        message='Invalid email'))
-    subject= StringField('Subject: ', [InputRequired(message='You must enter a message subject!'))
-    message= StringField('Message: ', [InputRequired(message='You cannot submit an empty message!'), Length(
+        message='Invalid email')])
+    subject = StringField('Subject: ', [InputRequired(
+        message='You must enter a message subject!')])
+    message = TextAreaField('Message: ', [InputRequired(message='You cannot submit an empty message!'), Length(
         min=1, max=500, message="Your message must be between 1 and 500 characters long!")])
-    submit= SubmitField("Send email")
+    submit = SubmitField("Send email")
