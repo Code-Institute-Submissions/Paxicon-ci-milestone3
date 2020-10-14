@@ -1,11 +1,15 @@
-{% extends 'base.html'%} {% block content %}
-<div class="container-fluid">
-  <div class="d-flex justify-content-center">
-    <h1>Characters</h1>
+{% extends 'base.html'%} 
+  {% block content %}
+<div class="jumbotron jumbotron-fluid jumbotron-bg-allchars">
+  <div class="container-fluid">
+    <h1 class="display-3">Character vault: </h1>
+    <p class="lead">
+      Below you can see all current characters stored in our database. For a more detailed profile, click the name in the left-most column!
+    </p>
   </div>
-
-  <br />
-  <br />
+</div>
+<div class="container-fluid">
+  <!--
   <div id="accordion">
     {% for entry in all_characters %}
     <div class="card">
@@ -43,5 +47,27 @@
     </div>
     {% endfor%}
   </div>
-</div>
+</div>-->
+
+<table class="table">
+  <tr>
+      <th scope="col">Character name</th>
+      <th scope="col">Class</th>
+      <th scope="col">Race</th>
+      <th scope="col">Level</th>
+      <th scope="col">Made by</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for entry in all_characters %}
+    <tr>
+    <td><a href="{{ url_for('char_profile', char_id=entry.pk) }}">{{ entry.content.Name }}</a></td>
+    <td>{{ entry.content.CharClass }} ( {{entry.content.Subclass}} )</td>
+    <td>{{ entry.content.Race }} ( {{entry.content.Subrace}} )</td>
+    <td>{{entry.content.ClassObj.Lvl}}</td>
+    <td>{{entry.Owner.display_name}}</td>    
+    </tr>
+    {% endfor%}    
+    </tbody>
+</table>
 {% endblock %}
