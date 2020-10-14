@@ -1,7 +1,7 @@
 /* Import fonts */
 @import url('https://fonts.googleapis.com/css2?family=Bree+Serif&family=Piazzolla:wght@400;700&display=swap');
 
-/* We begin by definining our REM setup. */
+/* We begin by definining our REM-base setup. */
 html{
   font-size: 14px;
 }
@@ -12,8 +12,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 body{
   font-family: 'Piazzolla', serif;
-  font-size: 1.25rem;
-  margin-bottom: 5rem;
+  font-size: 1rem;
+  margin-bottom: 4rem;
 }
 a{
   color: #c53618;

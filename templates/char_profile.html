@@ -54,116 +54,118 @@
 <br />
 <div class="container-fluid">
   <div class="row">
-    <table class="table table-borderless table-striped col-lg-12">
-      <thead>
-        <th class="col">Attributes:</th>
-        <th class="col">Strength</th>
-        <th class="col">Dexterity</th>
-        <th class="col">Constitution</th>
-        <th class="col">Intelligence</th>
-        <th class="col">Wisdom</th>
-        <th class="col">Charisma</th>
-      </thead>
-      <tr>
-        <th>Base value:</th>
-        <th id="str" class="col base">
-          {{character.content.AttributeList.strength}}
-        </th>
-        <th id="dex" class="col base">
-          {{character.content.AttributeList.dexterity}}
-        </th>
-        <th id="con" class="col base">
-          {{character.content.AttributeList.constitution}}
-        </th>
-        <th id="int" class="col base">
-          {{character.content.AttributeList.intelligence}}
-        </th>
-        <th id="wis" class="col base">
-          {{character.content.AttributeList.wisdom}}
-        </th>
-        <th id="cha" class="col base">
-          {{character.content.AttributeList.charisma}}
-        </th>
-      </tr>
-      <tr>
-        <th>Modifier:</th>
-        <th id="str-mod" class="col">
-          {{character.content.AttributeList.strength}}
-        </th>
-        <th id="dex-mod" class="col">
-          {{character.content.AttributeList.dexterity}}
-        </th>
-        <th id="con-mod" class="col">
-          {{character.content.AttributeList.constitution}}
-        </th>
-        <th id="int-mod" class="col">
-          {{character.content.AttributeList.intelligence}}
-        </th>
-        <th id="wis-mod" class="col">
-          {{character.content.AttributeList.wisdom}}
-        </th>
-        <th id="cha-mod" class="col">
-          {{character.content.AttributeList.charisma}}
-        </th>
-      </tr>
-      <tr>
-        <th>Roll:</th>
-        <th id="str-die" class="col">
-          <a
-            data-toggle="modal"
-            href="#diceRollModal"
-            class="dice-roller attribute-roll str-mod"
-          >
-            <i class="fas fa-dice-d20"></i
-          ></a>
-        </th>
-        <th id="dex-die" class="col">
-          <a
-            data-toggle="modal"
-            href="#diceRollModal"
-            class="dice-roller attribute-roll dex-mod"
-          >
-            <i class="fas fa-dice-d20"></i
-          ></a>
-        </th>
-        <th id="con-die" class="col">
-          <a
-            data-toggle="modal"
-            href="#diceRollModal"
-            class="dice-roller attribute-roll con-mod con-mod"
-          >
-            <i class="fas fa-dice-d20"></i
-          ></a>
-        </th>
-        <th id="int-die" class="col">
-          <a
-            data-toggle="modal"
-            href="#diceRollModal"
-            class="dice-roller attribute-roll int-mod"
-          >
-            <i class="fas fa-dice-d20"></i
-          ></a>
-        </th>
-        <th id="wis-die" class="col">
-          <a
-            data-toggle="modal"
-            href="#diceRollModal"
-            class="dice-roller attribute-roll wis-mod"
-          >
-            <i class="fas fa-dice-d20"></i
-          ></a>
-        </th>
-        <th id="cha-die" class="col">
-          <a
-            data-toggle="modal"
-            href="#diceRollModal"
-            class="dice-roller attribute-roll cha-mod"
-          >
-            <i class="fas fa-dice-d20"></i
-          ></a>
-        </th>
-      </tr>
-    </table>
+    <div class="table-responsive">
+      <table class="table table-borderless table-striped col-lg-12">
+        <thead>
+          <th class="col">Attributes:</th>
+          <th class="col">Strength</th>
+          <th class="col">Dexterity</th>
+          <th class="col">Constitution</th>
+          <th class="col">Intelligence</th>
+          <th class="col">Wisdom</th>
+          <th class="col">Charisma</th>
+        </thead>
+        <tr>
+          <th>Base value:</th>
+          <th id="str" class="col base">
+            {{character.content.AttributeList.strength}}
+          </th>
+          <th id="dex" class="col base">
+            {{character.content.AttributeList.dexterity}}
+          </th>
+          <th id="con" class="col base">
+            {{character.content.AttributeList.constitution}}
+          </th>
+          <th id="int" class="col base">
+            {{character.content.AttributeList.intelligence}}
+          </th>
+          <th id="wis" class="col base">
+            {{character.content.AttributeList.wisdom}}
+          </th>
+          <th id="cha" class="col base">
+            {{character.content.AttributeList.charisma}}
+          </th>
+        </tr>
+        <tr>
+          <th>Modifier:</th>
+          <th id="str-mod" class="col">
+            {{character.content.AttributeList.strength}}
+          </th>
+          <th id="dex-mod" class="col">
+            {{character.content.AttributeList.dexterity}}
+          </th>
+          <th id="con-mod" class="col">
+            {{character.content.AttributeList.constitution}}
+          </th>
+          <th id="int-mod" class="col">
+            {{character.content.AttributeList.intelligence}}
+          </th>
+          <th id="wis-mod" class="col">
+            {{character.content.AttributeList.wisdom}}
+          </th>
+          <th id="cha-mod" class="col">
+            {{character.content.AttributeList.charisma}}
+          </th>
+        </tr>
+        <tr>
+          <th>Roll:</th>
+          <th id="str-die" class="col">
+            <a
+              data-toggle="modal"
+              href="#diceRollModal"
+              class="dice-roller attribute-roll str-mod"
+            >
+              <i class="fas fa-dice-d20"></i
+            ></a>
+          </th>
+          <th id="dex-die" class="col">
+            <a
+              data-toggle="modal"
+              href="#diceRollModal"
+              class="dice-roller attribute-roll dex-mod"
+            >
+              <i class="fas fa-dice-d20"></i
+            ></a>
+          </th>
+          <th id="con-die" class="col">
+            <a
+              data-toggle="modal"
+              href="#diceRollModal"
+              class="dice-roller attribute-roll con-mod con-mod"
+            >
+              <i class="fas fa-dice-d20"></i
+            ></a>
+          </th>
+          <th id="int-die" class="col">
+            <a
+              data-toggle="modal"
+              href="#diceRollModal"
+              class="dice-roller attribute-roll int-mod"
+            >
+              <i class="fas fa-dice-d20"></i
+            ></a>
+          </th>
+          <th id="wis-die" class="col">
+            <a
+              data-toggle="modal"
+              href="#diceRollModal"
+              class="dice-roller attribute-roll wis-mod"
+            >
+              <i class="fas fa-dice-d20"></i
+            ></a>
+          </th>
+          <th id="cha-die" class="col">
+            <a
+              data-toggle="modal"
+              href="#diceRollModal"
+              class="dice-roller attribute-roll cha-mod"
+            >
+              <i class="fas fa-dice-d20"></i
+            ></a>
+          </th>
+        </tr>
+      </table>
+    </div>
   </div>
 </div>
 <br />
@@ -174,103 +176,105 @@
 <br />
 <div class="container-fluid">
   <div class="row">
-    <table class="table table-borderless table-striped col-lg-12">
-      <thead>
-        <th class="col">Saving throws:</th>
-        <th class="col">Strength</th>
-        <th class="col">Dexterity</th>
-        <th class="col">Constitution</th>
-        <th class="col">Intelligence</th>
-        <th class="col">Wisdom</th>
-        <th class="col">Charisma</th>
-      </thead>
-      <tr id="prof-row">
-        <th>Proficient:</th>
-        <th
-          id="str-prof"
-          class="col saving-throw {{character.content.SavesList.StrSave}}"
-        ></th>
-        <th
-          id="dex-prof"
-          class="col saving-throw {{character.content.SavesList.DexSave}}"
-        ></th>
-        <th
-          id="con-prof"
-          class="col saving-throw {{character.content.SavesList.ConSave}}"
-        ></th>
-        <th
-          id="int-prof"
-          class="col saving-throw {{character.content.SavesList.IntSave}}"
-        ></th>
-        <th
-          id="wis-prof"
-          class="col saving-throw
+    <div class="table-responsive">
+      <table class="table table-borderless table-striped col-lg-12">
+        <thead>
+          <th class="col">Saving throws:</th>
+          <th class="col">Strength</th>
+          <th class="col">Dexterity</th>
+          <th class="col">Constitution</th>
+          <th class="col">Intelligence</th>
+          <th class="col">Wisdom</th>
+          <th class="col">Charisma</th>
+        </thead>
+        <tr id="prof-row">
+          <th>Proficient:</th>
+          <th
+            id="str-prof"
+            class="col saving-throw {{character.content.SavesList.StrSave}}"
+          ></th>
+          <th
+            id="dex-prof"
+            class="col saving-throw {{character.content.SavesList.DexSave}}"
+          ></th>
+          <th
+            id="con-prof"
+            class="col saving-throw {{character.content.SavesList.ConSave}}"
+          ></th>
+          <th
+            id="int-prof"
+            class="col saving-throw {{character.content.SavesList.IntSave}}"
+          ></th>
+          <th
+            id="wis-prof"
+            class="col saving-throw
     {{character.content.SavesList.WisSave}}"
-        ></th>
-        <th
-          id="cha-prof"
-          class="col saving-throw
+          ></th>
+          <th
+            id="cha-prof"
+            class="col saving-throw
     {{character.content.SavesList.ChaSave}}"
-        ></th>
-      </tr>
-      <tr>
-        <th>Roll:</th>
-        <th id="StrSave-die" class="col">
-          <a
-            data-toggle="modal"
-            href="#diceRollModal"
-            class="dice-roller saving-throw-dice str-mod {{character.content.SavesList.StrSave}}"
-          >
-            <i class="fas fa-dice-d20"></i
-          ></a>
-        </th>
-        <th id="DexSave-die" class="col">
-          <a
-            data-toggle="modal"
-            href="#diceRollModal"
-            class="dice-roller saving-throw-dice dex-mod {{character.content.SavesList.DexSave}}"
-          >
-            <i class="fas fa-dice-d20"></i
-          ></a>
-        </th>
-        <th id="ConSave-die" class="col">
-          <a
-            data-toggle="modal"
-            href="#diceRollModal"
-            class="dice-roller saving-throw-dice con-mod {{character.content.SavesList.ConSave}}"
-          >
-            <i class="fas fa-dice-d20"></i
-          ></a>
-        </th>
-        <th id="IntSave-die" class="col">
-          <a
-            data-toggle="modal"
-            href="#diceRollModal"
-            class="dice-roller saving-throw-dice int-mod {{character.content.SavesList.IntSave}}"
-          >
-            <i class="fas fa-dice-d20"></i
-          ></a>
-        </th>
-        <th id="WisSave-die" class="col">
-          <a
-            data-toggle="modal"
-            href="#diceRollModal"
-            class="dice-roller saving-throw-dice wis-mod {{character.content.SavesList.WisSave}}"
-          >
-            <i class="fas fa-dice-d20"></i
-          ></a>
-        </th>
-        <th id="ChaSave-die" class="col">
-          <a
-            data-toggle="modal"
-            href="#diceRollModal"
-            class="dice-roller saving-throw-dice cha-mod {{character.content.SavesList.ChaSave}}"
-          >
-            <i class="fas fa-dice-d20"></i
-          ></a>
-        </th>
-      </tr>
-    </table>
+          ></th>
+        </tr>
+        <tr>
+          <th>Roll:</th>
+          <th id="StrSave-die" class="col">
+            <a
+              data-toggle="modal"
+              href="#diceRollModal"
+              class="dice-roller saving-throw-dice str-mod {{character.content.SavesList.StrSave}}"
+            >
+              <i class="fas fa-dice-d20"></i
+            ></a>
+          </th>
+          <th id="DexSave-die" class="col">
+            <a
+              data-toggle="modal"
+              href="#diceRollModal"
+              class="dice-roller saving-throw-dice dex-mod {{character.content.SavesList.DexSave}}"
+            >
+              <i class="fas fa-dice-d20"></i
+            ></a>
+          </th>
+          <th id="ConSave-die" class="col">
+            <a
+              data-toggle="modal"
+              href="#diceRollModal"
+              class="dice-roller saving-throw-dice con-mod {{character.content.SavesList.ConSave}}"
+            >
+              <i class="fas fa-dice-d20"></i
+            ></a>
+          </th>
+          <th id="IntSave-die" class="col">
+            <a
+              data-toggle="modal"
+              href="#diceRollModal"
+              class="dice-roller saving-throw-dice int-mod {{character.content.SavesList.IntSave}}"
+            >
+              <i class="fas fa-dice-d20"></i
+            ></a>
+          </th>
+          <th id="WisSave-die" class="col">
+            <a
+              data-toggle="modal"
+              href="#diceRollModal"
+              class="dice-roller saving-throw-dice wis-mod {{character.content.SavesList.WisSave}}"
+            >
+              <i class="fas fa-dice-d20"></i
+            ></a>
+          </th>
+          <th id="ChaSave-die" class="col">
+            <a
+              data-toggle="modal"
+              href="#diceRollModal"
+              class="dice-roller saving-throw-dice cha-mod {{character.content.SavesList.ChaSave}}"
+            >
+              <i class="fas fa-dice-d20"></i
+            ></a>
+          </th>
+        </tr>
+      </table>
+    </div>
   </div>
 </div>
 <br />

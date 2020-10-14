@@ -9,47 +9,9 @@
   </div>
 </div>
 <div class="container-fluid">
-  <!--
-  <div id="accordion">
-    {% for entry in all_characters %}
-    <div class="card">
-      <div class="card-header" id="heading-{{entry.pk}}">
-        <h5 class="mb-0">
-          <button
-            class="btn btn-link"
-            data-toggle="collapse"
-            data-target="#collapse-{{entry.pk}}"
-            aria-expanded="true"
-            aria-controls="collapse-{{entry.pk}}"
-          >
-            <p class="text-left">
-              Name: {{ entry.content.Name }} - Class:
-              {{entry.content.CharClass}} - Made by:
-              {{entry.Owner.display_name}}
-            </p>
-          </button>
-        </h5>
-      </div>
-
-      <div
-        id="collapse-{{entry.pk}}"
-        class="collapse"
-        aria-labelledby="heading-{{entry.content.Name|join}}"
-        data-parent="#accordion"
-      >
-        <div class="card-body">
-          {{entry.content.CharDescription}}<br />
-          <a href="{{ url_for('char_profile', char_id=entry.pk) }}"
-            >Detailed character sheet.</a
-          >
-        </div>
-      </div>
-    </div>
-    {% endfor%}
-  </div>
-</div>-->
-
-<table class="table">
+  <div class="row">
+    <div class=" table-responsive">
+<table class="table table-striped">
   <tr>
       <th scope="col">Character name</th>
       <th scope="col">Class</th>
@@ -70,4 +32,6 @@
     {% endfor%}    
     </tbody>
 </table>
+</div>
+</div>
 {% endblock %}
