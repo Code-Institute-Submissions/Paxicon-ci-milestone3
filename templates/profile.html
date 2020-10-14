@@ -5,16 +5,11 @@ get_flashed_messages() %} {% if messages%} {% for message in messages %}
 <div class="jumbotron jumbotron-fluid jumbotron-bg">
    <div class="container-fluid">
       <h3 class="display-3">Profile for: {{ user.display_name}}</h3>
-         <p class="lead">
-          Here you can find links to your character-sheets.
-        </p>
-        <p class="lead">
         <br />
         <br />
        <div class="col">
        <a class="btn btn-danger btn-lg" href="{{url_for('addchar')}}">Create a new character</a>
-       <br />     
-      </p>        
+       <br />   
     </div>
   </div>   
 </div> 
