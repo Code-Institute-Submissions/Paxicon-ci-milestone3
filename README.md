@@ -53,7 +53,7 @@ The app features:
 
 - _A secure authentication system based on sessioning, built on the Flask-Login extension, that links document-ownership to a users registered account and bars others from deleting it._
 - _A safe way to reset your password and retrieve ownership of your account, using a timed JWT-token method and server-side mailing provided by Flask-mail._
-- Account management features, such as display-name updating, account deletion with cascading deletion of registered characters if the owner is removed.\*
+- _Account management features, such as display-name updating, account deletion with cascading deletion of registered characters if the owner is removed._
 - _A front-end for adding documents to the database, using the pre-defined "User" and "char" schemas, using the MongoEngine ODM._
 - _A means of accessing database information through queries, either by ownership (profile.html), sorted alphabetically by collection (characters.html) and to access the data contained in each entry through templates (char_profile.html)_
 - _A suitable front-end presentation of a character-sheet as you might carry in a none-digital format to a gaming session, complete with jQuery-written javascript to handle dice-rolling and calculating derived statistics._
@@ -74,7 +74,7 @@ The app features:
 
 ## 1.3) Wireframes
 
-[Wireframe PDF](wireframes\Milestone-3-Bugbears-and-Bailiffs.pdf)
+[Wireframe PDF](/wireframes/Milestone-3-Bugbears-and-Bailiffs.pdf)
 
 ## 1.4) What to add in the future?
 
@@ -116,11 +116,11 @@ As the work progressed, I grew to appreciate both extensions more deeply. MongoE
 
 While the bug occured later in the process, as I defined the char-collection, I will add that I did run into issue with using Flask-WTF a little too liberally: When producing prototypes of addchar.html, I iterated over a very long model-object with multiple nested objects called CharInput (Located in charsheets.py) while testing. Due to a mistake I made in the process of defining the embedded documents used to nest several sub-forms, earlier entries in the "char" collection of my database contain upwards of 5 separate csrf_token keys nested in each other.
 
-![Multiple CSRF tokens](wireframes\csrf_tokens_multiples.png)
+![Multiple CSRF tokens](/wireframes/csrf_tokens_multiples.png)
 
 This was fixed later in the process, by redefining the sub-forms embedded in CharInput as "Form" objects instead of FlaskForm', a sub-object of the Flask-WTF extension that requires csrf-validation before validation. That is to say, the error occured because the embedded forms were requiring separate validation-tokens. Newly saved entries now only contain the single csrf_token, which I've chosen to save with the database a sort of 'stamp of approval', to ensure all entries have been validated. Older entries to the database do not need updating because the data used for the token is minimal and the user is never aware of the excess keys, nor do they impede functionality of the app.
 
-![Fixed, single CSRF token](wireframes\csrf_token_singular.png)
+![Fixed, single CSRF token](/wireframes/csrf_token_singular.png)
 
 Another reason I elected to use Flask-WTF is its security features of escaping input if not otherwise specified. To test this and ensure it was functional, I asked a friend to perform a simplistic javascript XSS-insertion on the /addchar route:
 ![XSS-test](wireframes\xss-testing.png)
@@ -137,7 +137,7 @@ _User requests a password reset email -> Flask-Mail uses Py-JWT to generate a ti
 There were no real issues in testing or implementing these two extensions (See under the Flask-Login section to see a bug I thought was caused by the JWT-token, but was actually
 unrelated to the mailing process itself) - I simply registered a no-reply adress to a domain I own, got the server port-information, then passed the required configs into my environment variables. I tested the two mailer-forms and concurred they were functional.
 
-![Mail-testing screenshot](wireframes\about-mail-test.png)
+![Mail-testing screenshot](/wireframes/about-mail-test.png)
 
 ## 2.2) Version control
 
