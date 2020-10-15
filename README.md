@@ -169,8 +169,43 @@ When submitting the project for peer-review, an immensely embarassing bug was un
 
 JavaScript was highly limited in the project, by choice. [jQuery](https://jquery.com/) was used to write the script charProfile.js, only used on char_profile.html. The script makes an AJAX-request for a JSON copy of the relevant character-document and uses it to provide interactive dice-rolls as well as to populate certain fields that are derived from other statistics the user has already submitted to the database. The only other JS file is index.js, which provides simple functionality for certain bootstrap components as needed.
 
+### 2.2.4) 'master' branch
+
+After merging frontend-design to the main branch, I focused my last week on testing, peer-review and cleaning up extraneous code.
+
 ## 3) Deployment and installation
+
+This section summarizes the experience of deploying the app to Heroku, followed by installation instructions including required config-variables.
 
 ## 3.1) Deployment
 
+The deployment was not as smooth as I had hoped, due to my own negligence. I had failed to provide a crucial config-variable, port, before deploying which caused the app to crash on load repeatedly. Once I realised my mistake, I manually added a port variable, fixed up the procfile and redeployed and the app has worked since. The only other thing of note is that I used the Heroku github deploy-flow instead of through the CLI, which I've done on minor projects of my own before.
+
 ## 3.2) Installation
+
+Requirements to install and run the app locally:
+
+1. Clone the repository and download it locally.
+2. Create a file named env.py. This is where you'll store your config-variables when running the code locally.
+3. Activate the virtual environment. For windows computers, the simplest way to do so is to type "Scripts/activate" from the command line in the main project folder, this runs a batch-script that activates the virtual environment. For [Mac OS](https://sourabhbajaj.com/mac-setup/Python/virtualenv.html) and Linux([Ubuntu](https://www.liquidweb.com/kb/creating-virtual-environment-ubuntu-16-04/) and [Debian](https://linuxconfig.org/how-to-set-up-a-python-virtual-environment-on-debian-10-buster)), I defer to the documentation
+   for Python for those operating systems, beyond the links above.
+4. Once env.py is populated with your environment variables, launch a terminal inside the main folder and type: "pip install -r requirements.txt" to install all extensions. Please note that it is _very_ unadvisable to run this command outside of a virtual environment, so ensure you've activate it before the command is issued. Note that this command is for installing and running the app locally on _windows_. If running on Mac OS and Linux, please refer to the links above or the Python/PIP documentation for your OS of choice.
+5. Now that all dependencies are installed, launch the app by typing python app.py in the terminal, from the root-folder of the app.
+
+### 3.2.1) Config variables
+
+The following variables must be configured in the environment you're running the app in. If as in our example above you're running the code locally, I recommend you simply create
+an env.py file, as in my instructions above.
+
+- 'PORT' = The port used by Flask to serve HTTP requests. For more on configuring environment variables for Flask, please refer to the [documentation](https://flask.palletsprojects.com/en/1.1.x/config/).
+
+- "MONGODB_DB" = The name of the database you're accessing.
+- "MONGODB_HOST" = Your MongoDB URI-string.
+- "SECRET_KEY" = An alphanumeric/random bit key used to secure multiple security features offered by Flask, as well as Py-JWT. I refer you to Flasks own [documentation](https://flask.palletsprojects.com/en/1.1.x/config/) on how to set it up correctly.
+
+The folllowing config variables are used by the Flask-Mail extension. While any e-mail you can provide proper SMTP-server credentials too will work, I would caution against using gmail and/lr as your mailer, due to security features meant to discourage spam-bots. _Using gmail as your app-mailer will require you to disable two-step verification and other security features!_ For more details and an excellent article, please follow this [link](https://medium.com/analytics-vidhya/send-email-with-gmail-python-and-flask-1810c25cf5f5)
+
+- 'MAIL_SERVER' = An SMTP server URI from your email-provider.
+- 'MAIL_PORT' = The port used by your providers server. Refer to your provider to get the correct value for this variable.
+- 'MAIL_USERNAME' = Login credentials for your mailer-account.
+- 'MAIL_PASSWORD' = Login credentials for your mailer-account.
