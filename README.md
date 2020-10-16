@@ -24,12 +24,14 @@ requirements.txt - All entries will be detailed at the bottom under the "Technol
    2.2.1) [User-Auth](#2-2-1-user-auth) \
    2.2.2) [CRUD-input](#2-2-2-crud-input) \
    2.2.3) [frontend-design](#2-2-3-frontend-design) \
-   2.2.4) ['master' branch](#2-2-4-master-branch)
-   2.3) [Markup validation](#2-3-markup-validation)
+   2.2.4) ['master' branch](#2-2-4-master-branch) \
+   2.3) [Markup validation](#2-3-markup-validation) \
+   2.4) [JS testing](#2-4-js-testing) \
+   2.5) [Final test run](#2-5-Final-test-run)
 3. [Deployment and installation](#3-deployment-and-installation) \
    3.1) [Deployment](#3-1-deployment) \
    3.2) [Installation](#3-2-installation) \
-   3.2.1) [Config variables](#3-2-1-config-variables)
+   3.2.1) [Config variables](#3-2-1-config-variables) 
 4. [Technologies used](#4-technologies-used)
 
 # 1 Introduction
@@ -181,6 +183,8 @@ Markup was validated using the [W3C validator](https://validator.w3.org/). The C
 ## 2 4 JS testing
 
 As the JS in the code is quite limited, testing was simply conducted by manually testing output of the d20 method in charProfile.js on rendered elements on the character-profiles and compared with expected results. Some commenting was added, but no further changes were made.
+
+The [JS Hint Validator](https://jshint.com/) raised no issues.
 
 ## 2 5 Final test run
 
