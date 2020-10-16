@@ -1,6 +1,13 @@
-{% extends 'base.html'%} {% block content %} {% with
-messages=get_flashed_messages() %} {% if messages%} {% for message in messages
-%} {{message}} {% endfor%} {% endif %} {%endwith%}
+{% extends 'base.html'%} 
+  {% block content %} 
+  <!-- Displays flash messages, if needed. -->
+    {% with messages=get_flashed_messages() %} 
+    {% if messages%} 
+      {% for message in messages %}
+      {{message}} 
+      {% endfor%}
+  {% endif %} 
+{%endwith%}
 
 {# Error handling, displaying validation problems to the user. #}
 
@@ -30,17 +37,15 @@ messages=get_flashed_messages() %} {% if messages%} {% for message in messages
     </div>
     {% endif %}
   
-
-<br />
-  <div class="jumbotron jumbotron-fluid jumbotron-char-bg">
-    <div class="container-fluid">
-      <h3 class="display-3">Create new character:</h3>
-      <p class="lead">
-        Fill in the following form to add a new character. All text and numerical fields are
-        required. Check-boxes are multiple
-      </p>
-    </div>
-  </div>
+<div class="jumbotron jumbotron-fluid jumbotron-char-bg">
+  <div class="container-fluid">
+     <h3 class="display-3">Create new character:</h3>
+     <p class="lead">
+       Fill in the following form to add a new character. All text and numerical fields are
+       required. Check-boxes are multiple
+     </p>
+   </div>
+</div>
 <div class="container-fluid">
   <form class="form" method="POST" action="{{url_for('addchar')}}">
     <h3 class="text-center">General information:</h3>
