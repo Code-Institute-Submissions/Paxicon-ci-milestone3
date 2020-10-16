@@ -25,6 +25,7 @@ requirements.txt - All entries will be detailed at the bottom under the "Technol
    2.2.2) [CRUD-input](#2-2-2-crud-input) \
    2.2.3) [frontend-design](#2-2-3-frontend-design) \
    2.2.4) ['master' branch](#2-2-4-master-branch)
+   2.3) [Markup validation](#2-3-markup-validation)
 3. [Deployment and installation](#3-deployment-and-installation) \
    3.1) [Deployment](#3-1-deployment) \
    3.2) [Installation](#3-2-installation) \
@@ -172,6 +173,22 @@ JavaScript was highly limited in the project, by choice. [jQuery](https://jquery
 ### 2 2 4 'master' branch
 
 After merging frontend-design to the main branch, I focused my last week on testing, peer-review and cleaning up extraneous code.
+
+## 2 3 Markup validation
+
+Markup was validated using the [W3C validator](https://validator.w3.org/). The CSS passed immediately, but the HTML required more work. I moved through every view in the app that returns a render_template. Those not protected by the @login_required marker were submitted by URL. For protected views such as /profile, the page was rendered locally on a flask dev-server and the jinja-generated html was copy-pasted from the browser source. Errors were then eliminated, mostly to do with trailing divs and nesting issues, until all views passed validation.
+
+## 2 4 JS testing
+
+As the JS in the code is quite limited, testing was simply conducted by manually testing output of the d20 method in charProfile.js on rendered elements on the character-profiles and compared with expected results. Some commenting was added, but no further changes were made.
+
+## 2 5 Final test run
+
+The final stage of my testing process, I designed a user flow of interaction with the app, delineating the flow of interactivity:
+
+_A user visits the app -> They register to the app -> They create a character -> They change their display name -> They retrieve their password using the password mailer system -> They succesfully login in again -> They delete their account and the character(s) they added are deleted._
+
+I surmised the app would be considered finished and ready for submission if, once deployed to heroku, all these stages could be performed without causing issues or raising errors. I went through each stage: I registered a new email on a domain I own and registered to the site. I added a character. I changed my display name. I reset my password using the mail-reset system. I logged in again and both the user and the character were deleted from the database. I had now completed the user-interaction lifecycle possible within the app and pronounced it ready for submission.
 
 # 3 Deployment and installation
 
