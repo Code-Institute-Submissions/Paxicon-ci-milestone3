@@ -98,7 +98,16 @@
         </div>
       </nav>
     </header>
-    <br />{% block content %} {% endblock %}<br />
+    <br />
+
+    {% block content %}
+
+    <!-- Display area for each template. -->
+
+    {% endblock %}
+    <br />
+
+    <!-- Footer -->
     <div class="container-fluid">
       <div class="row">
         <footer class="footer-base bg-light">
@@ -106,8 +115,8 @@
         </footer>
       </div>
     </div>
-    <!-- Personal JS -->
 
+    <!-- Personal universal. site-wide JS. -->
     <script
       type="text/javascript"
       src="{{url_for('static', filename='js/index.js' )}}"
