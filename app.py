@@ -36,7 +36,7 @@ login_manager = LoginManager(app)
 def load_user(user_id):
     return User.objects(pk=user_id).first()
 
-# Flask-Mail setup variables
+# Flask-Mail config variables.
 
 
 app.config['MAIL_SERVER'] = os.environ['MAIL_SERVER']
@@ -45,12 +45,14 @@ app.config['MAIL_USERNAME'] = os.environ['MAIL_USERNAME']
 app.config['MAIL_PASSWORD'] = os.environ['MAIL_PASSWORD']
 mail = Mail(app)
 
-# Routes below this point
+# Routes below this point.
 
 
 @app.route('/')
 def home():
     return render_template("home.html")
+
+# Grabs all contents of the Char collection from the DB, orders it alphabetically and feeds it into characters.html for rendering.
 
 
 @app.route("/characters")
@@ -58,6 +60,8 @@ def characters():
     all_characters = Char.objects().order_by('content.Name')
 
     return render_template("characters.html", all_characters=all_characters)
+
+# Renders about.html and, if post, validates the form, submits it and sends it using the Flask-Mail extension.
 
 
 @ app.route('/about', methods=["GET", "POST"])
@@ -73,22 +77,15 @@ def about():
                 'test-account@patrikaxelsson.one'],
                 html=render_template('contact_mail.html', form_data=form_data))
             mail.send(contact_mail)
-            # Feedback so the user can see the request went through!
+            # Feedback so the user can see the request went through.
             flash(
                 "Your message has been sent! We'll get back to you as soon as possible!")
-            # Redirect back to about to reset form and show the flash.
+            # Redirect back to 'about' to reset the form and show the flash.
             return redirect(url_for('about'))
     return render_template("about.html", form=form)
 
-# Email-handler route
+# Flask-Login compliant user registration scheme.
 
-
-@ app.route('/lore')
-def lore():
-    return render_template("lore.html")
-
-
-# Flask-Login compliant registration scheme.
 
 @ app.route('/register', methods=["GET", "POST"])
 def register():
@@ -111,7 +108,7 @@ def register():
             flash("Improper registration! This error means your form was not validated.")
     return render_template('register.html', form=form)
 
-# Flask-Login compliant login, with password-reset functionality
+# Flask-Login compliant login system, When posting, uses werkzeug to check the password hash against the User collection of the DB.
 
 
 @ app.route('/login', methods=["GET", "POST"])
@@ -147,6 +144,7 @@ def profile():
     user = current_user.get_id()
     MyChars = Char.objects(Owner=user)
 
+    # Handler for account-deletion, checks password and flashes the user a confirmation modal informing them all characters they've added will also be deleted.
     if request.method == 'POST':
         if check_password_hash(current_user['password'], form.password.data):
             flash("Your account has been deleted.")
@@ -175,7 +173,7 @@ def del_char(char_id):
 
     return redirect(url_for('profile'))
 
-# This route is another subsection of the profile-page. Like the one above, it exists only to process requests to MongoEngine and redirects to Profile otherwise.
+# This route is another subsection of the profile-page. Like the one above, it exists only to process requests to MongoEngine for the user to change their display-name and redirects to Profile otherwise.
 
 
 @ app.route('/profile/updt_name/<user_id>', methods=["GET", "POST"])
@@ -190,7 +188,7 @@ def updt_name(user_id):
 
     return redirect(url_for('profile'))
 
-# Route for creating new entries in the character database
+# Route for creating new entries in the character database.
 
 
 @ app.route('/profile/addchar', methods=["GET", "POST"])
@@ -200,13 +198,13 @@ def addchar():
     check_user = User.objects(email=current_user.email).first()
     form_data = form.data
     if request.method == 'POST' and form.validate():
-        # char_content is the dict-object we'll save to our newly created Char() object after filtering the form data.
         # First we need to prepare a new Char object
         new_char = Char()
-
         # Char() is a dynamic document class, so we can easily insert the full form data-dump, while keeping the object-ID of the owner easily accessible for queries.
+        # Note: This adds all form-data submitted as a nested object inside the document.
         new_char.content = form_data
-        # Owner tags against the currently
+        # Owner tags against the currently logged in user, gets the object-ID of their User account, then applies it under the key of "Owner" to the new entry. This allows
+        # us to specify cascading deletion rules, so there are no dangling references to deleted accounts.
         new_char.Owner = check_user
         new_char.save()
         flash("New character added!")
@@ -224,12 +222,12 @@ def lost_password():
     if request.method == 'POST':
         if form.validate():
             # First of all, check if there is a registered email in the DB that matches.
-            check_user = User.objects(email=form.email.data).first()
             # Checking if this e-mail exists in the database. If not, flashes an error to the user.
+            check_user = User.objects(email=form.email.data).first()
             if check_user:
+                # If a user is found, we'll proceed to generate a JWT-token to pass along with our mail.
                 email = str(form.email.data)
                 exp_time = datetime.datetime.now() + datetime.timedelta(hours=1)
-                # If a user is found, we'll proceed to generate a JWT-token to pass along with our mail.
                 token = jwt.encode({'reset_password': form.email.data,
                                     'exp': exp_time},
                                    key=os.getenv('SECRET_KEY'))
@@ -242,7 +240,7 @@ def lost_password():
                 flash(
                     "Reset password email sent to the provided email! Please check your email and follow instructions therein.")
             else:
-                flash("No such user found!")
+                flash("No user found!")
 
     return render_template("lost_password.html", form=form)
 
@@ -251,29 +249,32 @@ def lost_password():
 def mail_verified(token):
 
     # This form does not use the FlaskForm-extension. This is because of a bug with validation that made the JWT-token invalid and the form would not validate correctly,
-    # causing faulty passwords to be saved.
+    # causing faulty passwords to be saved to the database. Security is instead provided by the URL being passed to the users external email inbox, proving they are the owner
+    # of the account.
 
+    # Verified the token is still valid, by decrypting it and checking it against the database to see if the decrypted token matches a user
     user = jwt.decode(token, key=os.getenv('SECRET_KEY'))["reset_password"]
     token_valid = User.objects(email=user).first()
     password = request.form.get("password")
-    # Verified the token is still valid.
+
     if request.method == 'POST':
         # If a post occurs, check the validity of the token against the DB of registered users.
 
         if token_valid is None:
+            # This route triggers if the token is expired or otherwise faulty and redirects to the login page. Legitimate users can from there request a new reset-email.
             flash("Invalid token, password reset request denied.")
             return redirect(url_for('login'))
         else:
-
-            # If a token matching the JWT-token payload has been found, hash the current input and save it to the database.
-
+            # If a token matching the JWT-token payload has been found, we hash  the current input and save it to the database.
             token_valid.password = generate_password_hash(password)
             token_valid.save().reload()
-
+            # User feedback and redirect
             flash("Your password has been changed!")
             login_user(token_valid)
             return redirect(url_for('profile'))
     return render_template('verified_password_change.html', token=token)
+
+# Route for logging users out of the app.
 
 
 @ app.route('/logout', methods=['GET'])
@@ -282,7 +283,8 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
-# Char-Profile is the actual character-sheet. Users can access it either from their own profile or from the list of characters.
+# Char-Profile is the actual character-sheet. Users can access it either from their own profile or from the list of characters. The document ID-field is used as part of the URL,
+# to allow easy external linking for users and to give each document an end-point for the REST-API functionality.
 
 
 @ app.route("/char-profile/<char_id>", methods=['GET', 'POST'])
