@@ -24,16 +24,13 @@ messages %} {{message}} {% endfor%} {% endif %} {%endwith%}
   <div class="row justify-content-center">
     <form method="POST" action="{{ url_for('login')}}" class="form">
       <br />
-      <div class="d-flex justify-content-center">
+      <div class="co justify-content-center">
         <div class="form-group">
           {{form.email.label}}<br />
           {{form.email(class_="form-control")}}<br />
-          <br />
-          <div class="form-group">
-            {{form.password.label}}<br />
-            {{form.password(class_="form-control")}} {{form.submit(class_="btn
-            btn-danger")}}
-          </div>
+          {{form.password.label}}<br />
+          {{form.password(class_="form-control")}}<br />
+          {{form.submit(class_="btn btn-danger")}}
         </div>
       </div>
     </form>
