@@ -1,60 +1,61 @@
-{% extends 'base.html'%} {% block content %} {% with messages =
-get_flashed_messages() %} {% if messages%} {% for message in messages %}
-{{message}} {% endfor%} {% endif %} {%endwith%}
-{% if form.errors %}    
-    <div class="alert alert-error">
-      <ul class="errors">
-        {% for error_field, errors in form.errors.item %}
-            <li>{{ form[error_field].label }}: {{ errors|join(', ') }}</li>
-        {% endfor %}
-    {% endif %}
+{% extends 'base.html'%} {% block content %}
+<!-- Display for flash-messages -->
+{% with messages = get_flashed_messages() %} {% if messages%} {% for message in
+messages %} {{message}} {% endfor%} {% endif %} {%endwith%}
+<!-- Form validation error-handler -->
+{% if form.errors %}
+<div class="alert alert-error">
+  <ul class="errors">
+    {% for error_field, errors in form.errors.item %}
+    <li>{{ form[error_field].label }}: {{ errors|join(', ') }}</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
 <div class="flex-row">
-<div class="d-flex justify-content-center">
-  <h3 class="text-center">Enter your email and password to login:</h3><br>
+  <div class="d-flex justify-content-center">
+    <h3 class="text-center">Enter your email and password to login:</h3>
+    <br />
+  </div>
 </div>
-</div>
-<br>
+<br />
+<!-- Login form -->
 <div class="container">
-<div class="row justify-content-center">
-    <form method="POST" action="{{ url_for('login')}}" class="form">      
+  <div class="row justify-content-center">
+    <form method="POST" action="{{ url_for('login')}}" class="form">
       <br />
       <div class="d-flex justify-content-center">
-      <div class="form-group">        
-        {{form.email.label}}<br>
-        {{form.email(class_="form-control")}}<br>
-      
-      <div class="form-group">
-        {{form.password.label}}<br>
-        {{form.password(class_="form-control")}}
-      <div class="container">
-         <div class="row">
-           <div class="col">
-            <div class="form-group justify-content-center">
-              <br>
-              {{form.submit(class_="btn btn-danger")}}
-         </div>
-       </div>
-     </div>
-   </div>
-</div>
+        <div class="form-group">
+          {{form.email.label}}<br />
+          {{form.email(class_="form-control")}}<br />
+          <br />
+          <div class="form-group">
+            {{form.password.label}}<br />
+            {{form.password(class_="form-control")}} {{form.submit(class_="btn
+            btn-danger")}}
+          </div>
+        </div>
+      </div>
     </form>
   </div>
 </div>
-  <div class="container">
-  <div class="row justify-content-center">  
-    <br>
-    <br>
+<!-- Links for password reset/registration -->
+<div class="container">
+  <div class="row justify-content-center">
+    <br />
+    <br />
     <div class="col">
-  <p class="text-center">    
-    New here? Click <a href="{{url_for('register')}}">here</a>
-  </p>
+      <p class="text-center">
+        New here? Click <a href="{{url_for('register')}}">here</a>
+      </p>
+    </div>
+    <br />
+    <div class="col">
+      <p class="text-center">
+        Lost your password? Click
+        <a href="{{url_for('lost_password')}}">here</a>
+      </p>
+    </div>
+  </div>
 </div>
-  <br />
-  <div class="col">
-  <p class="text-center">
-    Lost your password? Click <a href="{{url_for('lost_password')}}">here</a>
-  </p>
-</div>
-</div>
-</div>
-  {% endblock %}
+{% endblock %}
