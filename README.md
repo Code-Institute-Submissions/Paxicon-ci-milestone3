@@ -9,26 +9,27 @@ requirements.txt - All entries will be detailed at the bottom under the "Technol
 
 ## Table of contents:
 
-1 [Introduction](#1-Introduction)
-1.1 [UX design](#1.1-UX-design)
-1.2 [Features](#1.2-Features)
-1.2 User stories
-1.4 Wireframes
-1.5) What to add in the future?
-2 Testing & Process
-2.1) Extensions used
-2.1.1) Flask-Login
-2.1.2) Flask-Mongoengine & Flask-WTF
-2.1.3) Flask-Mail & Py-JWT
-2.2) Version control
-2.2.1) User-Auth
-2.2.2) CRUD-input
-2.2.3) frontend-design
-2.2.4) 'master' branch
-3 Deployment and installation
-3.1) Deployment
-3.2) Installation
-3.2.1) Config variables 4) Technologies used
+1. [Introduction](#1-introduction) \
+   1.1) [UX design](#1-1-ux-design) \
+   1.2) [Features](#1-2-features) \
+   1.3) [User stories](#1-3-user-stories) \
+   1.4) [Wireframes](#1-4-wireframes) \
+   1.5) [What to add in the future?](#1-5-what-to-add-in-the-future)
+2. [Testing & Process](#2-testing-and-process) \
+   2.1) [Extensions used](#2-1-extensions-used) \
+   2.1.1) [Flask-Login](#2-1-1-flask-login) \
+   2.1.2) [Flask-Mongoengine & Flask-WTF](#2-1-2-flask-mongoengine-and-flask-wtf) \
+   2.1.3) [Flask-Mail & Py-JWT](#2-1-3-flask-mail-and-py-jwt) \
+   2.2) [Version control](#2-2-version-control) \
+   2.2.1) [User-Auth](#2-2-1-user-auth) \
+   2.2.2) [CRUD-input](#2-2-2-crud-input) \
+   2.2.3) [frontend-design](#2-2-3-frontend-design) \
+   2.2.4) ['master' branch](#2-2-4-master-branch)
+3. [Deployment and installation](#3-deployment-and-installation) \
+   3.1) [Deployment](#3-1-deployment) \
+   3.2) [Installation](#3-2-installation) \
+   3.2.1) [Config variables](#3-2-1-config-variables)
+4. [Technologies used](#4-technologies-used)
 
 # 1 Introduction
 
@@ -39,14 +40,14 @@ multiple objects with their own keys inside.
 
 Being a player of the game, I am also somewhat plugged into the player-community, so designing UX from that point of view made the design interesting to consider. In the following section, I'll discuss the user-stories and intended uses of the site.
 
-## 1.1 UX design
+## 1 1 UX design
 
 I had three concepts in mind when drawing up the design of the UX for the project. First, I wanted a secure user-auth process, allowing users to administer their own entries and to ensure ownership of database entries were tied directly to users. Second, I wanted a relatively open schema-design since the game rules of D&D by design is modular and expandable. Three, I wanted to include the feature of a simple dice-roller,
 to make the sheet an option for gamers who now perhaps play through Discord or other online-means where physical dice might not always be available or accessible the way they would be around a table.
 
 Visually, I went for a "less is more" approach, I wanted unobtrusive and clear access to data over ornate design. I wanted the sheet to be above all-else readable and searchable, making it much faster for the player to get access to the data he's saved.
 
-## 1.2 Features
+## 1 2 Features
 
 The app features:
 
@@ -57,7 +58,7 @@ The app features:
 - _A means of accessing database information through queries, either by ownership (profile.html), sorted alphabetically by collection (characters.html) and to access the data contained in each entry through templates (char_profile.html)_
 - _A suitable front-end presentation of a character-sheet as you might carry in a none-digital format to a gaming session, complete with jQuery-written javascript to handle dice-rolling and calculating derived statistics._
 
-## 1.3 User stories
+## 1 3 User stories
 
 - _A user would want to keep their sheet stored securely: The user-auth process ensures that only the owner, who created a document in the database, can delete it._
 
@@ -71,11 +72,11 @@ The app features:
 
 - _A group of players might want a central, accessible place to store their character sheets inbetween sessions, for sharing. The app allows them to centralize and use the list to compare sheets with each other._
 
-## 1.4 Wireframes
+## 1 4 Wireframes
 
 [Wireframe PDF](/wireframes/Milestone-3-Bugbears-and-Bailiffs.pdf)
 
-## 1.5 What to add in the future?
+## 1 5 What to add in the future?
 
 I have a lot of items I'd like to add in the future:
 
@@ -86,17 +87,17 @@ I have a lot of items I'd like to add in the future:
 - _A planned feature that had to be cut was allowing players to add their own ability-list and equipment, a highly modular dict-object with nested objects for each entry would
   have to be added and it was not feasible to complete in time for my deadline. This will be completed post-submission in a separate branch._
 
-# 2 Testing & Process
+# 2 Testing and Process
 
 My general testing process was manual testing, involving friends and colleagues as volunteer-testers. A form was handed to all volunteer-testers, asking them to fill in a small report for any issue that they noted and submit it to me either through Discord or Email. I handled these 'tickets' as they appeared, but in general it mostly involved display-issues that are discussed more in detail in 2.2.3) front-end design.
 
 Since this was my first full-stack project and first experience with Flask, I decided the process would have to be more structured than my approach to the two earlier Milestones. To wit, I first selected my feature-set, then took a look through the Flask extension eco-system to find suitable tasks for what I had in mind. Once my tools were selected, I structured the production and testing work-flow to one section of features at a time and isolated work on them into their own Git branches. Once a feature set was complete and functional enough to move on, I merged to master and branched the next feature-set and so on. Before discussing each branch, I'll begin by discussing the extensions used.
 
-## 2.1 Extensions used
+## 2 1 Extensions used
 
 I elected to chose a core set of extensions to provide the features I required: Flask-Login for handling sessions, Flask-Mongoengine as an ODM for handling my calls to Mongo, Flask-WTForm to provide both server-side and frontend validation of forms, Flask-Mail for sending passwords. I'll discuss the testing and implementation process of each below.
 
-### 2.1.1 Flask-Login
+### 2 1 1 Flask-Login
 
 [Flask-Login](https://flask-login.readthedocs.io/en/latest/) is a simple extension handling the basic tasks of session-management, but is unopinionated on database choice and design decisions. It is just a simplifying tool for handling logging users in and out and managing a User object. I had written a Flask-Login style User-object early in the process and grew to appreciate the extension, so after the revert I kept the extension to handle this task, while deferring security to werkzeug.
 
@@ -107,7 +108,7 @@ eventually found that the password being saved was invariably an empty string. F
 In the end the issue was resolved amicably through redefining the User object as a dynamic object and rewriting the password-reset as a simple "request.form.get" for that view.
 I consoled myself that to access that view at all, a user would have had access to a registered email's inbox within the last 60 minutes, so while the code is inelegant in this regard it is still acceptable from a user-security standpoint.
 
-### 2.1.2 Flask-Mongoengine & Flask-WTF
+### 2 1 2 Flask-Mongoengine and Flask-WTF
 
 [Flask-Mongoengine](http://docs.mongoengine.org/projects/flask-mongoengine/en/latest/) and [Flask-WTF](https://flask-wtf.readthedocs.io/en/stable/) were selected as a package, because of their interoperable features, that is to say Flask-WTF can handle and produce input-forms for database-document style objects created with the Mongoengine schema-model.
 This allows for quick prototyping of I/O forms, which was valuable early in the process when I was working to produce many variants on user registration, login and password reset forms.
@@ -127,7 +128,7 @@ _(Username cropped to protect the innocent!)_
 
 All entries tested were correctly escaped.
 
-### 2.1.3 Flask-Mail & Py-JWT
+### 2 1 3 Flask-Mail and Py-JWT
 
 [Flask-Mail](https://pythonhosted.org/Flask-Mail/) and [Py-JWT](https://pyjwt.readthedocs.io/en/latest/) were both part of my attempt to provide secure, if basic, user-auth and account management. Flask-Mail provides the ability to send and process emails through Flask and Py-JWT provides JSON web-token encoding. I originally added both of these solely for the password-reset functionality. The flow is as follow:
 
@@ -138,17 +139,17 @@ unrelated to the mailing process itself) - I simply registered a no-reply adress
 
 ![Mail-testing screenshot](/wireframes/about-mail-test.png)
 
-## 2.2 Version control
+## 2 2 Version control
 
 The work-flow for this project was separated into three separate stages, with a 'master' branch merge at the end of each phase of design.
 
-### 2.2.1 User-Auth
+### 2 2 1 User-Auth
 
 This branch originally began using an extension named [Flask-User](https://flask-user.readthedocs.io/en/latest/), because it contained the tools I needed for a functional user-auth system namely: managing sessions, MongoDB compatibility, pre-integrated form-based password reset and so forth. However it became clear as work progressed that much of Flask-User was not as well-documented as I had hoped and many of its features were implemented in a manner I did not feel were very accessible to customization. In the end, I reverted to a previous version and lost quite a few days of work. I then rewrote the login and auth system as detailed in the section above.
 
 Once I had a functional system that allowed users to login, logout and reset their password automatically, I cleaned up unused extensions and dependencies remaining after Flask-User, updated my requirements.txt and merged to the master.
 
-### 2.2.2 CRUD-input
+### 2 2 2 CRUD-input
 
 This branch was where I created the Char object that is used to represent the character-sheet. Designing the document-schema was difficult, due to my own misunderstandings of the extensions used to provide the input (Flask-WTF) and the purpose of the ODM (Flask-MongoEngine) and tried a rigid, Document model, imposing a strict schema. As the design evolved, I realised where I had complicated matters needlessly for myself and a new, better design emerged. I redefined the character-sheet object as follows:
 
@@ -160,7 +161,7 @@ This branch was where I created the Char object that is used to represent the ch
 
 After redefining the main object with these rules and rewriting the code to be more dynamic, I was able to produce a functional prototype allowing users to add and delete their own characters and administer this from a protected profile page. As mentioned above, to ensure database integrity, cascading deletion rules were set in place and tested: If a user deletes their account from the profile, all Char-objects they are listed as owners of are also deleted. Once I had ensured that creating, reading, updating and deleting documents were all functional, I merged with the master.
 
-### 2.2.3 frontend-design
+### 2 2 3 frontend-design
 
 Once the main backend functions were functional and general proof-of-concept of CRUD was finished, I focused on implementing my visual design. I elected to go for a bright, clean style with a focus on responsiveness and readability, as the app is designed with mobility in mind (A replacement for a paper-document should be as easy to bring with you as a paper document!). While the project began using [Materialize](https://materializecss.com/) as its frontend framework, I switched to [Bootstrap](https://getbootstrap.com/) due to some issues with Flask-WTF's widgets that made the Bootstrap class-based form styling method more appealing. I noticed some slight issues getting the bootstrap-grid to cooperate and responsiveness was lagging behind on smaller screens.
 
@@ -168,7 +169,7 @@ When submitting the project for peer-review, an immensely embarassing bug was un
 
 JavaScript was highly limited in the project, by choice. [jQuery](https://jquery.com/) was used to write the script charProfile.js, only used on char_profile.html. The script makes an AJAX-request for a JSON copy of the relevant character-document and uses it to provide interactive dice-rolls as well as to populate certain fields that are derived from other statistics the user has already submitted to the database. The only other JS file is index.js, which provides simple functionality for certain bootstrap components as needed.
 
-### 2.2.4 'master' branch
+### 2 2 4 'master' branch
 
 After merging frontend-design to the main branch, I focused my last week on testing, peer-review and cleaning up extraneous code.
 
@@ -176,11 +177,11 @@ After merging frontend-design to the main branch, I focused my last week on test
 
 This section summarizes the experience of deploying the app to Heroku, followed by installation instructions including required config-variables.
 
-## 3.1 Deployment
+## 3 1 Deployment
 
 The deployment was not as smooth as I had hoped, due to my own negligence. I had failed to provide a crucial config-variable, port, before deploying which caused the app to crash on load repeatedly. Once I realised my mistake, I manually added a port variable, fixed up the procfile and redeployed and the app has worked since. The only other thing of note is that I used the Heroku github deploy-flow instead of through the CLI, which I've done on minor projects of my own before.
 
-## 3.2 Installation
+## 3 2 Installation
 
 Requirements to install and run the app locally:
 
@@ -191,7 +192,7 @@ Requirements to install and run the app locally:
 4. Once env.py is populated with your environment variables, launch a terminal inside the main folder and type: "pip install -r requirements.txt" to install all extensions. Please note that it is _very_ unadvisable to run this command outside of a virtual environment, so ensure you've activate it before the command is issued. Note that this command is for installing and running the app locally on _windows_. If running on Mac OS and Linux, please refer to the links above or the Python/PIP documentation for your OS of choice.
 5. Now that all dependencies are installed, launch the app by typing python app.py in the terminal, from the root-folder of the app.
 
-### 3.2.1 Config variables
+### 3 2 1 Config variables
 
 The following variables must be configured in the environment you're running the app in. If as in our example above you're running the code locally, I recommend you simply create
 an env.py file, as in my instructions above.
