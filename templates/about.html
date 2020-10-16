@@ -34,7 +34,6 @@
        <div class="col">
        <button class="btn btn-danger btn-lg" data-target="#MailMeModal" data-toggle="modal">Contact form</button>
        <br />     
-      </p>        
     </div>
   </div>    
 </div>
@@ -101,7 +100,7 @@
     <h1>Media & Resources</h1>
 </div>
 <div class="d-flex justify-content-center">    
-    <h4> (A collection of D&D Podcasts, video-series, wikias and articles for those looking for more D&D content!)
+    <h4> (A collection of D&D Podcasts, video-series, wikias and articles for those looking for more D&D content!)</h4>
 </div>
 <br>
 <!-- Featured media modal -->
@@ -202,22 +201,22 @@
           {{form.hidden_tag()}}
           <div class="form-group">
             {{form.email.label}}
-            {{form.email(class_="form-control", placeholder_="Enter your email...")}}
+            {{form.email(class_="form-control")}}
           </div>
           <div class="form-group">
             {{form.subject.label}}
-            {{form.subject(class_="form-control", placeholder_="Subject...")}}
+            {{form.subject(class_="form-control")}}
           </div>
           <div class="form-group">
             {{form.message.label}}
-            {{form.message(class_="form-control", placeholder_="Enter your message...")}}
+            {{form.message(class_="form-control")}}
           </div>          
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        {{form.submit(class_="btn btn-danger")}} 
-        </form>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          {{form.submit(class_="btn btn-danger")}}         
       </div>
+    </form>
     </div>
   </div>
 </div>
