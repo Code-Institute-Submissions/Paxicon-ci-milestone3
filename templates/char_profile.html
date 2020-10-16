@@ -56,13 +56,15 @@
       <!-- While many of these fields are empty on launch, charProfile.js populates them on document ready. -->
       <table class="table table-borderless table-striped col-lg-12">
         <thead>
-          <th class="col">Attributes:</th>
-          <th class="col">Strength</th>
-          <th class="col">Dexterity</th>
-          <th class="col">Constitution</th>
-          <th class="col">Intelligence</th>
-          <th class="col">Wisdom</th>
-          <th class="col">Charisma</th>
+          <tr>
+            <th class="col">Attributes:</th>
+            <th class="col">Strength</th>
+            <th class="col">Dexterity</th>
+            <th class="col">Constitution</th>
+            <th class="col">Intelligence</th>
+            <th class="col">Wisdom</th>
+            <th class="col">Charisma</th>
+          </tr>
         </thead>
         <tr>
           <th>Base value:</th>
@@ -177,13 +179,15 @@
     <div class="table-responsive">
       <table class="table table-borderless table-striped col-lg-12">
         <thead>
-          <th class="col">Saving throws:</th>
-          <th class="col">Strength</th>
-          <th class="col">Dexterity</th>
-          <th class="col">Constitution</th>
-          <th class="col">Intelligence</th>
-          <th class="col">Wisdom</th>
-          <th class="col">Charisma</th>
+          <tr>
+            <th class="col">Saving throws:</th>
+            <th class="col">Strength</th>
+            <th class="col">Dexterity</th>
+            <th class="col">Constitution</th>
+            <th class="col">Intelligence</th>
+            <th class="col">Wisdom</th>
+            <th class="col">Charisma</th>
+          </tr>
         </thead>
         <tr id="prof-row">
           <th>Proficient:</th>
@@ -284,9 +288,11 @@
   <div class="row">
     <table class="table table-borderless table-striped">
       <thead>
-        <th class="col">Skill:</th>
-        <th class="col">Proficient</th>
-        <th class="col">Roll:</th>
+        <tr>
+          <th class="col">Skill:</th>
+          <th class="col">Proficient</th>
+          <th class="col">Roll:</th>
+        </tr>
       </thead>
       <tr>
         <th class="col">Athletics:</th>
@@ -568,7 +574,6 @@
   id="diceRollModal"
   tabindex="-1"
   role="dialog"
-  aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true"
 >
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -594,9 +599,6 @@
   </div>
 </div>
 <!-- Script for providing interactive functions and to calculate derived values. -->
-<script
-  type="text/javascript"
-  src="{{url_for('static', filename='js/charProfile.js' )}}"
-></script>
+<script src="{{url_for('static', filename='js/charProfile.js' )}}"></script>
 
 {% endblock %}
