@@ -1,7 +1,12 @@
 {% extends 'base.html'%} {% block content %}
 <!-- Display for flash-messages -->
-{% with messages = get_flashed_messages() %} {% if messages%} {% for message in
-messages %} {{message}} {% endfor%} {% endif %} {%endwith%}
+{% with messages = get_flashed_messages() %} 
+    {% if messages%} 
+    {% for message in messages %} 
+      {{message}} 
+    {% endfor%} 
+  {% endif %} 
+{%endwith%}
 <!-- Form validation error-handler -->
 {% if form.errors %}
 <div class="alert alert-error">

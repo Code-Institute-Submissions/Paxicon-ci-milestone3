@@ -1,14 +1,14 @@
 {% extends 'base.html'%} 
-  {% block content %} 
+{% block content %} 
   <!-- Displays flash messages, if needed. -->
     {% with messages=get_flashed_messages() %} 
     <!-- If true, displays flash messages in this div -->
-    {% if messages%} 
-      {% for message in messages %}
-      {{message}} 
-      {% endfor%}
-  {% endif %} 
-{%endwith%}
+      {% if messages%} 
+        {% for message in messages %}
+          {{message}} 
+        {% endfor%}
+      {% endif %} 
+    {%endwith%}
 
 {# Error handling, displaying validation problems to the user. #}
 
