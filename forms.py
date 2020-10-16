@@ -1,11 +1,11 @@
-# This file contains Flask-WTF form classes.
+# This file contains Flask-WTF form classes and validator methods from the following imports.
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextField, SubmitField, PasswordField, TextAreaField, ValidationError
 from wtforms.validators import InputRequired, Email, Length, EqualTo, DataRequired
 
 
-# Registration form, can also be passed without issue to login-page.
+# Registration form, passed for registration and login functions.
 
 class RegForm(FlaskForm):
     display_name = StringField('Display name: ', [InputRequired(message='You must provide a display name!'), Length(
@@ -16,7 +16,7 @@ class RegForm(FlaskForm):
         min=8, max=20, message="Your password must be between 8 and 20 characters long!")])
     submit = SubmitField("Login")
 
-# Form for requesting password-reset email
+# Form for requesting password-reset email.
 
 
 class LostPass(FlaskForm):
@@ -24,7 +24,7 @@ class LostPass(FlaskForm):
         message='Invalid email'), Length(max=50)])
     submit = SubmitField("Submit password request")
 
-# Form for about.html MailMe-modal
+# Form for about.html MailMe-modal.
 
 
 class MailMeForm(FlaskForm):
