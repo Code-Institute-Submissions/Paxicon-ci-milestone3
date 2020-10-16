@@ -24,7 +24,6 @@
   </div>
 </div>
 <br />
-<br />
 <div class="container-fluid">
   <div class="row">
     <br />
@@ -47,7 +46,6 @@
   </div>
 </div>
 <br />
-<br />
 <div class="d-flex justify-content-center">
   <h3>Attributes:</h3>
 </div>
@@ -55,6 +53,7 @@
 <div class="container-fluid">
   <div class="row">
     <div class="table-responsive">
+      <!-- While many of these fields are empty on launch, charProfile.js populates them on document ready. -->
       <table class="table table-borderless table-striped col-lg-12">
         <thead>
           <th class="col">Attributes:</th>
@@ -173,7 +172,6 @@
   <h3>Saving Throws:</h3>
 </div>
 <br />
-<br />
 <div class="container-fluid">
   <div class="row">
     <div class="table-responsive">
@@ -278,11 +276,9 @@
   </div>
 </div>
 <br />
-<br />
 <div class="d-flex justify-content-center">
   <h3>Skills:</h3>
 </div>
-<br />
 <br />
 <div class="container-fluid">
   <div class="row">
@@ -597,7 +593,7 @@
     </div>
   </div>
 </div>
-
+<!-- Script for providing interactive functions and to calculate derived values. -->
 <script
   type="text/javascript"
   src="{{url_for('static', filename='js/charProfile.js' )}}"
