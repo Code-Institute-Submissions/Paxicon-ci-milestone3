@@ -15,7 +15,7 @@ class User(UserMixin, db.DynamicDocument):
     meta = {'collection': 'User'}
     display_name = db.StringField(max_length=50)
     email = db.StringField(max_length=50)
-    password = db.StringField(min_length=8, max_length=20)
+    password = db.StringField()
     # A required attribute from flask-login to ensure the login.required decorators operate functionally. As auth here is very simple, all users are considered authenticated if they pass login.
     is_authenticated = True
     # As required by flask-login. For our purposes, all users are active users.

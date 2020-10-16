@@ -1,131 +1,196 @@
 {% extends 'base.html'%} 
 {% block content %}
 <!-- Displays flash messages, if needed. -->
- {% with messages = get_flashed_messages() %} 
+{% with messages = get_flashed_messages() %}
   {% if messages%} 
+  <div class="alert alert-error">
     {% for message in messages %}
-      {{message}} 
+     {{message}} 
     {% endfor%} 
+  </div> 
   {% endif %} 
 {%endwith%}
+<!-- Displays form validation errors, as needed.-->
+{% if form.errors %}    
+<div class="alert alert-error">
+  <ul class="errors">
+    {% for error_field, errors in form.errors.item %}
+        <li>{{ form[error_field].label }}: {{ errors|join(', ') }}</li>
+    {% endfor %}
+{% endif %}
+
 <!--- Jumbotron display -->
 <div class="jumbotron jumbotron-fluid jumbotron-bg">
-   <div class="container-fluid">
-      <h3 class="display-3">Profile for: {{ user.display_name}}</h3>
-        <br />
-        <br />
-       <div class="col">
-       <a class="btn btn-danger btn-lg" href="{{url_for('addchar')}}">Create a new character</a>
-       <br />   
+  <div class="container-fluid">
+    <h3 class="display-3">Profile for: {{ user.display_name}}</h3>
+    <br />
+    <br />
+    <div class="col">
+      <a class="btn btn-danger btn-lg" href="{{url_for('addchar')}}"
+        >Create a new character</a
+      >
+      <br />
     </div>
-  </div>   
-</div> 
+  </div>
+</div>
 <!-- Profile menu -->
 <div class="container-fluid">
-  <div class="row">  
-    <div class="col-md-12 col-lg-4 justify-content-center">      
-      <h4>Welcome to your profile page!</h4><br>
-      <p> 
-      Here you can administer your account, find links to your characters, delete characters, change your display name and delete your account. You can also click the button above to register new characters!
+  <div class="row">
+    <div class="col-md-12 col-lg-4 justify-content-center">
+      <h4>Welcome to your profile page!</h4>
+      <br />
+      <p>
+        Here you can administer your account, find links to your characters,
+        delete characters, change your display name and delete your account. You
+        can also click the button above to register new characters!
       </p>
     </div>
     <div class="col-md-6 col-lg-4 justify-content-center">
-    <div class="card float-right card-margin" style="width: 18rem;">
-      <div class="card-header">
-        <h5>Your characters: </h5>
-      </div>
-        <ul class="list-group list-group-flush"></ul>
-        {% for Char in Chars%} 
+      <div class="card float-right card-margin" style="width: 18rem">
+        <div class="card-header">
+          <h5>Your characters:</h5>
+        </div>
+        <ul class="list-group list-group-flush">
+          {% for Char in Chars%}
           <li class="list-group-item">
-            <a href="{{ url_for('char_profile', char_id=Char.pk) }}">{{Char.content.Name}}</a> <button class="btn float-right" data-toggle="modal" data-target="#mod-{{Char.pk}}"><i class="fas fa-trash-alt" id={{Char.pk}}></i></button>       
+            <a href="{{ url_for('char_profile', char_id=Char.pk) }}"
+              >{{Char.content.Name}}</a
+            >
+            <button
+              class="btn float-right"
+              data-toggle="modal"
+              data-target="#mod-{{Char.pk}}"
+            >
+              <i class="fas fa-trash-alt" id="{{Char.pk}}"></i>
+            </button>
           </li>
-        {%endfor%}
+          {%endfor%}
         </ul>
       </div>
     </div>
     <div class="col-md-6 col-lg-4 justify-content-center">
-    <h5>Account options: </h5> <br>
-      <button type="button" class="btn btn-outline-danger btn-lg" data-toggle="modal" data-target="#deletion-modal">
+      <h5>Account options:</h5>
+      <br />
+      <button
+        type="button"
+        class="btn btn-outline-danger"
+        data-toggle="modal"
+        data-target="#deletion-modal"
+      >
         Delete account
       </button>
-      <br>
-      <button type="button" class="btn btn-outline-danger btn-lg" data-toggle="modal" data-target="#displayName">
-          Change name
-      </button>   
+      <br />
+      <br />
+      <button
+        type="button"
+        class="btn btn-outline-danger"
+        data-toggle="modal"
+        data-target="#displayName"
+      >
+        Change name
+      </button>
     </div>
   </div>
 </div>
 
 <!-- Modal for account-deletion -->
- <div class="modal fade" id="deletion-modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Confirm account deletion
+<form method="POST">
+  <div class="modal fade" id="deletion-modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Confirm account deletion</h5>
+        </div>
+        <div class="modal-body">
+          <p>
+            Are you sure you wish to delete your account? All your saved
+            characters will be deleted with it. If you still want to close your
+            account, enter your email and password below: <br />
+          </p>
+          <br />
+          {{ form.hidden_tag() }} {{form.email.label}}
+          {{form.email(class_="float-right")}}<br />
+          {{form.password.label}} {{form.password(class_="float-right")}}<br />
+          <br />
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button type="submit" class="btn btn-danger">
+              Confirm account-deletion
+            </button>
+          </div>
+        </div>
       </div>
-      <div class="modal-body">
-        <p>Are you sure you wish to delete your account? All your saved characters will be deleted with it. If you still want to close your account, enter your email and password below: <br>
-        </p>
-        <form method="POST">
-        <br>
-        {{ form.hidden_tag() }}
-        {{form.email.label}}
-        {{form.email(class_="float-right")}}<br>
-        {{form.password.label}}
-        {{form.password(class_="float-right")}}<br>
-        <br>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button type="submit" class="btn btn-danger" action="{url_for('profile')">
-          Confirm account-deletion </button>        
-      </div>
-    </form>
     </div>
   </div>
-</div>
-</div>
+</form>
 <!-- Modal for character-deletion -->
-{% for Char in Chars%} 
-<div class="modal fade" id="mod-{{Char.pk}}">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Delete character: {{Char.content.Name}}
+{% for Char in Chars%}
+<form method="POST" action="{{url_for('del_char', char_id=Char.pk)}}">
+  <div class="modal fade" id="mod-{{Char.pk}}">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Delete character: {{Char.content.Name}}</h5>
+        </div>
+        <div class="modal-body">
+          <h5>Are you sure you wish to delete this character?</h5>
+          <br />
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button type="submit" class="btn btn-danger">
+              Delete character
+            </button>
+          </div>
+        </div>
       </div>
-      <div class="modal-body">
-        <h5>Are you sure you wish to delete this character?</h5>
-        <br>
-        <form method="POST" action="{{url_for('del_char', char_id=Char.pk)}}">          
-        <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button type="submit" class="btn btn-danger">
-          Delete character</button>        
-      </div>
-    </form>
     </div>
   </div>
-</div>
-</div>
+</form>
 {%endfor%}
-<!-- Modal for updating user Display name --> 
-<div class="modal fade" id="displayName">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Change display name:</h5>
+<!-- Modal for updating user Display name -->
+<form method="POST" action="{{url_for('updt_name', user_id=user.pk)}}">
+  <div class="modal fade" id="displayName">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Change display name:</h5>
+        </div>
+        <div class="modal-body">
+          <p>Enter your new display-name below and press the 'save' button.</p>
+          <input
+            class="form-control"
+            type="text"
+            name="display_name"
+            id="display_name"
+            required
+            placeholder="Enter your new display name..."
+          />
+          <br />
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button type="submit" class="btn btn-danger">Save</button>
+          </div>
+        </div>
       </div>
-      <div class="modal-body">
-        <p>Enter your new display-name below and press the 'save' button.</p>        
-        <form method="POST" action="{{url_for('updt_name', user_id=user.pk)}}">          
-          <input class="form-control" type="text" name="display_name" id="display_name" required placeholder="Enter your new display name...">          
-          <br>
-        <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button type="submit" class="btn btn-danger">
-          Save</button>        
-      </div>
-    </form>
     </div>
   </div>
-</div>
+</form>
 {%endblock %}

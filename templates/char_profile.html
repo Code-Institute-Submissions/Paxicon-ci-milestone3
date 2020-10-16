@@ -1,4 +1,16 @@
 {% extends 'base.html'%} {% block content %}
+
+{% with messages=get_flashed_messages() %}
+ {% if messages%}
+ <div class="alert alert-error">
+  {% for message in messages %}
+     {{message}}
+   {% endfor%}
+  </div>
+  {% endif %}
+{%endwith%}
+
+<!-- Char sheet below this point, made up of responsive bootstrap elements. -->
 <div class="d-flex justify-content-center">
   <h1>{{character.content.Name}}</h1>
 </div>

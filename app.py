@@ -180,12 +180,14 @@ def del_char(char_id):
 @ login_required
 def updt_name(user_id):
     newName = request.form["display_name"]
+    print(newName)
     user = User.objects(pk=user_id).first()
     if request.method == 'POST':
         user.update(display_name=newName)
         user.save().reload()
         flash("Your display name has been changed!")
-
+        return redirect(url_for('profile'))
+    # Triggers on 'GET' to redirect back to profile.
     return redirect(url_for('profile'))
 
 # Route for creating new entries in the character database.
