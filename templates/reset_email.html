@@ -1,10 +1,13 @@
 <html>
-  <h1>Lost your password? We're here to help!</h1>
-  <p>
-    To reset your password
-    <a href="{{ url_for('mail_verified', token=token, _external=True) }}">
-      click here </a
-    >
-    (If you did not request a password reset, ignore this message.)
-  </p>
+  <!-- This is the HTML-template for the password reset email. It renders a HTML mail with an anchor-link containing a JWT token and mails it to the user. -->
+  <body>
+    <h1>Lost your password? We're here to help!</h1>
+    <p>
+      To reset your password
+      <a href="{{ url_for('mail_verified', token=token, _external=True) }}">
+        click here
+      </a>
+      (If you did not request a password reset, ignore this message.)
+    </p>
+  </body>
 </html>
