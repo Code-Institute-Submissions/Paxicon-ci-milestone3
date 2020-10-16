@@ -1,37 +1,47 @@
-{% extends 'base.html'%} 
-  {% block content %}
+{% extends 'base.html'%} {% block content %}
+<!-- Jumbotron display -->
 <div class="jumbotron jumbotron-fluid jumbotron-allchars-bg">
   <div class="container-fluid">
-    <h1 class="display-3">Character vault: </h1>
+    <h1 class="display-3">Character vault:</h1>
     <p class="lead">
-      Below you can see all current characters stored in our database. For a more detailed profile, click the name in the left-most column!
+      Below you can see all current characters stored in our database. For a
+      more detailed profile, click the name in the left-most column!
     </p>
   </div>
 </div>
+<!-- Character profile, populates from the 'char' collection of the database. -->
 <div class="container-fluid">
   <div class="row">
-    <div class=" table-responsive">
-<table class="table table-striped">
-  <tr>
-      <th scope="col">Character name</th>
-      <th scope="col">Class</th>
-      <th scope="col">Race</th>
-      <th scope="col">Level</th>
-      <th scope="col">Made by</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for entry in all_characters %}
-    <tr>
-    <td><a href="{{ url_for('char_profile', char_id=entry.pk) }}">{{ entry.content.Name }}</a></td>
-    <td>{{ entry.content.CharClass }} ( {{entry.content.Subclass}} )</td>
-    <td>{{ entry.content.Race }} ( {{entry.content.Subrace}} )</td>
-    <td>{{entry.content.ClassObj.Lvl}}</td>
-    <td>{{entry.Owner.display_name}}</td>    
-    </tr>
-    {% endfor%}    
-    </tbody>
-</table>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Character name</th>
+            <th scope="col">Class</th>
+            <th scope="col">Race</th>
+            <th scope="col">Level</th>
+            <th scope="col">Made by</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for entry in all_characters %}
+          <tr>
+            <td>
+              <a href="{{ url_for('char_profile', char_id=entry.pk) }}"
+                >{{ entry.content.Name }}</a
+              >
+            </td>
+            <td>
+              {{ entry.content.CharClass }} ( {{entry.content.Subclass}} )
+            </td>
+            <td>{{ entry.content.Race }} ( {{entry.content.Subrace}} )</td>
+            <td>{{entry.content.ClassObj.Lvl}}</td>
+            <td>{{entry.Owner.display_name}}</td>
+          </tr>
+          {% endfor%}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% endblock %}
 </div>
-</div>
-{% endblock %}
